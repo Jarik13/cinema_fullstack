@@ -1,5 +1,5 @@
-import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react'
-import React, { useState } from 'react'
+import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
+import React, { useState } from 'react';
 
 const NowInCinema = () => {
     const [currentFilmNumber, setCurrentFilmNumber] = useState(1);
@@ -46,4 +46,4 @@ const NowInCinema = () => {
     )
 }
 
-export default NowInCinema
+export default NowInCinema;
