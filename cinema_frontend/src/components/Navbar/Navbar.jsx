@@ -1,5 +1,6 @@
 import React from 'react';
 import Location from '../Location/Location';
+import { Button } from '../ui/button';
 
 const Navbar = () => {
   return (
@@ -8,8 +9,9 @@ const Navbar = () => {
             <h1 className='cursor-pointer'>Jeen Studio</h1>
             <Location />
         </div>
-        <div>
-            
+        <div className='flex justify-between items-center gap-8'>
+            <Button variant="ghost" size="lg" className="text-xl underline decoration-2">In the cinema</Button>
+            <Button variant="destructive" size="lg">Watch online</Button>
         </div>
         <div>
             
