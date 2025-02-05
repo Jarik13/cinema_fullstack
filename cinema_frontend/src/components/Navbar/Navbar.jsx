@@ -3,6 +3,7 @@ import Location from '../Location/Location';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import Filters from '../Filters/Filters';
+import UserAvatar from '../UserAvatar/UserAvatar';
 
 const Navbar = () => {
   return (
@@ -18,6 +19,7 @@ const Navbar = () => {
         <div className='flex justify-between items-center gap-8'>
             <Input type="text" placeholder="Film here..." />
             <Filters />
+            <UserAvatar />
         </div>
     </div>
   )
