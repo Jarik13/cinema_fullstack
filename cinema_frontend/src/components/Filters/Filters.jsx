@@ -10,13 +10,12 @@ import { Select, SelectTrigger, SelectContent, SelectItem } from "@/components/u
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ChevronDown } from "lucide-react";
+import GenreFilter from "./GenreFilter/GenreFilter";
 
-const genres = ["Action", "Comedy", "Drama", "Horror", "Romance", "Sci-Fi"];
 const ageRatings = ["0+", "3+", "6+", "12+", "16+", "18+"];
 const ratingsRange = [0, 10]; 
 
 const Filters = () => {
-    const [selectedGenre, setSelectedGenre] = useState("all");
     const [selectedYear, setSelectedYear] = useState("");
     const [duration, setDuration] = useState([0, 240]);
     const [selectedAgeRating, setSelectedAgeRating] = useState("all");
@@ -48,24 +47,7 @@ const Filters = () => {
             <PopoverContent className="w-80 p-4">
                 <div className="space-y-4">
                     {/* Genre Filter */}
-                    <div>
-                        <Label htmlFor="genre" className="font-semibold">
-                            Genre
-                        </Label>
-                        <Select value={selectedGenre} onValueChange={setSelectedGenre}>
-                            <SelectTrigger id="genre">
-                                {selectedGenre === "all" ? "All" : selectedGenre}
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">All</SelectItem>
-                                {genres.map((genre) => (
-                                    <SelectItem key={genre} value={genre}>
-                                        {genre}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    </div>
+                    <GenreFilter />
 
                     {/* Year Filter */}
                     <div>
