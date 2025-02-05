@@ -1,6 +1,7 @@
 import React from 'react';
 import Location from '../Location/Location';
 import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 
 const Navbar = () => {
   return (
@@ -14,7 +15,7 @@ const Navbar = () => {
             <Button variant="destructive" size="lg">Watch online</Button>
         </div>
         <div>
-            
+            <Input type="text" placeholder="Film here..." />
         </div>
     </div>
   )
