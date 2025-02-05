@@ -1,6 +1,6 @@
-import { Label } from '@/components/ui/label'
-import { Slider } from '@/components/ui/slider'
-import React, { useState } from 'react'
+import { Label } from '@/components/ui/label';
+import { Slider } from '@/components/ui/slider';
+import React, { useState } from 'react';
 
 const DurationFilter = () => {
     const [duration, setDuration] = useState([0, 240]);
@@ -25,4 +25,4 @@ const DurationFilter = () => {
     )
 }
 
-export default DurationFilter
+export default DurationFilter;

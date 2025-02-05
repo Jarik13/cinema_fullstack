@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     Popover,
     PopoverTrigger,
@@ -22,22 +22,12 @@ const Filters = () => {
             </PopoverTrigger>
             <PopoverContent className="w-80 p-4">
                 <div className="space-y-4">
-                    {/* Genre Filter */}
                     <GenreFilter />
-
-                    {/* Year Filter */}
                     <YearFilter />
-
-                    {/* Duration Filter */}
                     <DurationFilter />
-
-                    {/* Age Rating Filter */}
                     <AgeRatingFilter />
-
-                    {/* Movie Rating Filter */}
                     <MovieRatingFilter />
 
-                    {/* Apply Filters Button */}
                     <div className="text-right">
                         <Button
                             variant="destructive"

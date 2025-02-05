@@ -1,7 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from 'react'
 
 const ratingsRange = [0, 10]; 
 
@@ -28,4 +27,4 @@ const MovieRatingFilter = () => {
     )
 }
 
-export default MovieRatingFilter
+export default MovieRatingFilter;

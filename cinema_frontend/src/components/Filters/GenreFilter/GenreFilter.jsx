@@ -1,6 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const genres = ["Action", "Comedy", "Drama", "Horror", "Romance", "Sci-Fi"];
 
@@ -29,4 +29,4 @@ const GenreFilter = () => {
     )
 }
 
-export default GenreFilter
+export default GenreFilter;

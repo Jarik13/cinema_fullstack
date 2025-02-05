@@ -1,6 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const ageRatings = ["0+", "3+", "6+", "12+", "16+", "18+"];
 
@@ -29,4 +29,4 @@ const AgeRatingFilter = () => {
     )
 }
 
-export default AgeRatingFilter
+export default AgeRatingFilter;
