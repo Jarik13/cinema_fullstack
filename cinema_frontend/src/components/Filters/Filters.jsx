@@ -12,12 +12,12 @@ import { Input } from "@/components/ui/input";
 import { ChevronDown } from "lucide-react";
 import GenreFilter from "./GenreFilter/GenreFilter";
 import YearFilter from "./YearFilter/YearFilter";
+import DurationFilter from "./DurationFilter/DurationFilter";
 
 const ageRatings = ["0+", "3+", "6+", "12+", "16+", "18+"];
 const ratingsRange = [0, 10]; 
 
 const Filters = () => {
-    const [duration, setDuration] = useState([0, 240]);
     const [selectedAgeRating, setSelectedAgeRating] = useState("all");
     const [movieRating, setMovieRating] = useState([0, 10]); 
 
@@ -37,22 +37,7 @@ const Filters = () => {
                     <YearFilter />
 
                     {/* Duration Filter */}
-                    <div>
-                        <Label htmlFor="duration" className="font-semibold">
-                            Duration (min)
-                        </Label>
-                        <Slider
-                            value={duration}
-                            min={0}
-                            max={300}
-                            step={10}
-                            onChange={setDuration}
-                        />
-                        <div className="flex justify-between text-sm mt-2">
-                            <span>{duration[0]} min</span>
-                            <span>{duration[1]} min</span>
-                        </div>
-                    </div>
+                    <DurationFilter />
 
                     {/* Age Rating Filter */}
                     <div>
