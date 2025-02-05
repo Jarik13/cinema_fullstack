@@ -13,12 +13,11 @@ import { ChevronDown } from "lucide-react";
 import GenreFilter from "./GenreFilter/GenreFilter";
 import YearFilter from "./YearFilter/YearFilter";
 import DurationFilter from "./DurationFilter/DurationFilter";
+import AgeRatingFilter from "./AgeRatingFilter/AgeRatingFilter";
 
-const ageRatings = ["0+", "3+", "6+", "12+", "16+", "18+"];
 const ratingsRange = [0, 10]; 
 
 const Filters = () => {
-    const [selectedAgeRating, setSelectedAgeRating] = useState("all");
     const [movieRating, setMovieRating] = useState([0, 10]); 
 
     return (
@@ -40,24 +39,7 @@ const Filters = () => {
                     <DurationFilter />
 
                     {/* Age Rating Filter */}
-                    <div>
-                        <Label htmlFor="ageRating" className="font-semibold">
-                            Age Rating
-                        </Label>
-                        <Select value={selectedAgeRating} onValueChange={setSelectedAgeRating}>
-                            <SelectTrigger id="ageRating">
-                                {selectedAgeRating === "all" ? "All" : selectedAgeRating}
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="all">All</SelectItem>
-                                {ageRatings.map((rating) => (
-                                    <SelectItem key={rating} value={rating}>
-                                        {rating}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                    </div>
+                    <AgeRatingFilter />
 
                     {/* Movie Rating Filter */}
                     <div>
