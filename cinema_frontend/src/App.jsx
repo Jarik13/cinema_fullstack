@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from './components/Navbar/Navbar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import InCinemaPage from './pages/InCinemaPage';
+import InCinemaPage from './pages/InCinemaPage/InCinemaPage';
 
 const App = () => {
   return (
