@@ -12,13 +12,31 @@ import { Input } from "@/components/ui/input";
 import { ChevronDown } from "lucide-react";
 
 const genres = ["Action", "Comedy", "Drama", "Horror", "Romance", "Sci-Fi"];
-const ageRatings = ["All Ages", "PG-13", "R", "18+"];
+const ageRatings = ["0+", "3+", "6+", "12+", "16+", "18+"];
+const ratingsRange = [0, 10]; 
 
 const Filters = () => {
     const [selectedGenre, setSelectedGenre] = useState("all");
     const [selectedYear, setSelectedYear] = useState("");
     const [duration, setDuration] = useState([0, 240]);
     const [selectedAgeRating, setSelectedAgeRating] = useState("all");
+    const [movieRating, setMovieRating] = useState([0, 10]); 
+
+    const currentYear = new Date().getFullYear();
+
+    const handleYearChange = (e) => {
+        const value = e.target.value;
+        setSelectedYear(value);
+    };
+
+    const handleYearBlur = () => {
+        const value = parseInt(selectedYear, 10);
+        if (value < 1930) {
+            setSelectedYear(1930);  
+        } else if (value > currentYear) {
+            setSelectedYear(currentYear); 
+        }
+    };
 
     return (
         <Popover>
@@ -52,14 +70,17 @@ const Filters = () => {
                     {/* Year Filter */}
                     <div>
                         <Label htmlFor="year" className="font-semibold">
-                            Year
+                            Year (from 1930 to current year)
                         </Label>
                         <Input
                             id="year"
-                            type="number"
+                            type="text"
                             placeholder="Enter year"
                             value={selectedYear}
-                            onChange={(e) => setSelectedYear(e.target.value)}
+                            onChange={handleYearChange}
+                            onBlur={handleYearBlur} 
+                            min={1930} 
+                            max={currentYear}
                         />
                     </div>
 
@@ -101,6 +122,24 @@ const Filters = () => {
                         </Select>
                     </div>
 
+                    {/* Movie Rating Filter */}
+                    <div>
+                        <Label htmlFor="movieRating" className="font-semibold">
+                            Movie Rating (0 to 10)
+                        </Label>
+                        <Slider
+                            value={movieRating}
+                            min={ratingsRange[0]}
+                            max={ratingsRange[1]}
+                            step={0.1}
+                            onChange={setMovieRating}
+                        />
+                        <div className="flex justify-between text-sm mt-2">
+                            <span>{movieRating[0]}</span>
+                            <span>{movieRating[1]}</span>
+                        </div>
+                    </div>
+
                     {/* Apply Filters Button */}
                     <div className="text-right">
                         <Button
@@ -111,6 +150,7 @@ const Filters = () => {
                                     selectedYear,
                                     duration,
                                     selectedAgeRating,
+                                    movieRating,
                                 })
                             }
                         >
