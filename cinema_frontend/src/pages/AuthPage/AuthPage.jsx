@@ -14,14 +14,13 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-center mb-4">{isLogin ? 'Login' : 'Register'}</h2>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="max-w-md w-full p-4 bg-white rounded-lg shadow-md mt-[-135px]">
+        <h2 className="text-2xl font-bold text-center mb-4">{isLogin ? 'Login' : 'Register'}</h2>
 
-      <Form {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {
-            !isLogin
-              ?
+        <Form {...form}>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            {!isLogin && (
               <FormField
                 control={form.control}
                 name="name"
@@ -38,58 +37,57 @@ const AuthPage = () => {
                   </FormItem>
                 )}
               />
-              :
-              <></>
-          }
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your email ..." {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your private name for verification.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
             )}
-          />
 
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input placeholder="Your password ..." {...field} />
-                </FormControl>
-                <FormDescription>
-                  This is your password. Password cannot be less 10 symbols.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your email ..." {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This is your private name for verification.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <Button type="submit" variant="destructive" className="w-full">
-            {isLogin ? 'Login' : 'Register'}
-          </Button>
-        </form>
-      </Form>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your password ..." {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    This is your password. Password cannot be less 10 symbols.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-      <div className="text-center mt-4">
-        <span>{isLogin ? "Don't have an account?" : 'Already have an account?'}</span>
-        <button
-          className="text-blue-500 ml-1"
-          onClick={() => setIsLogin((prev) => !prev)}
-        >
-          {isLogin ? 'Register here' : 'Login here'}
-        </button>
+            <Button type="submit" variant="destructive" className="w-full">
+              {isLogin ? 'Login' : 'Register'}
+            </Button>
+          </form>
+        </Form>
+
+        <div className="text-center mt-4">
+          <span>{isLogin ? "Don't have an account?" : 'Already have an account?'}</span>
+          <button
+            className="text-blue-500 ml-1"
+            onClick={() => setIsLogin((prev) => !prev)}
+          >
+            {isLogin ? 'Register here' : 'Login here'}
+          </button>
+        </div>
       </div>
     </div>
   );
