@@ -8,13 +8,15 @@ const YearFilter = () => {
 
     const handleYearChange = (e) => {
         const value = e.target.value;
-        setSelectedYear(value);
+        if (/^\d*$/.test(value)) {
+            setSelectedYear(value);
+        }
     };
 
     const handleYearBlur = () => {
         const value = parseInt(selectedYear, 10);
-        if (value < 1930) {
-            setSelectedYear(1930);
+        if (isNaN(value) || value < 1930) {
+            setSelectedYear(1930); 
         } else if (value > currentYear) {
             setSelectedYear(currentYear);
         }
