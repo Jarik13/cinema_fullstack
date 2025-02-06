@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
 import PersonalInfoCard from './PersonalInfoCard/PersonalInfoCard';
 import PurchaseHistoryCard from './PurchaseHistoryCard/PurchaseHistoryCard';
+import MyPaymentCardsCard from './MyPaymentCardsCard/MyPaymentCardsCard';
 
 const UserAccountDetails = () => {
     const [cardContent, setCardContent] = useState('personalInfo');
@@ -62,6 +63,7 @@ const UserAccountDetails = () => {
                 <CardContent className="space-y-6 w-[20rem]">
                     {cardContent === 'personalInfo' && <PersonalInfoCard />}
                     {cardContent === 'purchaseHistory' && <PurchaseHistoryCard />}
+                    {cardContent === 'paymentCards' && <MyPaymentCardsCard />}
                 </CardContent>
             </Card>
         </div>
