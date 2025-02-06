@@ -2,7 +2,7 @@ import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const GoToHomePage = () => {
+const GoToHomePage = ({ message }) => {
     const navigate = useNavigate();
 
     return (
@@ -14,8 +14,7 @@ const GoToHomePage = () => {
                 <ArrowLeft className="text-black w-5 h-5" />
             </div>
             <div className="ml-4">
-                <h1 className="text-lg font-bold">Вхід в Особистий кабінет</h1>
-                <p className="text-sm text-black/80">За вашими даними</p>
+                <h1 className="text-lg font-bold">{message}</h1>
             </div>
         </div>
     );

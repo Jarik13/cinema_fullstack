@@ -8,7 +8,7 @@ const UserAvatar = () => {
     const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);
-    const isAuthenticated = false;
+    const isAuthenticated = true;
 
     const handleMenuToggle = () => setOpen((prev) => !prev);
 
@@ -26,16 +26,22 @@ const UserAvatar = () => {
             <PopoverContent>
                 {
                     isAuthenticated
-                        ? 
+                        ?
                         <>
-                            <Button variant="ghost" className="w-full text-left" onClick={handleMenuToggle}>My Profile</Button>
+                            <Button
+                                variant="ghost"
+                                className="w-full text-left"
+                                onClick={() => { handleMenuToggle(); navigate("/my-profile") }}
+                            >
+                                My Profile
+                            </Button>
                             <Button variant="destructive" className="w-full text-left" onClick={handleMenuToggle}>Logout</Button>
                         </>
                         :
-                        <Button 
-                            variant="destructive" 
-                            className="w-full text-left" 
-                            onClick={() => {handleMenuToggle(); navigate("/auth")}}
+                        <Button
+                            variant="destructive"
+                            className="w-full text-left"
+                            onClick={() => { handleMenuToggle(); navigate("/auth") }}
                         >
                             Register
                         </Button>
