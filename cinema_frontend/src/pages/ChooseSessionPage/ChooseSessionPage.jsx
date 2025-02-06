@@ -1,6 +1,7 @@
 import DatePicker from '@/components/DatePicker/DatePicker';
 import GoToHomePage from '@/components/GoToHomePage/GoToHomePage';
 import Location from '@/components/Location/Location';
+import SessionCard from '@/components/SessionCard/SessionCard';
 import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
 
@@ -52,6 +53,51 @@ const ChooseSessionPage = () => {
                     Tomorrow
                 </Button>
                 <DatePicker />
+            </div>
+
+            <div className='grid grid-cols-4 gap-10 justify-center'>
+                <SessionCard
+                    startTime="15:00"
+                    endTime="17:00"
+                    hallName="Зал 1"
+                    availableSeats={301}
+                    lowestTicketPrice={400}
+                />
+                <SessionCard
+                    startTime="17:20"
+                    endTime="19:20"
+                    hallName="Зал 2"
+                    availableSeats={194}
+                    lowestTicketPrice={450}
+                />
+                <SessionCard
+                    startTime="19:40"
+                    endTime="21:40"
+                    hallName="Зал 3"
+                    availableSeats={150}
+                    lowestTicketPrice={420}
+                />
+                <SessionCard
+                    startTime="22:00"
+                    endTime="00:00"
+                    hallName="Зал 4"
+                    availableSeats={120}
+                    lowestTicketPrice={380}
+                />
+                <SessionCard
+                    startTime="12:00"
+                    endTime="14:00"
+                    hallName="Зал 5"
+                    availableSeats={250}
+                    lowestTicketPrice={410}
+                />
+                <SessionCard
+                    startTime="14:20"
+                    endTime="16:20"
+                    hallName="Зал 6"
+                    availableSeats={175}
+                    lowestTicketPrice={390}
+                />
             </div>
         </div>
     )
