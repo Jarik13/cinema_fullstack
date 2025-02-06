@@ -1,7 +1,7 @@
-import { Button } from '@/components/ui/button';
 import { CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import React from 'react';
+import UpdateUserInfoCard from '../UpdateUserInfo/UpdateUserInfoCard';
 
 const PersonalInfoCard = () => {
     return (
@@ -19,7 +19,7 @@ const PersonalInfoCard = () => {
                 <Input type="password" value="********" disabled className="bg-gray-700 text-white" />
             </div>
             <div>
-                <Button variant="destructive">Edit</Button>
+                <UpdateUserInfoCard />
             </div>
         </>
     )
