@@ -3,6 +3,7 @@ import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "@/com
 import PersonalInfoCard from './PersonalInfoCard/PersonalInfoCard';
 import PurchaseHistoryCard from './PurchaseHistoryCard/PurchaseHistoryCard';
 import MyPaymentCardsCard from './MyPaymentCardsCard/MyPaymentCardsCard';
+import MyTicketsCard from './MyTicketsCard/MyTicketsCard';
 
 const UserAccountDetails = () => {
     const [cardContent, setCardContent] = useState('personalInfo');
@@ -64,6 +65,7 @@ const UserAccountDetails = () => {
                     {cardContent === 'personalInfo' && <PersonalInfoCard />}
                     {cardContent === 'purchaseHistory' && <PurchaseHistoryCard />}
                     {cardContent === 'paymentCards' && <MyPaymentCardsCard />}
+                    {cardContent === 'myTickets' && <MyTicketsCard />}
                 </CardContent>
             </Card>
         </div>
