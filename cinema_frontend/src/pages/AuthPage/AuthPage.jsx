@@ -15,7 +15,7 @@ const AuthPage = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="max-w-md w-full p-4 bg-white rounded-lg shadow-md mt-[-135px]">
+      <div className="max-w-md w-full p-4 bg-white rounded-lg shadow-md mt-[-100px]">
         <h2 className="text-2xl font-bold text-center mb-4">{isLogin ? 'Login' : 'Register'}</h2>
 
         <Form {...form}>
@@ -72,6 +72,25 @@ const AuthPage = () => {
                 </FormItem>
               )}
             />
+
+            {!isLogin && (
+              <FormField
+                control={form.control}
+                name="age"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Age</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Your age ..." {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      This is your age to find movies suitable for your viewing.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
 
             <Button type="submit" variant="destructive" className="w-full">
               {isLogin ? 'Login' : 'Register'}
