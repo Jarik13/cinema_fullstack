@@ -50,15 +50,15 @@ const UserAccountDetails = () => {
                 </nav>
             </div>
 
-            <div className="flex w-[500px] h-[300px]"> 
+            <div className="flex w-[500px]"> 
                 <Card className="w-full h-full">
-                    <CardHeader>
+                    <CardHeader className="text-center text-xl">
                         {cardContent === 'personalInfo' && 'Personal Information'}
                         {cardContent === 'purchaseHistory' && 'Purchase History'}
                         {cardContent === 'paymentCards' && 'My Payment Cards'}
                         {cardContent === 'myTickets' && 'My Tickets'}
                     </CardHeader>
-                    <CardContent className="space-y-6">
+                    <CardContent className="space-y-3">
                         {cardContent === 'personalInfo' && <PersonalInfoCard />}
                         {cardContent === 'purchaseHistory' && <PurchaseHistoryCard />}
                         {cardContent === 'paymentCards' && <MyPaymentCardsCard />}
