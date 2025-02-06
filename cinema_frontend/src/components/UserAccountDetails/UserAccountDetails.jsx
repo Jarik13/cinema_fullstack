@@ -14,60 +14,58 @@ const UserAccountDetails = () => {
 
     return (
         <div className="flex flex-col md:flex-row gap-6 p-8 text-black max-w-4xl mx-auto transform translate-y-[-50px]">
-            <div className="flex flex-col items-center md:items-start w-[20rem]">
+            <div className="flex flex-col items-center md:items-start w-[320px] h-[400px]"> 
                 <div className="w-24 h-24 rounded-full shadow-lg flex items-center justify-center mb-4">
                     <span>Username</span>
                 </div>
-                <nav className="flex flex-col gap-2 text-black w-60">
+                <nav className="flex flex-col gap-2 text-black w-40">
                     <a
                         href="#"
                         onClick={() => handleLinkClick('personalInfo')}
-                        className={`${cardContent === 'personalInfo' ? 'underline' : ''
-                            }`}
+                        className={`${cardContent === 'personalInfo' ? 'underline' : ''}`}
                     >
                         Personal Information
                     </a>
                     <a
                         href="#"
                         onClick={() => handleLinkClick('purchaseHistory')}
-                        className={`${cardContent === 'purchaseHistory' ? 'underline' : ''
-                            }`}
+                        className={`${cardContent === 'purchaseHistory' ? 'underline' : ''}`}
                     >
                         Purchase History
                     </a>
                     <a
                         href="#"
                         onClick={() => handleLinkClick('paymentCards')}
-                        className={`${cardContent === 'paymentCards' ? 'underline' : ''
-                            }`}
+                        className={`${cardContent === 'paymentCards' ? 'underline' : ''}`}
                     >
                         My Payment Cards
                     </a>
                     <a
                         href="#"
                         onClick={() => handleLinkClick('myTickets')}
-                        className={`${cardContent === 'myTickets' ? 'underline' : ''
-                            }`}
+                        className={`${cardContent === 'myTickets' ? 'underline' : ''}`}
                     >
                         My Tickets
                     </a>
                 </nav>
             </div>
 
-            <Card className="w-full">
-                <CardHeader>
-                    {cardContent === 'personalInfo' && 'Personal Information'}
-                    {cardContent === 'purchaseHistory' && 'Purchase History'}
-                    {cardContent === 'paymentCards' && 'My Payment Cards'}
-                    {cardContent === 'myTickets' && 'My Tickets'}
-                </CardHeader>
-                <CardContent className="space-y-6 w-[20rem]">
-                    {cardContent === 'personalInfo' && <PersonalInfoCard />}
-                    {cardContent === 'purchaseHistory' && <PurchaseHistoryCard />}
-                    {cardContent === 'paymentCards' && <MyPaymentCardsCard />}
-                    {cardContent === 'myTickets' && <MyTicketsCard />}
-                </CardContent>
-            </Card>
+            <div className="flex w-[500px] h-[300px]"> 
+                <Card className="w-full h-full">
+                    <CardHeader>
+                        {cardContent === 'personalInfo' && 'Personal Information'}
+                        {cardContent === 'purchaseHistory' && 'Purchase History'}
+                        {cardContent === 'paymentCards' && 'My Payment Cards'}
+                        {cardContent === 'myTickets' && 'My Tickets'}
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        {cardContent === 'personalInfo' && <PersonalInfoCard />}
+                        {cardContent === 'purchaseHistory' && <PurchaseHistoryCard />}
+                        {cardContent === 'paymentCards' && <MyPaymentCardsCard />}
+                        {cardContent === 'myTickets' && <MyTicketsCard />}
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     );
 };
