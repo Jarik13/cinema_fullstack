@@ -1,4 +1,5 @@
 import React from 'react';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";  // Assuming these components are available
 
 const MyTicketsCard = () => {
   const tickets = [
@@ -10,18 +11,22 @@ const MyTicketsCard = () => {
   return (
     <div className="space-y-6">
       {tickets.length > 0 ? (
-        <ul className="space-y-4">
-          {tickets.map((ticket) => (
-            <li key={ticket.id} className="flex justify-between items-center bg-gray-100 p-4 rounded-lg shadow-lg">
-              <div>
-                <h4 className="font-semibold">{ticket.movieName}</h4>
-                <p className="text-gray-500">Showtime: {ticket.showtime}</p>
-                <p className="text-gray-400">Seat: {ticket.seat}</p>
-              </div>
-              <button className="text-blue-500 hover:underline">View Details</button>
-            </li>
-          ))}
-        </ul>
+        <Carousel className="w-full max-w-xs">
+          <CarouselContent>
+            {tickets.map((ticket) => (
+              <CarouselItem key={ticket.id}>
+                <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
+                  <h4 className="font-semibold">{ticket.movieName}</h4>
+                  <p className="text-gray-500">Showtime: {ticket.showtime}</p>
+                  <p className="text-gray-400">Seat: {ticket.seat}</p>
+                  <button className="text-blue-500 hover:underline mt-4">View Details</button>
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
       ) : (
         <p>No tickets booked yet.</p>
       )}
