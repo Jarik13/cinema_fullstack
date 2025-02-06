@@ -1,3 +1,4 @@
+import DatePicker from '@/components/DatePicker/DatePicker';
 import GoToHomePage from '@/components/GoToHomePage/GoToHomePage';
 import Location from '@/components/Location/Location';
 import { Button } from '@/components/ui/button';
@@ -32,25 +33,25 @@ const ChooseSessionPage = () => {
                 </div>
             </div>
 
-            <div className='p-2 mt-4'>
-                <div className='flex items-center justify-start gap-4 text-xl'>
-                    <h2>Search session location: </h2>
-                    <Location />
-                </div>
-                <div className='flex items-center justify-start gap-4'>
-                    <Button
-                        variant={selectedDay === "Today" ? "default" : "outline"}
-                        onClick={() => handleDaySelection("Today")}
-                    >
-                        Today
-                    </Button>
-                    <Button
-                        variant={selectedDay === "Tomorrow" ? "default" : "outline"}
-                        onClick={() => handleDaySelection("Tomorrow")}
-                    >
-                        Tomorrow
-                    </Button>
-                </div>
+            <div className='p-2 mt-4 flex items-center justify-start gap-4 text-xl'>
+                <h2>Search session location: </h2>
+                <Location />
+            </div>
+
+            <div className='p-2 mt-4 flex items-center justify-start gap-4'>
+                <Button
+                    variant={selectedDay === "Today" ? "default" : "outline"}
+                    onClick={() => handleDaySelection("Today")}
+                >
+                    Today
+                </Button>
+                <Button
+                    variant={selectedDay === "Tomorrow" ? "default" : "outline"}
+                    onClick={() => handleDaySelection("Tomorrow")}
+                >
+                    Tomorrow
+                </Button>
+                <DatePicker />
             </div>
         </div>
     )
