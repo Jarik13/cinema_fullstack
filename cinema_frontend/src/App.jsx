@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import InCinemaPage from './pages/InCinemaPage/InCinemaPage';
 import AuthPage from './pages/AuthPage/AuthPage';
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
+import ChooseSessionPage from './pages/ChooseSessionPage/ChooseSessionPage';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path='/' element={<InCinemaPage />} />
           <Route path='/auth' element={<AuthPage />} />
           <Route path='/my-profile' element={<UserProfilePage />} />
+          <Route path='/:locationId/sessions' element={<ChooseSessionPage />} />
         </Routes>
       </div>
     </BrowserRouter>
