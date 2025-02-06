@@ -16,7 +16,7 @@ const App = () => {
           <Route path='/' element={<InCinemaPage />} />
           <Route path='/auth' element={<AuthPage />} />
           <Route path='/my-profile' element={<UserProfilePage />} />
-          <Route path='/sessions' element={<ChooseSessionPage />} />
+          <Route path='/:locationId/sessions' element={<ChooseSessionPage />} />
         </Routes>
       </div>
     </BrowserRouter>
