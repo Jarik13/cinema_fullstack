@@ -4,7 +4,7 @@ import Screen from './Screen/Screen';
 
 const HallShape = () => {
   return (
-    <div className='flex flex-col w-3/4'>
+    <div className='flex flex-col w-3/4 gap-10'>
         <Screen />
         <SeatsList />
     </div>
