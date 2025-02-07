@@ -1,9 +1,11 @@
 import React from 'react';
-import SeatsList from '../SeatsList/SeatsList';
+import SeatsList from './SeatsList/SeatsList';
+import Screen from './Screen/Screen';
 
 const HallShape = () => {
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col w-3/4'>
+        <Screen />
         <SeatsList />
     </div>
   )
