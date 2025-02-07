@@ -1,3 +1,4 @@
+import BuyTicketList from '@/components/BuyTicketList/BuyTicketList';
 import GoToHomePage from '@/components/GoToHomePage/GoToHomePage';
 import HallShape from '@/components/HallShape/HallShape';
 import React from 'react';
@@ -26,7 +27,10 @@ const HallPage = () => {
         </div>
       </div>
 
-      <HallShape />
+      <div className='flex gap-4'>
+        <HallShape />
+        <BuyTicketList />
+      </div>
     </div>
   )
 }
