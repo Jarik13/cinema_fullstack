@@ -1,4 +1,5 @@
 import GoToHomePage from '@/components/GoToHomePage/GoToHomePage';
+import HallShape from '@/components/HallShape/HallShape';
 import React from 'react';
 
 const HallPage = () => {
@@ -6,7 +7,7 @@ const HallPage = () => {
     <div className='flex flex-col w-full p-4'>
       <GoToHomePage message={"Issuing tickets"} />
 
-      <div className='flex flex-col justify-start p-2 mt-4 border-b-2'>
+      <div className='flex flex-col justify-start p-2 mt-4 mb-4 border-b-2'>
         <div className='text-2xl mb-2'>
           <h1>Choose seats in Hall</h1>
         </div>
@@ -24,6 +25,8 @@ const HallPage = () => {
           <span>Hall Name</span>
         </div>
       </div>
+
+      <HallShape />
     </div>
   )
 }
