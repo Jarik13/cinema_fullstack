@@ -109,25 +109,23 @@ const SnacksListPage = () => {
                 </div>
             </div>
 
-            {selectedSnacks.length > 0 && (
-                <div className='w-full lg:w-1/3 bg-gray-50 shadow-lg rounded-lg p-6'>
-                    <h2 className='text-xl font-semibold mb-4'>Selected Snacks</h2>
-                    <div>
-                        {selectedSnacks.map(snack => (
-                            <div key={snack.id} className='flex justify-between items-center mb-2'>
-                                <span>{snack.name} x{snack.quantity}</span>
-                                <span>${snack.price * snack.quantity}</span>
-                            </div>
-                        ))}
-                    </div>
-                    <div className='flex justify-between items-center mt-6'>
-                        <h3 className='text-lg font-semibold'>Total Price: ${totalPrice}</h3>
-                        <Button variant="destructive" onClick={() => alert('Proceeding to payment...')}>
-                            Proceed to Payment
-                        </Button>
-                    </div>
+            <div className='w-full lg:w-1/3 bg-gray-50 shadow-lg rounded-lg p-6'>
+                <h2 className='text-xl font-semibold mb-4'>Selected Snacks</h2>
+                <div>
+                    {selectedSnacks.map(snack => (
+                        <div key={snack.id} className='flex justify-between items-center mb-2'>
+                            <span>{snack.name} x{snack.quantity}</span>
+                            <span>${snack.price * snack.quantity}</span>
+                        </div>
+                    ))}
                 </div>
-            )}
+                <div className='flex justify-between items-center mt-6'>
+                    <h3 className='text-lg font-semibold'>Total Price: ${totalPrice}</h3>
+                    <Button variant="destructive" onClick={() => alert('Proceeding to payment...')}>
+                        Proceed to Payment
+                    </Button>
+                </div>
+            </div>
         </div>
     );
 };
