@@ -19,7 +19,7 @@ const SnacksListPage = () => {
     ]);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
+    const itemsPerPage = 6;
 
     const indexOfLastSnack = currentPage * itemsPerPage;
     const indexOfFirstSnack = indexOfLastSnack - itemsPerPage;
@@ -45,21 +45,26 @@ const SnacksListPage = () => {
 
     const totalPages = Math.ceil(snacks.length / itemsPerPage);
 
+    const selectedSnacks = snacks.filter(snack => snack.quantity > 0);
+    const totalPrice = selectedSnacks.reduce((total, snack) => total + snack.price * snack.quantity, 0);
+
     return (
-        <div className='flex flex-col w-full p-4'>
-            <GoToHomePage message={"Choose your favourite snacks"} navigation={"/1/sessions/1"} />
+        <div className='flex flex-col lg:flex-row w-full p-4 gap-6'>
+            <div className='flex-1'>
+                <GoToHomePage message={"Choose your favourite snacks"} navigation={"/1/sessions/1"} />
 
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6'>
-                {currentSnacks.map(snack => (
-                    <div
-                        key={snack.id}
-                        className='border rounded-lg p-y-4 shadow-sm flex flex-col items-center'
-                    >
-                        <div className='w-full h-32 bg-gray-300 rounded-lg mb-4'></div>
+                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6'>
+                    {currentSnacks.map(snack => (
+                        <div
+                            key={snack.id}
+                            className='border rounded-lg py-4 px-2 shadow-lg flex flex-col items-center bg-white'
+                        >
+                            <div className='w-full h-32 bg-gray-300 rounded-lg mb-4'></div>
 
-                        <div className='flex gap-4 items-center mb-2'>
-                            <h3 className='text-xl font-semibold'>{snack.name}</h3>
-                            <p className='text-lg text-gray-600'>$ {snack.price}</p>
+                            <div className='flex gap-4 items-center mb-2'>
+                                <h3 className='text-xl font-semibold'>{snack.name}</h3>
+                                <p className='text-lg text-gray-600'>$ {snack.price}</p>
+                            </div>
 
                             <div className='flex items-center gap-4'>
                                 <Button
@@ -78,32 +83,51 @@ const SnacksListPage = () => {
                                 </Button>
                             </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
 
-            <div className='flex justify-center mt-4'>
-                <div className='flex gap-2'>
-                    {/* Кнопки для перемикання між сторінками */}
-                    <Button
-                        variant="outline"
-                        disabled={currentPage === 1}
-                        onClick={() => handlePageChange(currentPage - 1)}
-                    >
-                        Prev
-                    </Button>
-                    <span className='flex items-center'>
-                        Page {currentPage} of {totalPages}
-                    </span>
-                    <Button
-                        variant="outline"
-                        disabled={currentPage === totalPages}
-                        onClick={() => handlePageChange(currentPage + 1)}
-                    >
-                        Next
-                    </Button>
+                <div className='flex justify-center mt-4'>
+                    <div className='flex gap-2'>
+                        <Button
+                            variant="outline"
+                            disabled={currentPage === 1}
+                            onClick={() => handlePageChange(currentPage - 1)}
+                        >
+                            Prev
+                        </Button>
+                        <span className='flex items-center'>
+                            Page {currentPage} of {totalPages}
+                        </span>
+                        <Button
+                            variant="outline"
+                            disabled={currentPage === totalPages}
+                            onClick={() => handlePageChange(currentPage + 1)}
+                        >
+                            Next
+                        </Button>
+                    </div>
                 </div>
             </div>
+
+            {selectedSnacks.length > 0 && (
+                <div className='w-full lg:w-1/3 bg-gray-50 shadow-lg rounded-lg p-6'>
+                    <h2 className='text-xl font-semibold mb-4'>Selected Snacks</h2>
+                    <div>
+                        {selectedSnacks.map(snack => (
+                            <div key={snack.id} className='flex justify-between items-center mb-2'>
+                                <span>{snack.name} x{snack.quantity}</span>
+                                <span>${snack.price * snack.quantity}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <div className='flex justify-between items-center mt-6'>
+                        <h3 className='text-lg font-semibold'>Total Price: ${totalPrice}</h3>
+                        <Button variant="destructive" onClick={() => alert('Proceeding to payment...')}>
+                            Proceed to Payment
+                        </Button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
