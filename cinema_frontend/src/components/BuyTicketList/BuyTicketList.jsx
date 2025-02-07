@@ -4,8 +4,8 @@ import { Button } from '../ui/button';
 
 const BuyTicketList = ({ selectedSeats }) => {
     const tickets = selectedSeats.map((seatNumber) => {
-        const row = Math.floor(seatNumber / 10) + 1;
-        const seat = seatNumber % 10 + 1;
+        const row = Math.floor(seatNumber / 100);
+        const seat = Math.floor(seatNumber % 100) + 1;
         return { row, seat, price: 150 };
     });
 
