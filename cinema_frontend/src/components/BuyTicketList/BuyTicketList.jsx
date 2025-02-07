@@ -6,7 +6,7 @@ const BuyTicketList = ({ selectedSeats }) => {
     const tickets = selectedSeats.map((seatNumber) => {
         const row = Math.floor(seatNumber / 10) + 1;
         const seat = seatNumber % 10 + 1;
-        return { row, seat, price: 150 }; 
+        return { row, seat, price: 150 };
     });
 
     const removeTicket = (index) => {
@@ -49,18 +49,26 @@ const BuyTicketList = ({ selectedSeats }) => {
                 ))}
             </div>
 
-            <div className='flex flex-col gap-4'>
-                <div className='flex items-center justify-between text-xl'>
-                    <h4>Total Tickets: {totalTickets}</h4>
-                    <h4>Total Price: ${totalPrice}</h4>
+            {tickets.length > 0
+                ? (
+                    <div className='flex flex-col gap-4'>
+                        <div className='flex items-center justify-between text-xl'>
+                            <h4>Total Tickets: {totalTickets}</h4>
+                            <h4>Total Price: ${totalPrice}</h4>
+                        </div>
+                        <Button
+                            variant="destructive"
+                            onClick={() => alert('Proceeding to payment...')}
+                        >
+                            Proceed to Payment
+                        </Button>
+                    </div>
+                )
+                :
+                <div className='text-center text-xl p-10 border-t-2 border-b-2'>
+                    <h3>Your tickets here!</h3>
                 </div>
-                <Button
-                    variant="destructive"
-                    onClick={() => alert('Proceeding to payment...')}
-                >
-                    Proceed to Payment
-                </Button>
-            </div>
+            }
         </div>
     );
 };
