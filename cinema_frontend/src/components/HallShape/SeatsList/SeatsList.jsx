@@ -32,7 +32,7 @@ const SeatsList = () => {
             {row.map(() => (
               <div
                 key={seatNumber}
-                className="w-8 h-8 flex items-center justify-center border rounded-sm bg-gray-400 text-white"
+                className="w-8 h-8 flex items-center justify-center border cursor-pointer rounded-sm bg-gray-400 text-white hover:border-4 hover:border-yellow-500"
               >
                 {seatNumber++}
               </div>
