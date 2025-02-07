@@ -1,9 +1,15 @@
 import React from 'react';
 import SessionsList from './SessionsList/SessionsList';
+import { useNavigate } from 'react-router-dom';
 
 const SessionCard = ({ startTime, endTime, hallName, availableSeats, lowestTicketPrice }) => {
+    const navigate = useNavigate();
+
     return (
-        <div className="text-black p-4 rounded-md shadow-md w-80 border border-white relative">
+        <div 
+            className="text-black p-4 rounded-md shadow-md w-80 border border-white relative cursor-pointer"
+            onClick={() => navigate('/1/sessions/1')}
+        >
             <div className="flex justify-between text-sm mb-2">
                 <span>{startTime} - {endTime}</span>
                 <span>{hallName}</span>
