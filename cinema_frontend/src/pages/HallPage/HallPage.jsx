@@ -1,9 +1,11 @@
 import BuyTicketList from '@/components/BuyTicketList/BuyTicketList';
 import GoToHomePage from '@/components/GoToHomePage/GoToHomePage';
 import HallShape from '@/components/HallShape/HallShape';
-import React from 'react';
+import React, { useState } from 'react';
 
 const HallPage = () => {
+  const [selectedSeats, setSelectedSeats] = useState([]);
+
   return (
     <div className='flex flex-col w-full p-4'>
       <GoToHomePage message={"Issuing tickets"} />
@@ -28,8 +30,8 @@ const HallPage = () => {
       </div>
 
       <div className='flex gap-4'>
-        <HallShape />
-        <BuyTicketList />
+        <HallShape selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} />
+        <BuyTicketList selectedSeats={selectedSeats} />
       </div>
     </div>
   )

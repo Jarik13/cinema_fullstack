@@ -1,22 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MapPinCheckIcon, TicketCheckIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 
-const BuyTicketList = () => {
-    const [tickets, setTickets] = useState([
-        { row: 1, seat: 5, price: 150 },
-        { row: 2, seat: 8, price: 200 },
-        { row: 3, seat: 3, price: 180 },
-        { row: 4, seat: 10, price: 220 },
-        { row: 5, seat: 5, price: 150 },
-        { row: 6, seat: 8, price: 200 },
-        { row: 7, seat: 3, price: 180 },
-        { row: 8, seat: 10, price: 220 },
-    ]);
+const BuyTicketList = ({ selectedSeats }) => {
+    const tickets = selectedSeats.map((seatNumber) => {
+        const row = Math.floor(seatNumber / 10) + 1;
+        const seat = seatNumber % 10 + 1;
+        return { row, seat, price: 150 }; 
+    });
 
     const removeTicket = (index) => {
-        const updatedTickets = tickets.filter((_, i) => i !== index);
-        setTickets(updatedTickets);
+        tickets.splice(index, 1);
     };
 
     const totalTickets = tickets.length;
@@ -34,7 +28,7 @@ const BuyTicketList = () => {
                     <h3>From 10+</h3>
                 </div>
             </div>
-            
+
             <div className='flex flex-col gap-4'>
                 {tickets.map((ticket, index) => (
                     <div key={index} className='flex justify-between items-center border-b pb-2'>
@@ -69,6 +63,6 @@ const BuyTicketList = () => {
             </div>
         </div>
     );
-}
+};
 
 export default BuyTicketList;
