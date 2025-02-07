@@ -3,7 +3,7 @@ import React from 'react';
 const Screen = () => {
     return (
         <div className="relative text-center text-xl w-full">
-            <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-gray-400 via-transparent to-transparent rounded-t-xl shadow-[0px_-15px_50px_rgba(255,255,255,0.2)]"></div>
+            <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-gray-400 via-transparent to-transparent rounded-t-xl shadow-[0px_-15px_50px_rgba(255,255,255,0.2)]"></div>
 
             <div className="relative w-3/4 mx-auto">
                 <div
