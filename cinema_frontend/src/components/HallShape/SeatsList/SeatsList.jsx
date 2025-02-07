@@ -12,7 +12,9 @@ const SeatsList = () => {
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
   ];
 
-  const maxSeats = Math.max(...rows.map(row => row.length));
+  let seatNumber = 1;
+
+  const maxSeats = Math.max(...rows.map((row) => row.length));
 
   return (
     <div className="flex flex-col justify-center items-center space-y-1">
@@ -22,22 +24,30 @@ const SeatsList = () => {
         return (
           <div key={rowIndex} className="flex justify-center gap-1">
             {Array.from({ length: emptySeats }, (_, i) => (
-              <div key={`empty-${rowIndex}-${i}`} className="w-1 h-1 opacity-0"></div>
-            ))}
-            {row.map((seat, i) => (
               <div
-                key={i}
+                key={`empty-${rowIndex}-${i}`}
+                className="w-8 h-8 opacity-0"
+              ></div>
+            ))}
+            {row.map(() => (
+              <div
+                key={seatNumber}
                 className="w-8 h-8 flex items-center justify-center border rounded-sm bg-gray-400 text-white"
-              >{i}</div>
+              >
+                {seatNumber++}
+              </div>
             ))}
             {Array.from({ length: emptySeats }, (_, i) => (
-              <div key={`empty-right-${rowIndex}-${i}`} className="w-1 h-1 opacity-0"></div>
+              <div
+                key={`empty-right-${rowIndex}-${i}`}
+                className="w-8 h-8 opacity-0"
+              ></div>
             ))}
           </div>
         );
       })}
     </div>
-  )
-}
+  );
+};
 
 export default SeatsList;
