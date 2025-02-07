@@ -6,7 +6,7 @@ const UserProfilePage = () => {
     return (
         <div className="relative min-h-screen bg-gray-100 flex">
             <div className="absolute top-4 left-4">
-                <GoToHomePage message={"My profile"} />
+                <GoToHomePage message={"My profile"} navigation={"/"} />
             </div>
 
             <div className="flex items-center pl-10">

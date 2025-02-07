@@ -6,7 +6,7 @@ const AuthPage = () => {
   return (
     <div className="relative min-h-screen bg-gray-100 flex justify-center items-center">
       <div className="absolute top-4 left-4">
-        <GoToHomePage message={"Login to your personal account"} />
+        <GoToHomePage message={"Login to your personal account"} navigation={"/"} />
       </div>
 
       <RegisterLoginCard />

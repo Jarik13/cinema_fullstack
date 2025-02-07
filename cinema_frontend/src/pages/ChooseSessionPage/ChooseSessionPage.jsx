@@ -15,7 +15,7 @@ const ChooseSessionPage = () => {
 
     return (
         <div className='flex flex-col w-full p-4'>
-            <GoToHomePage message={"Choose session"} />
+            <GoToHomePage message={"Choose session"} navigation={"/"} />
 
             <div className='flex items-center justify-between p-2 mt-4 border-b-2'>
                 <div className='text-2xl'>

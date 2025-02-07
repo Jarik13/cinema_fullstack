@@ -8,7 +8,7 @@ const HallPage = () => {
 
   return (
     <div className='flex flex-col w-full p-4'>
-      <GoToHomePage message={"Issuing tickets"} />
+      <GoToHomePage message={"Issuing tickets"} navigation={"/1/sessions"} />
 
       <div className='flex flex-col justify-start p-2 mt-4 mb-4 border-b-2'>
         <div className='text-2xl mb-2'>
