@@ -1,8 +1,11 @@
 import React from 'react';
 import { MapPinCheckIcon, TicketCheckIcon } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const BuyTicketList = ({ selectedSeats }) => {
+    const navigate = useNavigate();
+
     const tickets = selectedSeats.map((seatNumber) => {
         const row = Math.floor(seatNumber / 100);
         const seat = Math.floor(seatNumber % 100) + 1;
@@ -58,7 +61,7 @@ const BuyTicketList = ({ selectedSeats }) => {
                         </div>
                         <Button
                             variant="destructive"
-                            onClick={() => alert('Proceeding to payment...')}
+                            onClick={() => navigate("/1/sessions/1/snacks")}
                         >
                             Proceed to Payment
                         </Button>
