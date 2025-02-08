@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import EditHallCard from './EditHallCard/EditHallCard';
+import DeleteHallCard from './DeleteHallCard/DeleteHallCard';
 
 const ListOfHalls = () => {
     const [halls, setHalls] = useState([
@@ -17,6 +18,7 @@ const ListOfHalls = () => {
     const [selectedHall, setSelectedHall] = useState(null);
     const [editHall, setEditHall] = useState({ id: '', name: '', seats: '' });
     const [isEditOpen, setIsEditOpen] = useState(false);
+    const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
     const toggleHallStatus = (id) => {
         setHalls(halls.map(hall =>
@@ -30,6 +32,11 @@ const ListOfHalls = () => {
         setIsEditOpen(true);
     };
 
+    const openDeleteModal = (hall) => {
+        setSelectedHall(hall);
+        setIsDeleteOpen(true);
+    };
+
     const handleEditChange = (e) => {
         const { name, value } = e.target;
         setEditHall(prev => ({ ...prev, [name]: value }));
@@ -40,6 +47,11 @@ const ListOfHalls = () => {
             hall.id === editHall.id ? { ...hall, name: editHall.name, seats: Number(editHall.seats) } : hall
         ));
         setIsEditOpen(false);
+    };
+
+    const deleteHall = () => {
+        setHalls(halls.filter(hall => hall.id !== selectedHall.id));
+        setIsDeleteOpen(false);
     };
 
     return (
@@ -66,7 +78,7 @@ const ListOfHalls = () => {
                                 {hall.isOpen ? "Close" : "Open"}
                             </Button>
                             <Button variant="outline" onClick={() => openEditModal(hall)}>Edit</Button>
-                            <Button variant="destructive">Delete</Button>
+                            <Button variant="destructive" onClick={() => openDeleteModal(hall)}>Delete</Button>
                         </div>
                     </div>
                 ))}
@@ -78,6 +90,13 @@ const ListOfHalls = () => {
                 editHall={editHall}
                 onChange={handleEditChange}
                 onSave={saveChanges}
+            />
+
+            <DeleteHallCard
+                isOpen={isDeleteOpen}
+                onClose={() => setIsDeleteOpen(false)}
+                onConfirm={deleteHall}
+                hallName={selectedHall?.name}
             />
         </div>
     );
