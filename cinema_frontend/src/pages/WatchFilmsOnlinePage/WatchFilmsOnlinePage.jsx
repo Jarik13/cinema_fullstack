@@ -1,8 +1,11 @@
 import GoToHomePage from '@/components/GoToHomePage/GoToHomePage';
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const WatchFilmsOnlinePage = () => {
+    const navigate = useNavigate();
+
     const films = [
         { id: 1, title: 'Inception', ageRating: '16+', price: 120 },
         { id: 2, title: 'Frozen II', ageRating: '6+', price: 100 },
@@ -69,7 +72,7 @@ const WatchFilmsOnlinePage = () => {
                         <h3 className='text-lg font-semibold mb-2'>{film.title}</h3>
                         <p className='text-sm text-gray-600 mb-2'>Age Rating: {film.ageRating}</p>
                         <p className='text-lg text-gray-800 font-medium mb-4'>$ {film.price}</p>
-                        <Button variant="destructive" onClick={() => alert(`You selected ${film.title}`)}>
+                        <Button variant="destructive" onClick={() => navigate("/watch-online/1")}>
                             Watch online
                         </Button>
                     </div>

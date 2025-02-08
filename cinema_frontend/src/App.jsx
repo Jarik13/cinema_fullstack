@@ -8,6 +8,7 @@ import ChooseSessionPage from './pages/ChooseSessionPage/ChooseSessionPage';
 import HallPage from './pages/HallPage/HallPage';
 import SnacksListPage from './pages/SnacksListPage/SnacksListPage';
 import WatchFilmsOnlinePage from './pages/WatchFilmsOnlinePage/WatchFilmsOnlinePage';
+import FilmDetailsOnlinePage from './pages/FilmDetailsOnlinePage/FilmDetailsOnlinePage';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path='/:locationId/sessions/:hallId/snacks' element={<SnacksListPage />} />
 
           <Route path='/watch-online' element={<WatchFilmsOnlinePage />} />
+          <Route path='/watch-online/:filmId' element={<FilmDetailsOnlinePage />} />
         </Routes>
       </div>
     </BrowserRouter>
