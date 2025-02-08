@@ -7,6 +7,7 @@ import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
 import ChooseSessionPage from './pages/ChooseSessionPage/ChooseSessionPage';
 import HallPage from './pages/HallPage/HallPage';
 import SnacksListPage from './pages/SnacksListPage/SnacksListPage';
+import WatchFilmsOnlinePage from './pages/WatchFilmsOnlinePage/WatchFilmsOnlinePage';
 
 const App = () => {
   return (
@@ -21,6 +22,8 @@ const App = () => {
           <Route path='/:locationId/sessions' element={<ChooseSessionPage />} />
           <Route path='/:locationId/sessions/:hallId' element={<HallPage />} />
           <Route path='/:locationId/sessions/:hallId/snacks' element={<SnacksListPage />} />
+
+          <Route path='/watch-online' element={<WatchFilmsOnlinePage />} />
         </Routes>
       </div>
     </BrowserRouter>
