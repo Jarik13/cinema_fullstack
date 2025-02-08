@@ -7,14 +7,20 @@ const AddHall = () => {
     const form = useForm({
         defaultValues: {
             name: "",
+            seats_count: 0,
         },
         mode: "onChange",
     });
 
-    const { handleSubmit } = form;
+    const { handleSubmit, setValue, reset } = form;
 
     const onSubmit = (data) => {
         console.log(data);
+
+        reset({
+            name: "",
+            seats_count: 0,
+        });
     }
 
     return (
@@ -33,7 +39,38 @@ const AddHall = () => {
                                     <Input placeholder="Hall name ..." {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    This is your public name of hall.
+                                    This is public name of hall.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="seats_count"
+                        rules={{
+                            required: "Count of seats is required",
+                            validate: (value) => {
+                                if (value === "" || isNaN(value)) {
+                                    setValue("seats_count", 0);
+                                    return "Seats count must be a valid number";
+                                }
+                                if (value < 0) {
+                                    setValue("seats_count", 0);
+                                    return "Seats count cannot be less than 0";
+                                }
+                                return true;
+                            },
+                        }}
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Seats count</FormLabel>
+                                <FormControl>
+                                    <Input type="number" placeholder="213 ..." {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    This is public count of all seats of hall.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
