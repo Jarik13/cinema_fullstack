@@ -1,5 +1,6 @@
-import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import EditSessionCard from './EditSessionCard/EditSessionCard';
 
 const ListOfSessions = () => {
     const [sessions, setSessions] = useState([
@@ -15,7 +16,7 @@ const ListOfSessions = () => {
 
     return (
         <div className='flex flex-col'>
-            <p className="text-2xl font-bold mb-4">All session list</p>
+            <p className="text-2xl font-bold mb-4">All Session List</p>
             <div className="border rounded-lg overflow-hidden">
                 <div className='grid grid-cols-6 bg-gray-100 font-bold px-4 py-2'>
                     <div>ID</div>
@@ -40,7 +41,7 @@ const ListOfSessions = () => {
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default ListOfSessions;
