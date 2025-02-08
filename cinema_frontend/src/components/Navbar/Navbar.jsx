@@ -17,7 +17,13 @@ const Navbar = () => {
         </div>
         <div className='flex justify-between items-center gap-8'>
             <Button variant="ghost" size="lg" className="text-xl underline decoration-2" onClick={() => navigate("/")}>In the cinema</Button>
-            <Button variant="destructive" size="lg">Watch online</Button>
+            <Button 
+              variant="destructive" 
+              size="lg"
+              onClick={() => navigate("/watch-online")}
+            >
+              Watch online
+            </Button>
         </div>
         <div className='flex justify-between items-center gap-8'>
             <Input type="text" placeholder="Film here..." />
