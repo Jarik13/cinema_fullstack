@@ -1,4 +1,5 @@
 import AddHall from "@/components/AdminOptionComponents/AddHall/AddHall";
+import ListOfHalls from "@/components/AdminOptionComponents/ListOfHalls/ListOfHalls";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 
@@ -9,6 +10,8 @@ const AdminPanelPage = () => {
         switch (activeComponent) {
             case "addHall":
                 return <AddHall />;
+            case "listOfHalls":
+                return <ListOfHalls />;
             default:
                 return <p className="text-gray-500">Select an action from the sidebar.</p>;
         }
@@ -25,7 +28,11 @@ const AdminPanelPage = () => {
                     >
                         Add halls
                     </Button>
-                    <Button variant="outline" className="w-full py-2 px-4">
+                    <Button 
+                        variant={activeComponent === "listOfHalls" ? "destructive" : "outline"}
+                        className="w-full py-2 px-4"
+                        onClick={() => setActiveComponent("listOfHalls")}
+                    >
                         List halls
                     </Button>
                     <Button variant="outline" className="w-full py-2 px-4">
