@@ -18,6 +18,12 @@ const AdminPanelPage = () => {
                     <Button variant="outline" className="w-full py-2 px-4">
                         List sessions
                     </Button>
+                    <Button variant="outline" className="w-full py-2 px-4">
+                        Add films
+                    </Button>
+                    <Button variant="outline" className="w-full py-2 px-4">
+                        List films
+                    </Button>
                 </div>
             </div> 
         </div>
