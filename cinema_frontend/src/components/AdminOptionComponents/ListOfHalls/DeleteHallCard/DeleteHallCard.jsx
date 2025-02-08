@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
-const DeleteHallModal = ({ isOpen, onClose, onConfirm, hallName }) => {
+const DeleteHallCard = ({ isOpen, onClose, onConfirm, hallName }) => {
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent>
@@ -18,4 +18,4 @@ const DeleteHallModal = ({ isOpen, onClose, onConfirm, hallName }) => {
     );
 };
 
-export default DeleteHallModal;
+export default DeleteHallCard;

@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
+import DeleteSessionCard from './DeleteSessionCard/DeleteSessionCard';
 
 const ListOfSessions = () => {
     const [sessions, setSessions] = useState([
@@ -12,6 +13,23 @@ const ListOfSessions = () => {
         { id: 7, hall: 'Hall 7', film: "Film 7", start_time: "18:00", end_time: "20:15" },
         { id: 8, hall: 'Hall 8', film: "Film 8", start_time: "20:30", end_time: "22:45" },
     ]);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [selectedSessionId, setSelectedSessionId] = useState(null);
+
+    const openDeleteDialog = (sessionId) => {
+        setSelectedSessionId(sessionId);
+        setIsDialogOpen(true);
+    };
+
+    const closeDeleteDialog = () => {
+        setSelectedSessionId(null);
+        setIsDialogOpen(false);
+    };
+
+    const deleteSession = () => {
+        setSessions(sessions.filter(session => session.id !== selectedSessionId));
+        closeDeleteDialog();
+    };
 
     return (
         <div className='flex flex-col'>
@@ -34,13 +52,19 @@ const ListOfSessions = () => {
                         <div>{session.end_time}</div>
                         <div className="flex gap-2">
                             <Button variant="outline">Edit</Button>
-                            <Button variant="destructive">Delete</Button>
+                            <Button variant="destructive" onClick={() => openDeleteDialog(session.id)}>Delete</Button>
                         </div>
                     </div>
                 ))}
             </div>
+            
+            <DeleteSessionCard
+                isOpen={isDialogOpen}
+                onClose={closeDeleteDialog}
+                onConfirm={deleteSession}
+            />
         </div>
-    )
-}
+    );
+};
 
 export default ListOfSessions;
