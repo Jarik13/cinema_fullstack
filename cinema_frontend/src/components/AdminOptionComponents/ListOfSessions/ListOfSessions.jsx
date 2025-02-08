@@ -14,6 +14,35 @@ const ListOfSessions = () => {
         { id: 8, hall: 'Hall 8', film: "Film 8", start_time: "20:30", end_time: "22:45" },
     ]);
 
+    const [isEditOpen, setIsEditOpen] = useState(false);
+    const [selectedSession, setSelectedSession] = useState(null);
+
+    const handleEdit = (session) => {
+        setSelectedSession(session);
+        setIsEditOpen(true);
+    };
+
+    const handleCloseEdit = () => {
+        setIsEditOpen(false);
+        setSelectedSession(null);
+    };
+
+    const handleChange = ({ name, value }) => {
+        setSelectedSession((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleSave = () => {
+        setSessions((prevSessions) =>
+            prevSessions.map((session) =>
+                session.id === selectedSession.id ? selectedSession : session
+            )
+        );
+        handleCloseEdit();
+    };
+
     return (
         <div className='flex flex-col'>
             <p className="text-2xl font-bold mb-4">All Session List</p>
@@ -34,12 +63,22 @@ const ListOfSessions = () => {
                         <div>{session.start_time}</div>
                         <div>{session.end_time}</div>
                         <div className="flex gap-2">
-                            <Button variant="outline">Edit</Button>
+                            <Button variant="outline" onClick={() => handleEdit(session)}>Edit</Button>
                             <Button variant="destructive">Delete</Button>
                         </div>
                     </div>
                 ))}
             </div>
+
+            {selectedSession && (
+                <EditSessionCard
+                    isOpen={isEditOpen}
+                    onClose={handleCloseEdit}
+                    editSession={selectedSession}
+                    onChange={handleChange}
+                    onSave={handleSave}
+                />
+            )}
         </div>
     );
 };
