@@ -1,4 +1,5 @@
 import AddHall from "@/components/AdminOptionComponents/AddHall/AddHall";
+import AddSession from "@/components/AdminOptionComponents/AddSession/AddSession";
 import ListOfHalls from "@/components/AdminOptionComponents/ListOfHalls/ListOfHalls";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
@@ -12,6 +13,8 @@ const AdminPanelPage = () => {
                 return <AddHall />;
             case "listOfHalls":
                 return <ListOfHalls />;
+            case "addSession":
+                return <AddSession />;
             default:
                 return <p className="text-gray-500">Select an action from the sidebar.</p>;
         }
@@ -28,14 +31,18 @@ const AdminPanelPage = () => {
                     >
                         Add halls
                     </Button>
-                    <Button 
+                    <Button
                         variant={activeComponent === "listOfHalls" ? "destructive" : "outline"}
                         className="w-full py-2 px-4"
                         onClick={() => setActiveComponent("listOfHalls")}
                     >
                         List halls
                     </Button>
-                    <Button variant="outline" className="w-full py-2 px-4">
+                    <Button 
+                        variant={activeComponent === "addSession" ? "destructive" : "outline"}
+                        className="w-full py-2 px-4"
+                        onClick={() => setActiveComponent("addSession")}
+                    >
                         Add sessions
                     </Button>
                     <Button variant="outline" className="w-full py-2 px-4">
