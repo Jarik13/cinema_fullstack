@@ -12,6 +12,12 @@ const AdminPanelPage = () => {
                     <Button variant="outline" className="w-full py-2 px-4">
                         List halls
                     </Button>
+                    <Button variant="outline" className="w-full py-2 px-4">
+                        Add sessions
+                    </Button>
+                    <Button variant="outline" className="w-full py-2 px-4">
+                        List sessions
+                    </Button>
                 </div>
             </div> 
         </div>
