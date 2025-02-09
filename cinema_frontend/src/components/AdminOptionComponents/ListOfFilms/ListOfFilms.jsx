@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import EditFilmCard from './EditFilmCard/EditFilmCard';
+import DeleteFilmCard from './DeleteFilmCard/DeleteFilmCard';
 
 const ListOfFilms = () => {
     const [films, setFilms] = useState([
@@ -35,6 +36,8 @@ const ListOfFilms = () => {
     ]);
 
     const [editingFilm, setEditingFilm] = useState(null);
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [selectedFilmId, setSelectedFilmId] = useState(null);
 
     const handleEditClick = (film) => {
         setEditingFilm(film);
@@ -63,6 +66,21 @@ const ListOfFilms = () => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, []);
 
+    const openDeleteDialog = (filmId) => {
+        setSelectedFilmId(filmId);
+        setIsDialogOpen(true);
+    };
+
+    const closeDeleteDialog = () => {
+        setSelectedFilmId(null);
+        setIsDialogOpen(false);
+    };
+
+    const deleteFilm = () => {
+        setFilms(films.filter(film => film.id !== selectedFilmId));
+        setIsDialogOpen(false);
+    };
+
     return (
         <div className='flex flex-col'>
             <p className="text-2xl font-bold mb-4">All film list</p>
@@ -88,7 +106,7 @@ const ListOfFilms = () => {
                         </div>
                         <div className="flex gap-2">
                             <Button variant="outline" onClick={() => handleEditClick(film)}>Edit</Button>
-                            <Button variant="destructive">Delete</Button>
+                            <Button variant="destructive" onClick={() => openDeleteDialog(film.id)}>Delete</Button>
                         </div>
                     </div>
                 ))}
@@ -97,10 +115,17 @@ const ListOfFilms = () => {
             {editingFilm && (
                 <EditFilmCard
                     film={editingFilm}
-                    onSave={handleSaveFilm}  
+                    onSave={handleSaveFilm}
                     onClose={handleCloseModal}
                 />
             )}
+
+            <DeleteFilmCard
+                isOpen={isDialogOpen}
+                onClose={closeDeleteDialog}
+                onConfirm={deleteFilm}
+                filmName={films.find(film => film.id === selectedFilmId)?.name || 'Unknown Film' }
+            />
         </div>
     )
 }
