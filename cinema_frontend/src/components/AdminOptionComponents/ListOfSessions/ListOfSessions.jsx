@@ -1,5 +1,6 @@
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import EditSessionCard from './EditSessionCard/EditSessionCard';
 import DeleteSessionCard from './DeleteSessionCard/DeleteSessionCard';
 
 const ListOfSessions = () => {
@@ -13,8 +14,37 @@ const ListOfSessions = () => {
         { id: 7, hall: 'Hall 7', film: "Film 7", start_time: "18:00", end_time: "20:15" },
         { id: 8, hall: 'Hall 8', film: "Film 8", start_time: "20:30", end_time: "22:45" },
     ]);
+
+    const [editingSession, setEditingSession] = useState(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [selectedSessionId, setSelectedSessionId] = useState(null);
+
+    const handleEditClick = (session) => {
+        setEditingSession(session);
+    };
+
+    const handleCloseModal = () => {
+        setEditingSession(null);
+    };
+
+    const handleSaveSession = (updatedSession) => {
+        setSessions(prevSessions =>
+            prevSessions.map(session =>
+                session.id === updatedSession.id ? updatedSession : session
+            )
+        );
+        handleCloseModal();
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                handleCloseModal();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     const openDeleteDialog = (sessionId) => {
         setSelectedSessionId(sessionId);
@@ -33,7 +63,7 @@ const ListOfSessions = () => {
 
     return (
         <div className='flex flex-col'>
-            <p className="text-2xl font-bold mb-4">All session list</p>
+            <p className="text-2xl font-bold mb-4">All Session List</p>
             <div className="border rounded-lg overflow-hidden">
                 <div className='grid grid-cols-6 bg-gray-100 font-bold px-4 py-2'>
                     <div>ID</div>
@@ -51,12 +81,20 @@ const ListOfSessions = () => {
                         <div>{session.start_time}</div>
                         <div>{session.end_time}</div>
                         <div className="flex gap-2">
-                            <Button variant="outline">Edit</Button>
+                            <Button variant="outline" onClick={() => handleEditClick(session)}>Edit</Button>
                             <Button variant="destructive" onClick={() => openDeleteDialog(session.id)}>Delete</Button>
                         </div>
                     </div>
                 ))}
             </div>
+            
+            {editingSession && (
+                <EditSessionCard
+                    session={editingSession}
+                    onSave={handleSaveSession}  
+                    onClose={handleCloseModal}
+                />
+            )}
             
             <DeleteSessionCard
                 isOpen={isDialogOpen}
