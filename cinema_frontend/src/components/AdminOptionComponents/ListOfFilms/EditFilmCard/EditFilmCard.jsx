@@ -32,8 +32,17 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
     };
 
     const handleGenreChange = (value) => {
-        const updatedGenres = [...genresValue, value];
-        setValue("genres", updatedGenres); 
+        if (!genresValue.includes(value)) {
+            const updatedGenres = [...genresValue, value];
+            setValue("genres", updatedGenres);
+        } else {
+            alert("This genre has already been selected!");
+        }
+    };
+
+    const handleGenreRemove = (genreToRemove) => {
+        const updatedGenres = genresValue.filter(genre => genre !== genreToRemove);
+        setValue("genres", updatedGenres);
     };
 
     const onSubmit = (data) => {
@@ -147,7 +156,13 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
                                     <div className="mt-4 w-full">
                                         <div className="flex gap-4">
                                             {genresValue.map((genre, index) => (
-                                                <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">{genre}</div>
+                                                <div 
+                                                    key={index} 
+                                                    className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white"
+                                                    onClick={() => handleGenreRemove(genre)}
+                                                    >
+                                                        {genre}
+                                                    </div>
                                             ))}
                                         </div>
                                     </div>
