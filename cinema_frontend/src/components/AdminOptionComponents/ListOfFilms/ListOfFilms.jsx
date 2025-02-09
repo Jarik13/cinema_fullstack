@@ -96,7 +96,7 @@ const ListOfFilms = () => {
 
             {editingFilm && (
                 <EditFilmCard
-                    session={editingFilm}
+                    film={editingFilm}
                     onSave={handleSaveFilm}  
                     onClose={handleCloseModal}
                 />
