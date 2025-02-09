@@ -1,3 +1,4 @@
+import React, { useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -19,14 +20,28 @@ const EditSessionCard = ({ session, onSave, onClose }) => {
     });
 
     const { handleSubmit } = form;
+    const modalRef = useRef(null);
+
+    const handleClickOutside = (e) => {
+        if (modalRef.current && !modalRef.current.contains(e.target)) {
+            onClose(); 
+        }
+    };
 
     const onSubmit = (data) => {
         onSave(data);
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-            <div className="p-4 border rounded bg-gray-50 w-1/3">
+        <div
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+            onClick={handleClickOutside}
+        >
+            <div
+                ref={modalRef}
+                className="p-4 border rounded-lg bg-gray-50 w-1/3"
+                onClick={(e) => e.stopPropagation()} 
+            >
                 <h2 className="text-xl font-bold mb-4">Edit Session</h2>
                 <Form {...form}>
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -92,11 +107,8 @@ const EditSessionCard = ({ session, onSave, onClose }) => {
                                 <FormItem>
                                     <FormLabel>Start Time</FormLabel>
                                     <FormControl>
-                                        <Input type="datetime-local" {...field} />
+                                        <Input {...field} type="text" placeholder="Start Time" />
                                     </FormControl>
-                                    <FormDescription>
-                                        Date and time when the session will start.
-                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -110,17 +122,14 @@ const EditSessionCard = ({ session, onSave, onClose }) => {
                                 <FormItem>
                                     <FormLabel>End Time</FormLabel>
                                     <FormControl>
-                                        <Input type="datetime-local" {...field} />
+                                        <Input {...field} type="text" placeholder="End Time" />
                                     </FormControl>
-                                    <FormDescription>
-                                        Date and time when the session will end.
-                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
 
-                        <Button type="submit" variant="destructive" onClick={onClose}>
+                        <Button type="submit" className="mt-4">
                             Save Changes
                         </Button>
                     </form>
