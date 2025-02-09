@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import EditFilmCard from './EditFilmCard/EditFilmCard';
 
 const ListOfFilms = () => {
     const [films, setFilms] = useState([
@@ -33,6 +34,35 @@ const ListOfFilms = () => {
         },
     ]);
 
+    const [editingFilm, setEditingFilm] = useState(null);
+
+    const handleEditClick = (film) => {
+        setEditingFilm(film);
+    };
+
+    const handleCloseModal = () => {
+        setEditingFilm(null);
+    };
+
+    const handleSaveFilm = (updatedFilm) => {
+        setFilms(prevFilms =>
+            prevFilms.map(film =>
+                film.id === updatedFilm.id ? updatedFilm : film
+            )
+        );
+        handleCloseModal();
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                handleCloseModal();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
     return (
         <div className='flex flex-col'>
             <p className="text-2xl font-bold mb-4">All film list</p>
@@ -57,12 +87,20 @@ const ListOfFilms = () => {
                             ))}
                         </div>
                         <div className="flex gap-2">
-                            <Button variant="outline">Edit</Button>
+                            <Button variant="outline" onClick={() => handleEditClick(film)}>Edit</Button>
                             <Button variant="destructive">Delete</Button>
                         </div>
                     </div>
                 ))}
             </div>
+
+            {editingFilm && (
+                <EditFilmCard
+                    session={editingFilm}
+                    onSave={handleSaveFilm}  
+                    onClose={handleCloseModal}
+                />
+            )}
         </div>
     )
 }
