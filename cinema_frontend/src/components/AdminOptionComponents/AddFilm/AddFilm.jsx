@@ -1,9 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+
+const genres = ["Genre 1", "Genre 2", "Genre 3", "Genre 4"];
 
 const AddFilm = () => {
     const form = useForm({
@@ -17,11 +20,13 @@ const AddFilm = () => {
         mode: "onChange",
     });
 
+    const [selectedGenres, setSelectedGenres] = useState([]);
     const { handleSubmit, setValue, reset } = form;
 
     const onSubmit = (data) => {
         console.log(data);
 
+        setSelectedGenres([]);
         reset({
             name: "",
             description: "",
@@ -30,6 +35,14 @@ const AddFilm = () => {
             genres: [],
         });
     }
+
+    const handleGenreChange = (value) => {
+        if (!selectedGenres.includes(value)) {
+            const updatedGenres = [...selectedGenres, value];
+            setSelectedGenres(updatedGenres);
+            setValue('genres', updatedGenres);  
+        }
+    };
 
     return (
         <div className="p-4 border rounded bg-gray-50 w-1/2">
@@ -103,13 +116,47 @@ const AddFilm = () => {
                         )}
                     />
 
+                    <FormField
+                        control={form.control}
+                        name="genres"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Genres</FormLabel>
+                                <FormControl>
+                                    <Select onValueChange={(value) => handleGenreChange(value)}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select a genre" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {genres.map((genre, index) => (
+                                                <SelectItem key={index} value={genre}>{genre}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormDescription>
+                                    This is film genres.
+                                </FormDescription>
+                                <FormMessage />
+                                <div className="mt-4 w-full">
+                                    <div className="flex gap-4">
+                                            {selectedGenres.map((genre, index) => (
+                                                <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">{genre}</div>
+                                            ))}
+                                    </div>
+                                </div>
+
+                            </FormItem>
+                        )}
+                    />
+
                     <Button type="submit" variant="destructive">
                         Save All
                     </Button>
                 </form>
             </Form>
         </div>
-    )
-}
+    );
+};
 
 export default AddFilm;
