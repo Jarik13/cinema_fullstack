@@ -24,6 +24,16 @@ const ListOfSessions = () => {
         setEditingSession(null);
     };
 
+    const handleSaveSession = (updatedSession) => {
+        // Оновити сесію в масиві
+        setSessions(prevSessions =>
+            prevSessions.map(session =>
+                session.id === updatedSession.id ? updatedSession : session
+            )
+        );
+        handleCloseModal();
+    };
+
     useEffect(() => {
         const handleKeyDown = (event) => {
             if (event.key === 'Escape') {
@@ -63,7 +73,7 @@ const ListOfSessions = () => {
             {editingSession && (
                 <EditSessionCard
                     session={editingSession}
-                    onSave={handleCloseModal}
+                    onSave={handleSaveSession}  
                     onClose={handleCloseModal}
                 />
             )}

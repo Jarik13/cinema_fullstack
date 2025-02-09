@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useForm } from "react-hook-form";
 
 const halls = ["Hall 1", "Hall 2", "Hall 3", "Hall 4"];
-const films = ["Movie A", "Movie B", "Movie C", "Movie D"];
+const films = ["Film 1", "Film 2", "Film 3", "Film 4"];
 
 const EditSessionCard = ({ session, onSave, onClose }) => {
     const form = useForm({
@@ -29,7 +29,9 @@ const EditSessionCard = ({ session, onSave, onClose }) => {
     };
 
     const onSubmit = (data) => {
-        onSave(data);
+        console.log(data);
+        const updatedSession = { ...session, ...data };
+        onSave(updatedSession);
     };
 
     return (
