@@ -4,6 +4,7 @@ import AddSession from "@/components/AdminOptionComponents/AddSession/AddSession
 import ListOfFilms from "@/components/AdminOptionComponents/ListOfFilms/ListOfFilms";
 import ListOfHalls from "@/components/AdminOptionComponents/ListOfHalls/ListOfHalls";
 import ListOfSessions from "@/components/AdminOptionComponents/ListOfSessions/ListOfSessions";
+import ListOfTickets from "@/components/AdminOptionComponents/ListOfTickets/ListOfTickets";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 
@@ -24,6 +25,8 @@ const AdminPanelPage = () => {
                 return <AddFilm />
             case "listOfFilms":
                 return <ListOfFilms />;
+            case "listOfTickets":
+                return <ListOfTickets />
             default:
                 return <p className="text-gray-500">Select an action from the sidebar.</p>;
         }
@@ -75,7 +78,11 @@ const AdminPanelPage = () => {
                     >
                         List films
                     </Button>
-                    <Button variant="outline" className="w-full py-2 px-4">
+                    <Button 
+                        variant={activeComponent === "listOfTickets" ? "destructive" : "outline"}
+                        className="w-full py-2 px-4"
+                        onClick={() => setActiveComponent("listOfTickets")}
+                    >
                         List tickets
                     </Button>
                     <Button variant="outline" className="w-full py-2 px-4">
