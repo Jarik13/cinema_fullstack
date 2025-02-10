@@ -9,8 +9,11 @@ import HallPage from './pages/HallPage/HallPage';
 import SnacksListPage from './pages/SnacksListPage/SnacksListPage';
 import WatchFilmsOnlinePage from './pages/WatchFilmsOnlinePage/WatchFilmsOnlinePage';
 import FilmDetailsOnlinePage from './pages/FilmDetailsOnlinePage/FilmDetailsOnlinePage';
+import AdminPanelPage from './pages/AdminPanelPage/AdminPanelPage';
 
 const App = () => {
+  const isAdmin = true;
+
   return (
     <BrowserRouter>
       <div>
@@ -26,6 +29,11 @@ const App = () => {
 
           <Route path='/watch-online' element={<WatchFilmsOnlinePage />} />
           <Route path='/watch-online/:filmId' element={<FilmDetailsOnlinePage />} />
+
+          <Route 
+            path="/admin" 
+            element={isAdmin ? <AdminPanelPage /> : <Navigate to="/" />} 
+          />
         </Routes>
       </div>
     </BrowserRouter>
