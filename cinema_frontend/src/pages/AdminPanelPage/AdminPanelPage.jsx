@@ -5,6 +5,7 @@ import ListOfFilms from "@/components/AdminOptionComponents/ListOfFilms/ListOfFi
 import ListOfHalls from "@/components/AdminOptionComponents/ListOfHalls/ListOfHalls";
 import ListOfSessions from "@/components/AdminOptionComponents/ListOfSessions/ListOfSessions";
 import ListOfTickets from "@/components/AdminOptionComponents/ListOfTickets/ListOfTickets";
+import ListOfUsers from "@/components/AdminOptionComponents/ListOfUsers/ListOfUsers";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
 
@@ -27,6 +28,8 @@ const AdminPanelPage = () => {
                 return <ListOfFilms />;
             case "listOfTickets":
                 return <ListOfTickets />
+            case "listOfUsers":
+                return <ListOfUsers />
             default:
                 return <p className="text-gray-500">Select an action from the sidebar.</p>;
         }
@@ -71,21 +74,25 @@ const AdminPanelPage = () => {
                     >
                         Add films
                     </Button>
-                    <Button 
+                    <Button
                         variant={activeComponent === "listOfFilms" ? "destructive" : "outline"}
                         className="w-full py-2 px-4"
                         onClick={() => setActiveComponent("listOfFilms")}
                     >
                         List films
                     </Button>
-                    <Button 
+                    <Button
                         variant={activeComponent === "listOfTickets" ? "destructive" : "outline"}
                         className="w-full py-2 px-4"
                         onClick={() => setActiveComponent("listOfTickets")}
                     >
                         List tickets
                     </Button>
-                    <Button variant="outline" className="w-full py-2 px-4">
+                    <Button
+                        variant={activeComponent === "listOfUsers" ? "destructive" : "outline"}
+                        className="w-full py-2 px-4"
+                        onClick={() => setActiveComponent("listOfUsers")}
+                    >
                         List users
                     </Button>
                 </div>
