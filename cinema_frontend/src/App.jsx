@@ -10,32 +10,36 @@ import SnacksListPage from './pages/SnacksListPage/SnacksListPage';
 import WatchFilmsOnlinePage from './pages/WatchFilmsOnlinePage/WatchFilmsOnlinePage';
 import FilmDetailsOnlinePage from './pages/FilmDetailsOnlinePage/FilmDetailsOnlinePage';
 import AdminPanelPage from './pages/AdminPanelPage/AdminPanelPage';
+import { Provider } from 'react-redux';
+import { store } from './redux/Store';
 
 const App = () => {
   const isAdmin = true;
 
   return (
     <BrowserRouter>
-      <div>
-        <Navbar />
+      <Provider store={store}>
+        <div>
+          <Navbar />
 
-        <Routes>
-          <Route path='/' element={<InCinemaPage />} />
-          <Route path='/auth' element={<AuthPage />} />
-          <Route path='/my-profile' element={<UserProfilePage />} />
-          <Route path='/:locationId/sessions' element={<ChooseSessionPage />} />
-          <Route path='/:locationId/sessions/:hallId' element={<HallPage />} />
-          <Route path='/:locationId/sessions/:hallId/snacks' element={<SnacksListPage />} />
+          <Routes>
+            <Route path='/' element={<InCinemaPage />} />
+            <Route path='/auth' element={<AuthPage />} />
+            <Route path='/my-profile' element={<UserProfilePage />} />
+            <Route path='/:locationId/sessions' element={<ChooseSessionPage />} />
+            <Route path='/:locationId/sessions/:hallId' element={<HallPage />} />
+            <Route path='/:locationId/sessions/:hallId/snacks' element={<SnacksListPage />} />
 
-          <Route path='/watch-online' element={<WatchFilmsOnlinePage />} />
-          <Route path='/watch-online/:filmId' element={<FilmDetailsOnlinePage />} />
+            <Route path='/watch-online' element={<WatchFilmsOnlinePage />} />
+            <Route path='/watch-online/:filmId' element={<FilmDetailsOnlinePage />} />
 
-          <Route 
-            path="/admin" 
-            element={isAdmin ? <AdminPanelPage /> : <Navigate to="/" />} 
-          />
-        </Routes>
-      </div>
+            <Route
+              path="/admin"
+              element={isAdmin ? <AdminPanelPage /> : <Navigate to="/" />}
+            />
+          </Routes>
+        </div>
+      </Provider>
     </BrowserRouter>
   )
 }
