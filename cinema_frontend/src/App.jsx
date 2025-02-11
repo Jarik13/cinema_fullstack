@@ -12,6 +12,7 @@ import FilmDetailsOnlinePage from './pages/FilmDetailsOnlinePage/FilmDetailsOnli
 import AdminPanelPage from './pages/AdminPanelPage/AdminPanelPage';
 import { Provider } from 'react-redux';
 import { store } from './redux/Store';
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   const isAdmin = true;
@@ -21,6 +22,8 @@ const App = () => {
       <Provider store={store}>
         <div>
           <Navbar />
+
+          <ToastContainer position="top-right" autoClose={3000} />
 
           <Routes>
             <Route path='/' element={<InCinemaPage />} />
