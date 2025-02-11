@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import EditSnackCard from './EditSnackCard/EditSnackCard';
 
 const ListOfSnacks = () => {
     const [snacks, setSnacks] = useState([
@@ -16,6 +17,35 @@ const ListOfSnacks = () => {
         { id: 11, name: 'Burger', price: 110 },
         { id: 12, name: 'Fries', price: 40 },
     ]);
+
+    const [editingSnack, setEditingSnack] = useState(null);
+
+    const handleEditClick = (snack) => {
+        setEditingSnack(snack);
+    };
+
+    const handleCloseModal = () => {
+        setEditingSnack(null);
+    };
+
+    const handleSaveSnack = (updatedSnack) => {
+        setSnacks(prevSnacks =>
+            prevSnacks.map(snack =>
+                snack.id === updatedSnack.id ? updatedSnack : snack
+            )
+        );
+        handleCloseModal();
+    };
+
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                handleCloseModal();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     return (
         <div className='flex flex-col'>
@@ -34,11 +64,20 @@ const ListOfSnacks = () => {
                         <div>{snack.price}</div>
                         <div className="flex gap-2">
                             <Button variant="outline" onClick={() => handleEditClick(snack)}>Edit</Button>
-                            <Button variant="destructive" onClick={() => openDeleteDialog(snack.id)}>Delete</Button>
+                            <Button variant="destructive">Delete</Button>
                         </div>
                     </div>
                 ))}
             </div>
+
+            {editingSnack && (
+                <EditSnackCard
+                    snack={editingSnack}
+                    onSave={handleSaveSnack}
+                    onClose={handleCloseModal}
+                />
+            )}
+
         </div>
     );
 }
