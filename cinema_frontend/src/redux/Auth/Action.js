@@ -17,6 +17,7 @@ export const register = (data) => async (dispatch) => {
     } catch (e) {
         dispatch({ type: REGISTER_FAILURE });
         toast.error("Registration failed. Please try again.");
-        console.error(e);
+        console.error(e.response ? e.response.data : e);  // Додаткове логування помилки
     }
+    
 };
