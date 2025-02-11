@@ -96,6 +96,7 @@ const ListOfSnacks = () => {
                 />
             )}
             <DeleteSnackCard
+                name={snacks.find(snack => snack.id === selectedSnackId)?.name || 'Unknown Film'}
                 isOpen={isDialogOpen}
                 onClose={closeDeleteDialog}
                 onConfirm={deleteSnack}
