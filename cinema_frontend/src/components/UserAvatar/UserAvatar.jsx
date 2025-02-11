@@ -3,12 +3,16 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Avatar, AvatarFallback } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { store } from '@/redux/Store';
 
 const UserAvatar = () => {
     const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);
-    const isAuthenticated = false;
+    const user = useSelector(store => store.auth.user);
+
+    const isAuthenticated = !!user;
 
     const handleMenuToggle = () => setOpen((prev) => !prev);
 
@@ -18,7 +22,7 @@ const UserAvatar = () => {
                 {
                     isAuthenticated
                         ? <Avatar>
-                            <AvatarFallback>U</AvatarFallback>
+                            <AvatarFallback>{user?.username[0].toUpperCase()}</AvatarFallback>
                         </Avatar>
                         : "None"
                 }

@@ -8,17 +8,24 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 const RegisterLoginCard = () => {
-    const form = useForm();
-    const { handleSubmit } = useForm();
+    const form = useForm({
+        defaultValues: {
+            username: '',
+            email: '',
+            password: '',
+            age: ''
+        }
+    });
+    const { handleSubmit } = form;
     const [isLogin, setIsLogin] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
+        console.log(data);
         dispatch(register(data))
         navigate("/");
-        console.log(data);
     };
 
     return (
