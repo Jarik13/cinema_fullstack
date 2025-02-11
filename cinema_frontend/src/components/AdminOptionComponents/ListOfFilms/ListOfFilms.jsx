@@ -10,6 +10,7 @@ const ListOfFilms = () => {
             name: 'Film 1',
             description: "Description 1",
             release_year: 2000,
+            age_rating: "10+",
             genres: ["Genre 1", "Genre 2"]
         },
         {
@@ -17,6 +18,7 @@ const ListOfFilms = () => {
             name: 'Film 2',
             description: "Description 2",
             release_year: 1990,
+            age_rating: "0+",
             genres: ["Genre 2", "Genre 3"]
         },
         {
@@ -24,6 +26,7 @@ const ListOfFilms = () => {
             name: 'Film 3',
             description: "Description 3",
             release_year: 2025,
+            age_rating: "3+",
             genres: ["Genre 1"]
         },
         {
@@ -31,6 +34,7 @@ const ListOfFilms = () => {
             name: 'Film 4',
             description: "Description 4",
             release_year: 2020,
+            age_rating: "6+",
             genres: ["Genre 1", "Genre 2", "Genre 3"]
         },
     ]);
@@ -85,20 +89,22 @@ const ListOfFilms = () => {
         <div className='flex flex-col'>
             <p className="text-2xl font-bold mb-4">All film list</p>
             <div className="border rounded-lg overflow-hidden">
-                <div className='grid grid-cols-6 bg-gray-100 font-bold px-4 py-2'>
+                <div className='grid grid-cols-7 bg-gray-100 font-bold px-4 py-2'>
                     <div>ID</div>
                     <div>Film name</div>
                     <div>Film description</div>
                     <div>Release year</div>
+                    <div>Age rating</div>
                     <div>Genres</div>
                     <div>Actions</div>
                 </div>
                 {films.map((film) => (
-                    <div key={film.id} className="grid grid-cols-6 px-4 py-2 border-t">
+                    <div key={film.id} className="grid grid-cols-7 px-4 py-2 border-t">
                         <div>{film.id}</div>
                         <div>{film.name}</div>
                         <div>{film.description}</div>
                         <div>{film.release_year}</div>
+                        <div>{film.age_rating}</div>
                         <div className="grid grid-cols-1 gap-4">
                             {film.genres?.map((genre, index) => (
                                 <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">{genre}</div>

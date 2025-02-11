@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 
 const genres = ["Genre 1", "Genre 2", "Genre 3", "Genre 4"];
+const ageRatings = ["0+", "3+", "6+", "12+", "16+", "18+"];
 
 const EditFilmCard = ({ film, onSave, onClose }) => {
     const form = useForm({
@@ -16,6 +17,7 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
             release_year: film?.release_year || 1930,
             image_url: film?.image_url || "",
             genres: film?.genres || [],
+            age_rating: film?.age_rating || "0+",
         },
         mode: "onChange",
     });
@@ -156,19 +158,46 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
                                     <div className="mt-4 w-full">
                                         <div className="flex gap-4">
                                             {genresValue.map((genre, index) => (
-                                                <div 
-                                                    key={index} 
+                                                <div
+                                                    key={index}
                                                     className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white"
                                                     onClick={() => handleGenreRemove(genre)}
-                                                    >
-                                                        {genre}
-                                                    </div>
+                                                >
+                                                    {genre}
+                                                </div>
                                             ))}
                                         </div>
                                     </div>
                                 </FormItem>
                             )}
                         />
+
+                        <FormField
+                            control={form.control}
+                            name="age_rating"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Age rating</FormLabel>
+                                    <FormControl>
+                                        <Select onValueChange={(value) => setValue("age_rating", value)} value={watch("age_rating")}>
+                                            <SelectTrigger>
+                                                <SelectValue>{watch("age_rating")}</SelectValue>
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {ageRatings.map((rating, index) => (
+                                                    <SelectItem key={index} value={rating}>{rating}</SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </FormControl>
+                                    <FormDescription>
+                                        This is the film's age rating.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
 
                         <Button type="submit" variant="destructive">
                             Save All

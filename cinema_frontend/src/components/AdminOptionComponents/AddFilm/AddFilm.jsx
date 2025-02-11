@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const genres = ["Genre 1", "Genre 2", "Genre 3", "Genre 4"];
+const ageRatings = ["0+", "3+", "6+", "12+", "16+", "18+"];
 
 const AddFilm = () => {
     const form = useForm({
@@ -14,6 +15,7 @@ const AddFilm = () => {
             name: "",
             description: "",
             release_year: 1930,
+            age_rating: "0+",
             image_url: "",
             genres: [],
         },
@@ -31,6 +33,7 @@ const AddFilm = () => {
             name: "",
             description: "",
             release_year: 1930,
+            age_rating: "0+",
             image_url: "",
             genres: [],
         });
@@ -40,7 +43,7 @@ const AddFilm = () => {
         if (!selectedGenres.includes(value)) {
             const updatedGenres = [...selectedGenres, value];
             setSelectedGenres(updatedGenres);
-            setValue('genres', updatedGenres);  
+            setValue('genres', updatedGenres);
         }
     };
 
@@ -140,12 +143,38 @@ const AddFilm = () => {
                                 <FormMessage />
                                 <div className="mt-4 w-full">
                                     <div className="flex gap-4">
-                                            {selectedGenres.map((genre, index) => (
-                                                <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">{genre}</div>
-                                            ))}
+                                        {selectedGenres.map((genre, index) => (
+                                            <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">{genre}</div>
+                                        ))}
                                     </div>
                                 </div>
 
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="age_rating"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Age rating</FormLabel>
+                                <FormControl>
+                                    <Select onValueChange={(value) => setValue("age_rating", value)}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select an age rating" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {ageRatings.map((rating, index) => (
+                                                <SelectItem key={index} value={rating}>{rating}</SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormDescription>
+                                    This is the film's age rating.
+                                </FormDescription>
+                                <FormMessage />
                             </FormItem>
                         )}
                     />
