@@ -3,20 +3,26 @@ import { Input } from '@/components/ui/input';
 import React from 'react';
 import UpdateUserInfoCard from '../UpdateUserInfo/UpdateUserInfoCard';
 
-const PersonalInfoCard = () => {
+const PersonalInfoCard = ({ user }) => {
+    const maskedPassword = user?.password ? '*'.repeat(user.password.length) : '';
+
     return (
         <>
             <div>
                 <CardDescription className="text-gray-400">Name:</CardDescription>
-                <span>Something name</span>
+                <span>{user?.username}</span>
             </div>
             <div>
                 <CardDescription className="text-gray-400">Email:</CardDescription>
-                <span>example@something.com</span>
+                <span>{user?.email}</span>
+            </div>
+            <div>
+                <CardDescription className="text-gray-400">Age:</CardDescription>
+                <span>{user?.age}</span>
             </div>
             <div>
                 <CardDescription className="text-gray-400">Password:</CardDescription>
-                <Input type="password" value="********" disabled className="bg-gray-700 text-white" />
+                <Input type="text" disabled value={maskedPassword} className="bg-gray-700 text-white" />
             </div>
             <div>
                 <UpdateUserInfoCard />

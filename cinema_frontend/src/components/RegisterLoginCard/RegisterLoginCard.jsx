@@ -23,7 +23,6 @@ const RegisterLoginCard = () => {
     const dispatch = useDispatch();
 
     const onSubmit = (data) => {
-        console.log(data);
         dispatch(register(data))
         navigate("/");
     };

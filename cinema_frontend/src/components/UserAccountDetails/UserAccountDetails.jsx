@@ -4,9 +4,11 @@ import PersonalInfoCard from './PersonalInfoCard/PersonalInfoCard';
 import PurchaseHistoryCard from './PurchaseHistoryCard/PurchaseHistoryCard';
 import MyPaymentCardsCard from './MyPaymentCardsCard/MyPaymentCardsCard';
 import MyTicketsCard from './MyTicketsCard/MyTicketsCard';
+import { useSelector } from 'react-redux';
 
 const UserAccountDetails = () => {
     const [cardContent, setCardContent] = useState('personalInfo');
+    const user = useSelector(store => store.auth.user);
 
     const handleLinkClick = (content) => {
         setCardContent(content);
@@ -16,7 +18,7 @@ const UserAccountDetails = () => {
         <div className="flex flex-col md:flex-row gap-6 p-8 text-black max-w-4xl mx-auto transform translate-y-[-50px]">
             <div className="flex flex-col items-center md:items-start w-[320px] h-[400px]"> 
                 <div className="w-24 h-24 rounded-full shadow-lg flex items-center justify-center mb-4">
-                    <span>Username</span>
+                    <span>{user?.username}</span>
                 </div>
                 <nav className="flex flex-col gap-2 text-black w-40">
                     <a
@@ -59,7 +61,7 @@ const UserAccountDetails = () => {
                         {cardContent === 'myTickets' && 'My Tickets'}
                     </CardHeader>
                     <CardContent className="space-y-3">
-                        {cardContent === 'personalInfo' && <PersonalInfoCard />}
+                        {cardContent === 'personalInfo' && <PersonalInfoCard user={user} />}
                         {cardContent === 'purchaseHistory' && <PurchaseHistoryCard />}
                         {cardContent === 'paymentCards' && <MyPaymentCardsCard />}
                         {cardContent === 'myTickets' && <MyTicketsCard />}
