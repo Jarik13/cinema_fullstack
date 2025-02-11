@@ -8,7 +8,7 @@ const UserAvatar = () => {
     const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);
-    const isAuthenticated = true;
+    const isAuthenticated = false;
 
     const handleMenuToggle = () => setOpen((prev) => !prev);
 
