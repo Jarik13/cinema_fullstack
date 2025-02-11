@@ -5,6 +5,7 @@ import AddSnack from "@/components/AdminOptionComponents/AddSnack/AddSnack";
 import ListOfFilms from "@/components/AdminOptionComponents/ListOfFilms/ListOfFilms";
 import ListOfHalls from "@/components/AdminOptionComponents/ListOfHalls/ListOfHalls";
 import ListOfSessions from "@/components/AdminOptionComponents/ListOfSessions/ListOfSessions";
+import ListOfSnacks from "@/components/AdminOptionComponents/ListOfSnacks/ListOfSnacks";
 import ListOfTickets from "@/components/AdminOptionComponents/ListOfTickets/ListOfTickets";
 import ListOfUsers from "@/components/AdminOptionComponents/ListOfUsers/ListOfUsers";
 import { Button } from "@/components/ui/button";
@@ -29,6 +30,8 @@ const AdminPanelPage = () => {
                 return <ListOfFilms />;
             case "addSnack":
                 return <AddSnack />;
+            case "listOfSnacks":
+                return <ListOfSnacks />
             case "listOfTickets":
                 return <ListOfTickets />;
             case "listOfUsers":
@@ -90,6 +93,13 @@ const AdminPanelPage = () => {
                         onClick={() => setActiveComponent("addSnack")}
                     >
                         Add snacks
+                    </Button>
+                    <Button
+                        variant={activeComponent === "listOfSnacks" ? "destructive" : "outline"}
+                        className="w-full py-2 px-4"
+                        onClick={() => setActiveComponent("listOfSnacks")}
+                    >
+                        List snacks
                     </Button>
                     <Button
                         variant={activeComponent === "listOfTickets" ? "destructive" : "outline"}
