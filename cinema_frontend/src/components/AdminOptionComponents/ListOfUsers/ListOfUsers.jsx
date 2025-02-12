@@ -1,29 +1,43 @@
 import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import BlockUserCard from './BlockUserCard/BlockUserCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { blockUser, getUserList } from '@/redux/User/Action';
+import { store } from '@/redux/Store';
 
 const ListOfUsers = () => {
-    const [users, setUsers] = useState([
-        { id: 1, name: "yaroslav", email: "yaroslav@gmail.com", age: 18 },
-        { id: 2, name: "katya", email: "katya@gmail.com", age: 19 },
-        { id: 3, name: "roksolana", email: "roksolana@gmail.com", age: 19 },
-    ]);
+    const dispatch = useDispatch();
+    const users = useSelector(store => store.userReducer.users);
     const [selectedUser, setSelectedUser] = useState(null);
+
+    const admin = useSelector(store => store.auth.user);
+
+    const isFirstLoad = useRef(true); 
+
+    useEffect(() => {
+        if (admin?.email) {
+            dispatch(getUserList(admin.email, isFirstLoad.current)); 
+            isFirstLoad.current = false; 
+        }
+    }, [dispatch, admin]);     
 
     const handleBlockClick = (user) => {
         setSelectedUser(user);
     };
 
-    const handleConfirmBlock = () => {
-        setUsers(users.filter(user => user.id !== selectedUser.id));
+    const handleConfirmBlock = async () => {
+        if (!selectedUser) return;
+
+        await dispatch(blockUser(admin?.email, selectedUser?.UserName));
         setSelectedUser(null);
+        await dispatch(getUserList(admin.email, true));
     };
 
     return (
         <div className='flex flex-col'>
             <p className="text-2xl font-bold mb-4">All Users List</p>
             <div className="border rounded-lg overflow-hidden">
-                <div className='grid grid-cols-[1fr_1fr_2fr_1fr_0.5fr] bg-gray-100 font-bold px-4 py-2'>
+                <div className='grid grid-cols-[2fr_1fr_2fr_1fr_0.5fr] bg-gray-100 font-bold px-4 py-2'>
                     <div>ID</div>
                     <div>Name</div>
                     <div>Email</div>
@@ -31,11 +45,11 @@ const ListOfUsers = () => {
                     <div>Action</div>
                 </div>
                 {users.map(user => (
-                    <div key={user.id} className="grid grid-cols-[1fr_1fr_2fr_1fr_0.5fr] border-t px-4 py-2 items-center">
-                        <div>{user.id}</div>
-                        <div>{user.name}</div>
-                        <div>{user.email}</div>
-                        <div>{user.age}</div>
+                    <div key={user.Id} className="grid grid-cols-[2fr_1fr_2fr_1fr_0.5fr] border-t px-4 py-2 items-center">
+                        <div>{user.Id}</div>
+                        <div>{user.UserName}</div>
+                        <div>{user.Email}</div>
+                        <div>{user.Age}</div>
                         <Button variant="destructive" onClick={() => handleBlockClick(user)}>Block</Button>
                     </div>
                 ))}
@@ -46,7 +60,7 @@ const ListOfUsers = () => {
                     isOpen={!!selectedUser}
                     onClose={() => setSelectedUser(null)}
                     onConfirm={handleConfirmBlock}
-                    name={selectedUser.name}
+                    name={selectedUser.UserName}
                 />
             )}
         </div>
