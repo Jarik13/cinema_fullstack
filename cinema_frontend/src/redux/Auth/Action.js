@@ -8,7 +8,7 @@ export const register = (data) => async (dispatch) => {
     dispatch({ type: REGISTER_REQUEST });
 
     try {
-        const response = await axios.post(`${baseURL2}/api/Register`, data);
+        const response = await axios.post(`${baseURL}/api/Register`, data);
         if (response) {
             dispatch({ type: REGISTER_SUCCESS, payload: data });
             toast.success("Registration successful!");

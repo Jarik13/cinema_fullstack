@@ -1,15 +1,18 @@
 import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BlockUserCard from './BlockUserCard/BlockUserCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserList } from '@/redux/User/Action';
 import { store } from '@/redux/Store';
 
 const ListOfUsers = () => {
+    const dispatch = useDispatch();
     const users = useSelector(store => store.userReducer.users);
     const [selectedUser, setSelectedUser] = useState(null);
 
-    console.log(users);
+    useEffect(() => {
+        getUserList();
+    }, [dispatch])
 
     const handleBlockClick = (user) => {
         setSelectedUser(user);
@@ -47,7 +50,7 @@ const ListOfUsers = () => {
                     isOpen={!!selectedUser}
                     onClose={() => setSelectedUser(null)}
                     onConfirm={handleConfirmBlock}
-                    name={selectedUser.name}
+                    name={selectedUser.UserName}
                 />
             )}
         </div>
