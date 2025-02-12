@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import BlockUserCard from './BlockUserCard/BlockUserCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserList } from '@/redux/User/Action';
+import { blockUser, getUserList } from '@/redux/User/Action';
 import { store } from '@/redux/Store';
 
 const ListOfUsers = () => {
@@ -12,19 +12,25 @@ const ListOfUsers = () => {
 
     const admin = useSelector(store => store.auth.user);
 
+    const isFirstLoad = useRef(true); 
+
     useEffect(() => {
         if (admin?.email) {
-            dispatch(getUserList(admin.email));
+            dispatch(getUserList(admin.email, isFirstLoad.current)); 
+            isFirstLoad.current = false; 
         }
-    }, [dispatch, admin]);    
+    }, [dispatch, admin]);     
 
     const handleBlockClick = (user) => {
         setSelectedUser(user);
     };
 
-    const handleConfirmBlock = () => {
-        setUsers(users.filter(user => user.id !== selectedUser.id));
+    const handleConfirmBlock = async () => {
+        if (!selectedUser) return;
+
+        await dispatch(blockUser(admin?.email, selectedUser?.UserName));
         setSelectedUser(null);
+        await dispatch(getUserList(admin.email, true));
     };
 
     return (

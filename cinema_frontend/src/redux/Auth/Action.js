@@ -52,7 +52,6 @@ export const getUserProfile = () => async (dispatch) => {
             }
         });
         
-        console.log(data);
         dispatch({ type: GET_USER_SUCCESS, payload: data });
     } catch (e) {
         console.log(e);
