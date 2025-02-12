@@ -1,13 +1,12 @@
 import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
 import BlockUserCard from './BlockUserCard/BlockUserCard';
+import { useDispatch } from 'react-redux';
+import { getUserList } from '@/redux/User/Action';
 
 const ListOfUsers = () => {
-    const [users, setUsers] = useState([
-        { id: 1, name: "yaroslav", email: "yaroslav@gmail.com", age: 18 },
-        { id: 2, name: "katya", email: "katya@gmail.com", age: 19 },
-        { id: 3, name: "roksolana", email: "roksolana@gmail.com", age: 19 },
-    ]);
+    const dispatch = useDispatch();
+    const users = dispatch(getUserList());
     const [selectedUser, setSelectedUser] = useState(null);
 
     const handleBlockClick = (user) => {
