@@ -10,11 +10,13 @@ const ListOfUsers = () => {
     const users = useSelector(store => store.userReducer.users);
     const [selectedUser, setSelectedUser] = useState(null);
 
-    console.log("Users", users);
+    const admin = useSelector(store => store.auth.user);
 
     useEffect(() => {
-        dispatch(getUserList());
-    }, [dispatch])
+        if (admin?.email) {
+            dispatch(getUserList(admin.email));
+        }
+    }, [dispatch, admin]);    
 
     const handleBlockClick = (user) => {
         setSelectedUser(user);
