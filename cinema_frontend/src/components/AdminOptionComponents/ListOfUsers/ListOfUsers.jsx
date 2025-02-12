@@ -10,8 +10,10 @@ const ListOfUsers = () => {
     const users = useSelector(store => store.userReducer.users);
     const [selectedUser, setSelectedUser] = useState(null);
 
+    console.log("Users", users);
+
     useEffect(() => {
-        getUserList();
+        dispatch(getUserList());
     }, [dispatch])
 
     const handleBlockClick = (user) => {
