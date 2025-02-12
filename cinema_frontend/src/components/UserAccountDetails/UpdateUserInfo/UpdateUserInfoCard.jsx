@@ -10,11 +10,17 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useDispatch } from "react-redux";
+import { updateUserProfile } from "@/redux/User/Action";
 
-const UpdateUserInfoCard = () => {
+const UpdateUserInfoCard = ({ email }) => {
+    const dispatch = useDispatch();
+
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [ageError, setAgeError] = useState("");
+    const [name, setName] = useState("");
+    const [emailValue, setEmailValue] = useState("");
     const [age, setAge] = useState("");
+    const [ageError, setAgeError] = useState("");
 
     const handleAgeChange = (e) => {
         const value = e.target.value;
@@ -30,11 +36,11 @@ const UpdateUserInfoCard = () => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-
         setAgeError("");
-        setIsDialogOpen(false);
 
-        console.log("Form submitted successfully!");
+        dispatch(updateUserProfile(email, name, emailValue, age));
+
+        setIsDialogOpen(false);
     };
 
     return (
@@ -52,11 +58,24 @@ const UpdateUserInfoCard = () => {
                         <div className="grid gap-4">
                             <div className="space-y-2">
                                 <Label htmlFor="name">Name</Label>
-                                <Input id="name" placeholder="Your name ..." className="w-full" />
+                                <Input
+                                    id="name"
+                                    placeholder="Your name ..."
+                                    className="w-full"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="email">Email</Label>
-                                <Input id="email" type="email" placeholder="Your email ..." className="w-full" />
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="Your email ..."
+                                    className="w-full"
+                                    value={emailValue}
+                                    onChange={(e) => setEmailValue(e.target.value)}
+                                />
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="age">Age</Label>
@@ -75,7 +94,7 @@ const UpdateUserInfoCard = () => {
                             <DialogClose asChild>
                                 <Button variant="secondary">Cancel</Button>
                             </DialogClose>
-                            <Button type="submit" variant="destructive" disabled={!!ageError}>
+                            <Button type="submit" variant="destructive" disabled={!!ageError || !name || !emailValue || !age}>
                                 Save changes
                             </Button>
                         </div>
