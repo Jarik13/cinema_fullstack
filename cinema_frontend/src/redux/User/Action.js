@@ -1,10 +1,10 @@
 import axios from "axios";
-import { GET_USER_LIST_FAILURE, GET_USER_LIST_SUCCESS, UPDATE_USER_PROFILE_REQUEST } from "./ActionType";
+import { GET_USER_LIST_FAILURE, GET_USER_LIST_REQUEST, GET_USER_LIST_SUCCESS, UPDATE_USER_PROFILE_REQUEST } from "./ActionType";
 import { toast } from "react-toastify";
 
 
 export const getUserList = () => async (dispatch) => {
-    dispatch({ type: UPDATE_USER_PROFILE_REQUEST });
+    dispatch({ type: GET_USER_LIST_REQUEST });
 
     try {
         const { data } = await axios.get(`http://localhost:5161/api/User/ListOfUsers`);
