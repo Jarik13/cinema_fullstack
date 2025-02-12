@@ -6,6 +6,8 @@ import UpdateUserInfoCard from '../UpdateUserInfo/UpdateUserInfoCard';
 const PersonalInfoCard = ({ user }) => {
     const maskedPassword = user?.password ? '*'.repeat(user.password.length) : '';
 
+    console.log(user);
+
     return (
         <>
             <div>
@@ -25,7 +27,7 @@ const PersonalInfoCard = ({ user }) => {
                 <Input type="text" disabled value={maskedPassword} className="bg-gray-700 text-white" />
             </div>
             <div>
-                <UpdateUserInfoCard />
+                <UpdateUserInfoCard email={user?.email} />
             </div>
         </>
     )
