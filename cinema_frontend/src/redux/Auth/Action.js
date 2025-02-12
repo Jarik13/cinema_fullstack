@@ -8,16 +8,15 @@ export const register = (data) => async (dispatch) => {
     dispatch({ type: REGISTER_REQUEST });
 
     try {
-        const response = await axios.post(`${baseURL2}/api/Register`, data);
+        const response = await axios.post(`${baseURL}/api/Register`, data);
         if (response) {
             dispatch({ type: REGISTER_SUCCESS, payload: data });
-            toast.success("Registration successful!");
+            toast.success(response.data.message);
         }
-        console.log("Register success: ", response);
+
     } catch (e) {
         dispatch({ type: REGISTER_FAILURE });
-        toast.error("Registration failed. Please try again.");
-        console.error(e.response ? e.response.data : e);  // Додаткове логування помилки
+        toast.error(e.response.data);
     }
     
 };
