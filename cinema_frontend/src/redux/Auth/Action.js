@@ -13,7 +13,6 @@ export const register = (data) => async (dispatch) => {
             dispatch({ type: REGISTER_SUCCESS, payload: data });
             toast.success("Registration successful!");
         }
-        console.log("Register success: ", response);
     } catch (e) {
         dispatch({ type: REGISTER_FAILURE });
         toast.error("Registration failed. Please try again.");
