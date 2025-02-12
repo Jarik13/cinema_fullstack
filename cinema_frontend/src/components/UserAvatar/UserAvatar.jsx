@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Avatar, AvatarFallback } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { store } from '@/redux/Store';
+import { getUserProfile } from '@/redux/Auth/Action';
 
 const UserAvatar = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [open, setOpen] = useState(false);
     const user = useSelector(store => store.auth.user);
@@ -16,13 +18,20 @@ const UserAvatar = () => {
 
     const handleMenuToggle = () => setOpen((prev) => !prev);
 
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token && !user) {
+            dispatch(getUserProfile());
+        }
+    }, [dispatch, user]);
+
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger>
                 {
                     isAuthenticated
                         ? <Avatar>
-                            <AvatarFallback>{user?.username[0].toUpperCase()}</AvatarFallback>
+                            <AvatarFallback>{user?.username ? user.username[0].toUpperCase() : 'U'}</AvatarFallback>
                         </Avatar>
                         : "None"
                 }

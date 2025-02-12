@@ -1,4 +1,4 @@
-import { REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./ActionType"
+import { GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./ActionType"
 
 const initialState = {
     user: null,
@@ -10,11 +10,17 @@ const initialState = {
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case REGISTER_REQUEST:
+        case LOGIN_REQUEST:
             return { ...state, loading: true, error: null };
         case REGISTER_SUCCESS:
+        case LOGIN_SUCCESS:
             return { ...state, loading: false, user: action.payload, isAuthenticated: true };
+        case GET_USER_SUCCESS:
+            return { ...state, loading: false, user: action.payload.data, isAuthenticated: true };
         case REGISTER_FAILURE:
             return { ...state, loading: false, error: "Registration failed" };
+        case LOGIN_FAILURE:
+            return { ...state, loading: false, error: "Login failed" };
         default:
             return state;
     }
