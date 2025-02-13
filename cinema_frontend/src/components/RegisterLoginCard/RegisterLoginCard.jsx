@@ -1,16 +1,35 @@
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import React, { useState } from 'react';
+import { getUserProfile, login, register } from '@/redux/Auth/Action';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterLoginCard = () => {
-    const form = useForm();
-    const { handleSubmit } = useForm();
+    const form = useForm({
+        defaultValues: {
+            username: '',
+            email: '',
+            password: '',
+            age: ''
+        }
+    });
+    const { handleSubmit } = form;
     const [isLogin, setIsLogin] = useState(false);
 
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     const onSubmit = (data) => {
-        console.log(data);
+        if (!isLogin) {
+            dispatch(register(data));
+        } else {
+            dispatch(login(data));
+        }
+
+        navigate("/");
     };
 
     return (
@@ -22,12 +41,12 @@ const RegisterLoginCard = () => {
                     {!isLogin && (
                         <FormField
                             control={form.control}
-                            name="name"
+                            name="username"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Name</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Your name ..." {...field} />
+                                        <Input placeholder="Your username ..." {...field} />
                                     </FormControl>
                                     <FormDescription>
                                         This is your public display name.

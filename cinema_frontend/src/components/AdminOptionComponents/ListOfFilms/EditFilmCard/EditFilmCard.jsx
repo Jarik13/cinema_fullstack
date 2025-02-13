@@ -16,6 +16,7 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
             description: film?.description || "",
             release_year: film?.release_year || 1930,
             image_url: film?.image_url || "",
+            trailer_url: film?.trailer_url || "",
             genres: film?.genres || [],
             age_rating: film?.age_rating || "0+",
         },
@@ -55,12 +56,12 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
 
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+            className="fixed scroll-m-1 inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
             onClick={handleClickOutside}
         >
             <div
                 ref={modalRef}
-                className="p-4 border rounded-lg bg-gray-50 w-1/3"
+                className="p-4 border rounded-lg bg-gray-50 w-1/2 max-w-lg h-4/5 overflow-auto"
                 onClick={(e) => e.stopPropagation()}
             >
                 <h2 className="text-xl font-bold mb-4">Edit Film</h2>
@@ -127,6 +128,42 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
                                     </FormControl>
                                     <FormDescription>
                                         This is the release year of the film.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="image_url"
+                            rules={{ required: "Image URL is required" }}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Film image url</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Film image url ..." {...field} />
+                                    </FormControl>
+                                    <FormDescription>
+                                        This is public image of film.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="trailer_url"
+                            rules={{ required: "Trailer URL is required" }}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Film trailer url</FormLabel>
+                                    <FormControl>
+                                        <Input placeholder="Film trailer url ..." {...field} />
+                                    </FormControl>
+                                    <FormDescription>
+                                        This is public trailer of film.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

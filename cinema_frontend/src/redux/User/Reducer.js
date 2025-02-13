@@ -1,0 +1,52 @@
+import { 
+    GET_USER_LIST_FAILURE, 
+    GET_USER_LIST_REQUEST, 
+    GET_USER_LIST_SUCCESS, 
+    UPDATE_USER_PROFILE_FAILURE, 
+    UPDATE_USER_PROFILE_REQUEST, 
+    UPDATE_USER_PROFILE_SUCCESS,
+    BLOCK_USER_REQUEST,
+    BLOCK_USER_SUCCESS,
+    BLOCK_USER_FAILURE
+} from "./ActionType";
+
+const initialState = {
+    user: null,
+    users: [],
+    loading: false,
+    error: null,
+};
+
+export const userReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case UPDATE_USER_PROFILE_REQUEST:
+        case GET_USER_LIST_REQUEST:
+        case BLOCK_USER_REQUEST:
+            return { ...state, loading: true, error: null };
+
+        case UPDATE_USER_PROFILE_SUCCESS:
+            return { ...state, loading: false, user: action.payload };
+
+        case GET_USER_LIST_SUCCESS:
+            return { ...state, loading: false, users: action.payload };
+
+        case BLOCK_USER_SUCCESS:
+            return { 
+                ...state, 
+                loading: false, 
+                users: state.users.filter(user => user.UserName !== action.payload)
+            };
+
+        case UPDATE_USER_PROFILE_FAILURE:
+            return { ...state, loading: false, error: "Update profile failed!" };
+
+        case GET_USER_LIST_FAILURE:
+            return { ...state, loading: false, error: "Get list of users failed!" };
+
+        case BLOCK_USER_FAILURE:
+            return { ...state, loading: false, error: "Failed to block user!" };
+
+        default:
+            return state;
+    }
+};

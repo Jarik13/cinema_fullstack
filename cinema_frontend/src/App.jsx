@@ -1,6 +1,10 @@
 import React from 'react';
-import Navbar from './components/Navbar/Navbar';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Provider, useSelector } from 'react-redux';
+import { store } from './redux/Store';
+import { ToastContainer } from 'react-toastify';
+
+import Navbar from './components/Navbar/Navbar';
 import InCinemaPage from './pages/InCinemaPage/InCinemaPage';
 import AuthPage from './pages/AuthPage/AuthPage';
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
@@ -12,13 +16,28 @@ import FilmDetailsOnlinePage from './pages/FilmDetailsOnlinePage/FilmDetailsOnli
 import AdminPanelPage from './pages/AdminPanelPage/AdminPanelPage';
 
 const App = () => {
-  const isAdmin = true;
+  return (
+    <Provider store={store}>
+      <BrowserRouter>
+        <MainApp />
+      </BrowserRouter>
+    </Provider>
+  );
+};
+
+const MainApp = () => {
+  const user = useSelector(store => store.auth.user);
+
+  const isAdmin = user?.roles?.includes("Admin");
 
   return (
-    <BrowserRouter>
-      <div>
-        <Navbar />
+    <div>
+      <Navbar />
+      <ToastContainer position="top-right" autoClose={3000} />
 
+      {isAdmin ?
+        <AdminPanelPage />
+        :
         <Routes>
           <Route path='/' element={<InCinemaPage />} />
           <Route path='/auth' element={<AuthPage />} />
@@ -29,15 +48,10 @@ const App = () => {
 
           <Route path='/watch-online' element={<WatchFilmsOnlinePage />} />
           <Route path='/watch-online/:filmId' element={<FilmDetailsOnlinePage />} />
-
-          <Route 
-            path="/admin" 
-            element={isAdmin ? <AdminPanelPage /> : <Navigate to="/" />} 
-          />
         </Routes>
-      </div>
-    </BrowserRouter>
-  )
-}
+      }
+    </div>
+  );
+};
 
 export default App;
