@@ -7,6 +7,7 @@ const ListOfFilms = () => {
     const [films, setFilms] = useState([
         {
             id: 1,
+            image_url: "https://uk.wikipedia.org/wiki/%D0%9A%D1%96%D1%82#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Felis_silvestris_silvestris.jpg", 
             name: 'Film 1',
             description: "Description 1",
             release_year: 2000,
@@ -14,6 +15,7 @@ const ListOfFilms = () => {
         },
         {
             id: 2,
+            image_url: "", 
             name: 'Film 2',
             description: "Description 2",
             release_year: 1990,
@@ -21,6 +23,7 @@ const ListOfFilms = () => {
         },
         {
             id: 3,
+            image_url: "", 
             name: 'Film 3',
             description: "Description 3",
             release_year: 2025,
@@ -28,12 +31,13 @@ const ListOfFilms = () => {
         },
         {
             id: 4,
+            image_url: "", 
             name: 'Film 4',
             description: "Description 4",
             release_year: 2020,
             genres: ["Genre 1", "Genre 2", "Genre 3"]
         },
-    ]);
+    ]);    
 
     const [editingFilm, setEditingFilm] = useState(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -85,8 +89,9 @@ const ListOfFilms = () => {
         <div className='flex flex-col'>
             <p className="text-2xl font-bold mb-4">All film list</p>
             <div className="border rounded-lg overflow-hidden">
-                <div className='grid grid-cols-6 bg-gray-100 font-bold px-4 py-2'>
+                <div className='grid grid-cols-7 bg-gray-100 font-bold px-4 py-2'>
                     <div>ID</div>
+                    <div>Image</div>
                     <div>Film name</div>
                     <div>Film description</div>
                     <div>Release year</div>
@@ -94,8 +99,11 @@ const ListOfFilms = () => {
                     <div>Actions</div>
                 </div>
                 {films.map((film) => (
-                    <div key={film.id} className="grid grid-cols-6 px-4 py-2 border-t">
+                    <div key={film.id} className="grid grid-cols-7 px-4 py-2 border-t">
                         <div>{film.id}</div>
+                        <div>
+                            <img src={film.image_url} alt="Film" className="w-20 h-20 object-cover" />
+                        </div>
                         <div>{film.name}</div>
                         <div>{film.description}</div>
                         <div>{film.release_year}</div>
