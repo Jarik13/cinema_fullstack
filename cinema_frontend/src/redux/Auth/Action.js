@@ -25,10 +25,10 @@ export const login = (data) => async (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
 
     try {
-        const response = await axios.post(`https://localhost:7057/api/Account/login`, data);
-
-        if (response.data && response.data.Token) {
-            const token = response.data.Token;
+        const response = await axios.post(`${baseURL}/api/Login/login`, data);
+        console.log("Response", response);
+        if (response.data && response.data.token) {
+            const token = response.data.token;
             localStorage.setItem("token", token);
             dispatch({ type: LOGIN_SUCCESS, payload: token });
             await dispatch(getUserProfile());
@@ -47,7 +47,7 @@ export const getUserProfile = () => async (dispatch) => {
     dispatch({ type: GET_USER_REQUEST });
 
     try {
-        const data = await axios.post(`${baseURL2}/api/Account/profile`, {}, {
+        const data = await axios.post(`${baseURL}/api/Login/profile`, {}, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
