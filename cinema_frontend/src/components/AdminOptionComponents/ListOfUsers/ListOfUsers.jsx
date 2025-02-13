@@ -10,16 +10,12 @@ const ListOfUsers = () => {
     const users = useSelector(store => store.userReducer.users);
     const [selectedUser, setSelectedUser] = useState(null);
 
-    const admin = useSelector(store => store.auth.user);
-
-    const isFirstLoad = useRef(true); 
+    const isFirstLoad = useRef(true);
 
     useEffect(() => {
-        if (admin?.email) {
-            dispatch(getUserList(admin.email, isFirstLoad.current)); 
-            isFirstLoad.current = false; 
-        }
-    }, [dispatch, admin]);     
+        dispatch(getUserList(isFirstLoad.current));
+        isFirstLoad.current = false;
+    }, [dispatch]);
 
     const handleBlockClick = (user) => {
         setSelectedUser(user);
@@ -45,11 +41,11 @@ const ListOfUsers = () => {
                     <div>Action</div>
                 </div>
                 {users.map(user => (
-                    <div key={user.Id} className="grid grid-cols-[2fr_1fr_2fr_1fr_0.5fr] border-t px-4 py-2 items-center">
-                        <div>{user.Id}</div>
-                        <div>{user.UserName}</div>
-                        <div>{user.Email}</div>
-                        <div>{user.Age}</div>
+                    <div key={user.id} className="grid grid-cols-[2fr_1fr_2fr_1fr_0.5fr] border-t px-4 py-2 items-center">
+                        <div>{user.id}</div>
+                        <div>{user.userName}</div>
+                        <div>{user.email}</div>
+                        <div>{user.age}</div>
                         <Button variant="destructive" onClick={() => handleBlockClick(user)}>Block</Button>
                     </div>
                 ))}

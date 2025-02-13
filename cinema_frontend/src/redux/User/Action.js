@@ -1,17 +1,18 @@
 import axios from "axios";
-import { 
-    BLOCK_USER_FAILURE, 
-    BLOCK_USER_REQUEST, 
-    BLOCK_USER_SUCCESS, 
-    GET_USER_LIST_FAILURE, 
-    GET_USER_LIST_REQUEST, 
-    GET_USER_LIST_SUCCESS, 
-    UPDATE_USER_PROFILE_FAILURE, 
-    UPDATE_USER_PROFILE_REQUEST, 
-    UPDATE_USER_PROFILE_SUCCESS 
+import {
+    BLOCK_USER_FAILURE,
+    BLOCK_USER_REQUEST,
+    BLOCK_USER_SUCCESS,
+    GET_USER_LIST_FAILURE,
+    GET_USER_LIST_REQUEST,
+    GET_USER_LIST_SUCCESS,
+    UPDATE_USER_PROFILE_FAILURE,
+    UPDATE_USER_PROFILE_REQUEST,
+    UPDATE_USER_PROFILE_SUCCESS
 } from "./ActionType";
 import { toast } from "react-toastify";
 import { getUserProfile } from "../Auth/Action";
+import { baseURL } from "@/config/constants";
 
 export const updateUserProfile = (email, name, emailValue, age) => async (dispatch) => {
     dispatch({ type: UPDATE_USER_PROFILE_REQUEST });
@@ -38,12 +39,12 @@ export const updateUserProfile = (email, name, emailValue, age) => async (dispat
             patches,
             {
                 headers: {
-                    "Content-Type": "application/json-patch+json" 
+                    "Content-Type": "application/json-patch+json"
                 }
             }
         );
 
-        console.log("Updated:", response.data); 
+        console.log("Updated:", response.data);
 
         dispatch({ type: UPDATE_USER_PROFILE_SUCCESS, payload: response.data });
         await dispatch(getUserProfile());
@@ -55,13 +56,15 @@ export const updateUserProfile = (email, name, emailValue, age) => async (dispat
     }
 };
 
-export const getUserList = (email, showToast) => async (dispatch) => {
+export const getUserList = (showToast) => async (dispatch) => {
     dispatch({ type: GET_USER_LIST_REQUEST });
 
     try {
-        const response = await axios.get(`http://localhost:5161/api/Admin`, {
-            params: { email }
+        const response = await axios.get(`${baseURL}/api/Admin`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
+
+        console.log(response);
 
         if (response && response.data) {
             dispatch({ type: GET_USER_LIST_SUCCESS, payload: response.data });
@@ -78,7 +81,6 @@ export const getUserList = (email, showToast) => async (dispatch) => {
         return null;
     }
 };
-
 
 export const blockUser = (adminEmail, userNameToDelete) => async (dispatch) => {
     dispatch({ type: BLOCK_USER_REQUEST });
