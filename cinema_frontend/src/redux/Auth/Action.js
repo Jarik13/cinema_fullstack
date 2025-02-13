@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./ActionType";
-import api, { baseURL, baseURL2 } from "@/config/constants";
+import { baseURL, baseURL2 } from "@/config/constants";
 
 export const register = (data) => async (dispatch) => {
     dispatch({ type: REGISTER_REQUEST });
