@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { store } from '@/redux/Store';
-import { getUserProfile } from '@/redux/Auth/Action';
+import { getUserProfile, logout } from '@/redux/Auth/Action';
 
 const UserAvatar = () => {
     const navigate = useNavigate();
@@ -17,6 +17,13 @@ const UserAvatar = () => {
     const isAuthenticated = !!user;
 
     const handleMenuToggle = () => setOpen((prev) => !prev);
+
+    const handleLogout = () => {
+        dispatch(logout());
+        navigate("/");
+        setOpen(false); 
+    };
+
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -48,7 +55,7 @@ const UserAvatar = () => {
                             >
                                 My Profile
                             </Button>
-                            <Button variant="destructive" className="w-full text-left" onClick={handleMenuToggle}>Logout</Button>
+                            <Button variant="destructive" className="w-full text-left" onClick={handleLogout}>Logout</Button>
                         </>
                         :
                         <Button

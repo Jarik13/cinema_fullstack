@@ -27,10 +27,8 @@ const App = () => {
 
 const MainApp = () => {
   const user = useSelector(store => store.auth.user);
-  console.log("User:", user);
 
   const isAdmin = user?.roles?.includes("Admin");
-  console.log(isAdmin);
 
   return (
     <div>
