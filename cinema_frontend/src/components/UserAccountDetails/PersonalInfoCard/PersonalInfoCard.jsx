@@ -6,8 +6,6 @@ import UpdateUserInfoCard from '../UpdateUserInfo/UpdateUserInfoCard';
 const PersonalInfoCard = ({ user }) => {
     const maskedPassword = user?.password ? '*'.repeat(user.password.length) : '';
 
-    console.log(user);
-
     return (
         <>
             <div>

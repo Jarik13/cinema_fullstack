@@ -11,8 +11,6 @@ const MyTicketsCard = () => {
     dispatch(getUserTickets());
   }, [dispatch]);
 
-  console.log(tickets);
-
   return (
     <div className="space-y-6">
       {tickets?.length > 0 ? (

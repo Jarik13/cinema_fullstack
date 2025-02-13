@@ -13,7 +13,6 @@ export const getUserTickets = () => async (dispatch) => {
             }
         });
 
-        console.log(data);
         dispatch({ type: GET_USER_TICKETS_SUCCESS, payload: data });
     } catch (e) {
         toast(e.data);
