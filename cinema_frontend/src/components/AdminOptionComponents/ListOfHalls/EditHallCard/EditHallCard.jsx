@@ -12,12 +12,12 @@ const EditHallCard = ({ isOpen, onClose, editHall, onChange, onSave }) => {
                     <DialogTitle>Edit hall</DialogTitle>
                 </DialogHeader>
                 <div className="flex flex-col gap-4">
-                    <Label htmlFor="name">Hall name</Label>
+                    <Label htmlFor="name">Hall number</Label>
                     <Input
-                        name="name"
-                        value={editHall.name}
+                        name="number"
+                        value={editHall.number}
                         onChange={onChange}
-                        placeholder="Hall name ..."
+                        placeholder="Hall number ..."
                     />
                     <Label htmlFor="seats">Seats count</Label>
                     <Input

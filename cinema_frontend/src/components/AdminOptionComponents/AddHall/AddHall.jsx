@@ -1,3 +1,4 @@
+import Location from "@/components/Location/Location";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -6,8 +7,9 @@ import { useForm } from "react-hook-form";
 const AddHall = () => {
     const form = useForm({
         defaultValues: {
-            name: "",
+            number: "",
             seats_count: 0,
+            location_id: "", 
         },
         mode: "onChange",
     });
@@ -18,10 +20,11 @@ const AddHall = () => {
         console.log(data);
 
         reset({
-            name: "",
+            number: "",
             seats_count: 0,
+            location_id: "", 
         });
-    }
+    };
 
     return (
         <div className="p-4 border rounded bg-gray-50 w-1/2">
@@ -30,16 +33,16 @@ const AddHall = () => {
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <FormField
                         control={form.control}
-                        name="name"
-                        rules={{ required: "Name is required" }}
+                        name="number"
+                        rules={{ required: "Number is required" }}
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Name</FormLabel>
+                                <FormLabel>Number</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Hall name ..." {...field} />
+                                    <Input placeholder="Hall number ..." {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    This is public name of hall.
+                                    This is the public number of the hall.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
@@ -70,7 +73,7 @@ const AddHall = () => {
                                     <Input type="number" placeholder="213 ..." {...field} />
                                 </FormControl>
                                 <FormDescription>
-                                    This is public count of all seats of hall.
+                                    This is the public count of all seats of the hall.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
