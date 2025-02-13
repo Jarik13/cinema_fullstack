@@ -14,11 +14,11 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
         defaultValues: {
             name: film?.name || "",
             description: film?.description || "",
-            release_year: film?.release_year || 1930,
-            image_url: film?.image_url || "",
-            trailer_url: film?.trailer_url || "",
+            releaseYear: film?.releaseYear || 1930,
+            imageUrl: film?.imageUrl || "",
+            trailerUrl: film?.trailerUrl || "",
             genres: film?.genres || [],
-            age_rating: film?.age_rating || "0+",
+            ageRating: film?.ageRating || "0+",
         },
         mode: "onChange",
     });
@@ -105,16 +105,16 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="release_year"
+                            name="releaseYear"
                             rules={{
                                 required: "Release year is required",
                                 validate: (value) => {
                                     if (value === "" || isNaN(value)) {
-                                        setValue("release_year", 1930);
+                                        setValue("releaseYear", 1930);
                                         return "Release year must be a valid number";
                                     }
                                     if (value < 1930) {
-                                        setValue("release_year", 1930);
+                                        setValue("releaseYear", 1930);
                                         return "Release year cannot be less than 1930";
                                     }
                                     return true;
@@ -136,7 +136,7 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="image_url"
+                            name="imageUrl"
                             rules={{ required: "Image URL is required" }}
                             render={({ field }) => (
                                 <FormItem>
@@ -154,7 +154,7 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="trailer_url"
+                            name="trailerUrl"
                             rules={{ required: "Trailer URL is required" }}
                             render={({ field }) => (
                                 <FormItem>
@@ -211,14 +211,14 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="age_rating"
+                            name="ageRating"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Age rating</FormLabel>
                                     <FormControl>
-                                        <Select onValueChange={(value) => setValue("age_rating", value)} value={watch("age_rating")}>
+                                        <Select onValueChange={(value) => setValue("ageRating", value)} value={watch("ageRating")}>
                                             <SelectTrigger>
-                                                <SelectValue>{watch("age_rating")}</SelectValue>
+                                                <SelectValue>{watch("ageRating")}</SelectValue>
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {ageRatings.map((rating, index) => (
