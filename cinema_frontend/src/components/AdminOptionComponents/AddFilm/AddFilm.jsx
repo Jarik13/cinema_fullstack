@@ -15,6 +15,7 @@ const AddFilm = () => {
             description: "",
             release_year: 1930,
             image_url: "",
+            trailer_url: "",
             genres: [],
         },
         mode: "onChange",
@@ -32,6 +33,7 @@ const AddFilm = () => {
             description: "",
             release_year: 1930,
             image_url: "",
+            trailer_url: "",
             genres: [],
         });
     }
@@ -40,7 +42,7 @@ const AddFilm = () => {
         if (!selectedGenres.includes(value)) {
             const updatedGenres = [...selectedGenres, value];
             setSelectedGenres(updatedGenres);
-            setValue('genres', updatedGenres);  
+            setValue('genres', updatedGenres);
         }
     };
 
@@ -118,6 +120,42 @@ const AddFilm = () => {
 
                     <FormField
                         control={form.control}
+                        name="image_url"
+                        rules={{ required: "Image URL is required" }}
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Film image url</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Film image url ..." {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    This is public image of film.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="trailer_url"
+                        rules={{ required: "Trailer URL is required" }}
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Film trailer url</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="Film trailer url ..." {...field} />
+                                </FormControl>
+                                <FormDescription>
+                                    This is public trailer of film.
+                                </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
                         name="genres"
                         render={({ field }) => (
                             <FormItem>
@@ -140,9 +178,9 @@ const AddFilm = () => {
                                 <FormMessage />
                                 <div className="mt-4 w-full">
                                     <div className="flex gap-4">
-                                            {selectedGenres.map((genre, index) => (
-                                                <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">{genre}</div>
-                                            ))}
+                                        {selectedGenres.map((genre, index) => (
+                                            <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">{genre}</div>
+                                        ))}
                                     </div>
                                 </div>
 
