@@ -3,19 +3,23 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { createFilm } from '@/redux/Film/Action';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
 const genres = ["Genre 1", "Genre 2", "Genre 3", "Genre 4"];
 
 const AddFilm = () => {
+    const dispatch = useDispatch();
+
     const form = useForm({
         defaultValues: {
             name: "",
             description: "",
-            release_year: 1930,
-            image_url: "",
-            trailer_url: "",
+            releaseYear: 1930,
+            imageUrl: "",
+            trailerUrl: "",
             genres: [],
         },
         mode: "onChange",
@@ -27,13 +31,24 @@ const AddFilm = () => {
     const onSubmit = (data) => {
         console.log(data);
 
+        const filmDto = {
+            name: data.name,
+            description: data.description,
+            releaseYear: data.releaseYear,
+            imageUrl: data.imageUrl,
+            trailerUrl: data.trailerUrl,
+            genres: [{ name: "Action" }], // here need update !!!!!!!!!!!!!!!!!!!!!!!
+        };
+    
+        dispatch(createFilm(filmDto));
+
         setSelectedGenres([]);
         reset({
             name: "",
             description: "",
-            release_year: 1930,
-            image_url: "",
-            trailer_url: "",
+            releaseYear: 1930,
+            imageUrl: "",
+            trailerUrl: "",
             genres: [],
         });
     }
@@ -89,16 +104,16 @@ const AddFilm = () => {
 
                     <FormField
                         control={form.control}
-                        name="release_year"
+                        name="releaseYear"
                         rules={{
                             required: "Release year is required",
                             validate: (value) => {
                                 if (value === "" || isNaN(value)) {
-                                    setValue("release_year", 1930);
+                                    setValue("releaseYear", 1930);
                                     return "Release year must be a valid number";
                                 }
                                 if (value < 1930) {
-                                    setValue("release_year", 1930);
+                                    setValue("releaseYear", 1930);
                                     return "Release year cannot be less than 1930";
                                 }
                                 return true;
@@ -120,7 +135,7 @@ const AddFilm = () => {
 
                     <FormField
                         control={form.control}
-                        name="image_url"
+                        name="imageUrl"
                         rules={{ required: "Image URL is required" }}
                         render={({ field }) => (
                             <FormItem>
@@ -138,7 +153,7 @@ const AddFilm = () => {
 
                     <FormField
                         control={form.control}
-                        name="trailer_url"
+                        name="trailerUrl"
                         rules={{ required: "Trailer URL is required" }}
                         render={({ field }) => (
                             <FormItem>

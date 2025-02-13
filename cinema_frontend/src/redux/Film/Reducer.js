@@ -15,5 +15,7 @@ export const filmReducer = (state = initialState, action) => {
             return { ...state, loading: false, film: action.payload };
         case CREATE_FILM_FAILURE:
             return { ...state, loading: false, error: "Create film failed!" };
+        default:
+            return state;
     }
 }
