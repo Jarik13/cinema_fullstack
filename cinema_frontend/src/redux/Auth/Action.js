@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { GET_USER_FAILURE, GET_USER_REQUEST, GET_USER_SUCCESS, LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT, REGISTER_FAILURE, REGISTER_REQUEST, REGISTER_SUCCESS } from "./ActionType";
-import { baseURL, baseURL2 } from "@/config/constants";
+import { baseURL } from "@/config/constants";
 
 export const register = (data) => async (dispatch) => {
     dispatch({ type: REGISTER_REQUEST });
@@ -27,8 +27,8 @@ export const login = (data) => async (dispatch) => {
     try {
         const response = await axios.post(`${baseURL}/api/Login/login`, data);
 
-        if (response.data && response.data.Token) {
-            const token = response.data.Token;
+        if (response.data && response.data.token) {
+            const token = response.data.token;
             localStorage.setItem("token", token);
             dispatch({ type: LOGIN_SUCCESS, payload: token });
             await dispatch(getUserProfile());

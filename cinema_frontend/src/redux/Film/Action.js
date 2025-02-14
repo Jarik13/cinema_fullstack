@@ -3,7 +3,6 @@ import { CREATE_FILM_FAILURE, CREATE_FILM_REQUEST, CREATE_FILM_SUCCESS, DELETE_F
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
-
 export const createFilm = (film) => async (dispatch) => {
     dispatch({ type: CREATE_FILM_REQUEST });
 
