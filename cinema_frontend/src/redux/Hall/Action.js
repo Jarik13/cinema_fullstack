@@ -29,13 +29,15 @@ export const createHall = (data) => async (dispatch, getState) => {
     }
 };
 
-export const getHallList = () => async (dispatch) => {
+export const getHallList = (showToast) => async (dispatch) => {
     dispatch({ type: GET_ALL_HALLS_REQUEST });
 
     try {
         const { data } = await axios.get(`${baseURL}/api/Hall/get_halls`);
         dispatch({ type: GET_ALL_HALLS_SUCCESS, payload: data });
-        toast.success("Halls getted successfully!");
+        if (showToast) {
+            toast.success("Halls getted successfully!");
+        }
     } catch (e) {
         console.error(e);
         dispatch({ type: GET_ALL_HALLS_FAILURE });

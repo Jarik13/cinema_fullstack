@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import EditHallCard from './EditHallCard/EditHallCard';
 import DeleteHallCard from './DeleteHallCard/DeleteHallCard';
@@ -8,15 +8,17 @@ import { getHallList, updateHall } from '@/redux/Hall/Action';
 const ListOfHalls = () => {
     const dispatch = useDispatch();
     const halls = useSelector(store => store.hall?.halls || []);
-    console.log(halls);
 
     const [selectedHall, setSelectedHall] = useState(null);
     const [editHall, setEditHall] = useState({ id: '', number: '', count_of_seats: '' });
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
+    const isFirstLoad = useRef(true);
+
     useEffect(() => {
-        dispatch(getHallList());
+        dispatch(getHallList(isFirstLoad.current));
+        isFirstLoad.current = false;
     }, [dispatch]);
 
     const toggleHallStatus = (id) => {
@@ -43,7 +45,7 @@ const ListOfHalls = () => {
         await dispatch(updateHall(editHall.id, [
             { op: "replace", path: "/Number", value: Number(editHall.number) },
         ]));
-        await dispatch(getHallList());
+        await dispatch(getHallList(true));
         setIsEditOpen(false);
     };
 
