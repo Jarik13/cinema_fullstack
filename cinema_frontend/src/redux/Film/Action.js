@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_FILM_FAILURE, CREATE_FILM_REQUEST, CREATE_FILM_SUCCESS, DELETE_FILM_FAILURE, DELETE_FILM_REQUEST, DELETE_FILM_SUCCESS, GET_ALL_FILMS_FAILURE, GET_ALL_FILMS_REQUEST, UPDATE_FILM_FAILURE, UPDATE_FILM_REQUEST, UPDATE_FILM_SUCCESS } from "./ActionType"
+import { CREATE_FILM_FAILURE, CREATE_FILM_REQUEST, CREATE_FILM_SUCCESS, DELETE_FILM_FAILURE, DELETE_FILM_REQUEST, DELETE_FILM_SUCCESS, GET_ALL_FILMS_FAILURE, GET_ALL_FILMS_REQUEST, GET_ALL_FILMS_SUCCESS, UPDATE_FILM_FAILURE, UPDATE_FILM_REQUEST, UPDATE_FILM_SUCCESS } from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -76,6 +76,7 @@ export const getFilmList = () => async (dispatch) => {
         });
 
         console.log(data);
+        dispatch({ type: GET_ALL_FILMS_SUCCESS, payload: data });
         toast.success("Films getted successfully!");
     } catch (e) {
         dispatch({ type: GET_ALL_FILMS_FAILURE });
