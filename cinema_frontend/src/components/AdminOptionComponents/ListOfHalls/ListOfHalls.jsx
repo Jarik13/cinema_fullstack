@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import EditHallCard from './EditHallCard/EditHallCard';
 import DeleteHallCard from './DeleteHallCard/DeleteHallCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { getHallList, updateHall } from '@/redux/Hall/Action';
+import { deleteHall, getHallList, updateHall } from '@/redux/Hall/Action';
 
 const ListOfHalls = () => {
     const dispatch = useDispatch();
@@ -49,8 +49,9 @@ const ListOfHalls = () => {
         setIsEditOpen(false);
     };
 
-    const deleteHall = () => {
-        // here will be deleteHall
+    const handleDeleteHall = async () => {
+        await dispatch(deleteHall(selectedHall.id));
+        await dispatch(getHallList(true));
         setIsDeleteOpen(false);
     };
 
@@ -95,7 +96,7 @@ const ListOfHalls = () => {
             <DeleteHallCard
                 isOpen={isDeleteOpen}
                 onClose={() => setIsDeleteOpen(false)}
-                onConfirm={deleteHall}
+                onConfirm={handleDeleteHall}
                 hallName={selectedHall?.number}
             />
         </div>

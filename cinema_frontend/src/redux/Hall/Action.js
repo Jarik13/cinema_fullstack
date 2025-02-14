@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS, UPDATE_HALL_FAILURE, UPDATE_HALL_REQUEST, UPDATE_HALL_SUCCESS } from "./ActionType";
+import { CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, DELETE_HALL_FAILURE, DELETE_HALL_REQUEST, DELETE_HALL_SUCCESS, GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS, UPDATE_HALL_FAILURE, UPDATE_HALL_REQUEST, UPDATE_HALL_SUCCESS } from "./ActionType";
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -14,10 +14,10 @@ export const createHall = (data) => async (dispatch, getState) => {
             throw new Error("Location ID is missing.");
         }
 
-        const requestData = { 
-            ...data, 
-            seats_count: String(data.count_of_seats), 
-            locationId 
+        const requestData = {
+            ...data,
+            seats_count: String(data.count_of_seats),
+            locationId
         };
 
         const response = await axios.post(`${baseURL}/api/Hall/create_hall`, requestData);
@@ -60,6 +60,25 @@ export const updateHall = (id, pathes) => async (dispatch) => {
     } catch (e) {
         console.error(e);
         dispatch({ type: UPDATE_HALL_FAILURE });
-        toast.error(e.response?.data || "Failed to update hall!");
+        toast.error("Failed to update hall!");
+    }
+}
+
+export const deleteHall = (id) => async (dispatch) => {
+    dispatch({ type: DELETE_HALL_REQUEST });
+
+    try {
+        const response = await axios.delete(`${baseURL}/api/Hall/delete_hall/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        console.log(response);
+        dispatch({ type: DELETE_HALL_SUCCESS });
+        toast.success("Hall deleted successfully!");
+    } catch (e) {
+        console.error(e);
+        dispatch({ type: DELETE_HALL_FAILURE });
+        toast.error("Failed to delete hall!");
     }
 }
