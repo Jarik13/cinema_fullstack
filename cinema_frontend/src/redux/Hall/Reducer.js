@@ -9,5 +9,7 @@ const initialState = {
 export const hallReducer = (state = initialState, action) => {
     switch (action.type) {
         
+        default:
+            return state;
     }
 }
