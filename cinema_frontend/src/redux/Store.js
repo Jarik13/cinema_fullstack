@@ -4,11 +4,13 @@ import { authReducer } from "./Auth/Reducer";
 import { userReducer } from "./User/Reducer";
 import { filmReducer } from "./Film/Reducer";
 import { ticketReducer } from "./Ticket/Reducer";
+import { hallReducer } from "./Hall/Reducer";
 
 const rootReducer = combineReducers({
     auth: authReducer,
     userReducer: userReducer,
     film: filmReducer,
     ticket: ticketReducer,
+    hall: hallReducer
 });
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunk))
