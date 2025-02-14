@@ -15,10 +15,7 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
             name: film?.name || "",
             description: film?.description || "",
             releaseYear: film?.releaseYear || 1930,
-            imageUrl: film?.imageUrl || "",
-            trailerUrl: film?.trailerUrl || "",
             genres: film?.genres || [],
-            ageRating: film?.ageRating || "0+",
         },
         mode: "onChange",
     });
@@ -136,42 +133,6 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="imageUrl"
-                            rules={{ required: "Image URL is required" }}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Film image url</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Film image url ..." {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is public image of film.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="trailerUrl"
-                            rules={{ required: "Trailer URL is required" }}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Film trailer url</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Film trailer url ..." {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is public trailer of film.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
                             name="genres"
                             render={({ field }) => (
                                 <FormItem>
@@ -208,33 +169,6 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
                                 </FormItem>
                             )}
                         />
-
-                        <FormField
-                            control={form.control}
-                            name="ageRating"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Age rating</FormLabel>
-                                    <FormControl>
-                                        <Select onValueChange={(value) => setValue("ageRating", value)} value={watch("ageRating")}>
-                                            <SelectTrigger>
-                                                <SelectValue>{watch("ageRating")}</SelectValue>
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {ageRatings.map((rating, index) => (
-                                                    <SelectItem key={index} value={rating}>{rating}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </FormControl>
-                                    <FormDescription>
-                                        This is the film's age rating.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
 
                         <Button type="submit" variant="destructive">
                             Save All
