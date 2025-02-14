@@ -5,20 +5,21 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../ui/command';
 import { cn } from '@/lib/utils';
 import { useDispatch, useSelector } from 'react-redux';
-import { getLocationList } from '@/redux/Location/Action';
+import { getLocationList, setSelectedLocation } from '@/redux/Location/Action';
 
 const Location = () => {
     const dispatch = useDispatch();
     const locations = useSelector(store => store.location?.locations || []);
+    const selectedLocation = useSelector(store => store.location?.selectedLocation || null);
 
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("");
 
     useEffect(() => {
         dispatch(getLocationList()); 
     }, [dispatch]);
 
     const formattedLocations = locations.map(location => ({
+        id: location.id,
         value: location.name + ", " + location.city, 
         label: `${location.name}, ${location.city}` 
     }));
@@ -32,8 +33,8 @@ const Location = () => {
                     aria-expanded={open}
                     className="w-[200px] justify-between"
                 >
-                    {value
-                        ? formattedLocations.find((location) => location.value === value)?.label
+                    {selectedLocation 
+                        ? formattedLocations.find((loc) => loc.id === selectedLocation.id)?.label
                         : "Select location..."
                     }
                     <ChevronsUpDown className="opacity-50" />
@@ -47,9 +48,9 @@ const Location = () => {
                         <CommandGroup>
                             {formattedLocations.map((location) => (
                                 <CommandItem
-                                    key={location.value}
+                                    key={location.id}
                                     onSelect={() => {
-                                        setValue(location.value === value ? "" : location.value);
+                                        dispatch(setSelectedLocation(location)); 
                                         setOpen(false);
                                     }}
                                 >
@@ -57,7 +58,7 @@ const Location = () => {
                                     <Check
                                         className={cn(
                                             "ml-auto",
-                                            value === location.value ? "opacity-100" : "opacity-0"
+                                            selectedLocation?.id === location.id ? "opacity-100" : "opacity-0"
                                         )}
                                     />
                                 </CommandItem>
@@ -66,8 +67,8 @@ const Location = () => {
                     </CommandList>
                 </Command>
             </PopoverContent>
-        </Popover >
-    )
+        </Popover>
+    );
 }
 
 export default Location;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_ALL_LOCATIONS_FAILURE, GET_ALL_LOCATIONS_REQUEST, GET_ALL_LOCATIONS_SUCCESS } from "./ActionType"
+import { GET_ALL_LOCATIONS_FAILURE, GET_ALL_LOCATIONS_REQUEST, GET_ALL_LOCATIONS_SUCCESS, SET_SELECTED_LOCATION } from "./ActionType"
 import { baseURL } from "@/config/constants";
 import { toast } from "react-toastify";
 
@@ -15,3 +15,8 @@ export const getLocationList = () => async (dispatch) => {
         toast.error("Faild to get locations!");
     }
 }
+
+export const setSelectedLocation = (location) => ({
+    type: SET_SELECTED_LOCATION,
+    payload: location,
+});
