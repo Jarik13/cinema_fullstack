@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_HALL_REQUEST } from "./ActionType";
+import { CREATE_HALL_REQUEST, GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS } from "./ActionType";
 import { CREATE_FILM_FAILURE } from "../Film/ActionType";
 import axios from "axios";
 import { baseURL } from "@/config/constants";
@@ -30,3 +30,17 @@ export const createHall = (data) => async (dispatch, getState) => {
         toast.error(e.response?.data || "Failed to create hall.");
     }
 };
+
+export const getHallList = () => async (dispatch) => {
+    dispatch({ type: GET_ALL_HALLS_REQUEST });
+
+    try {
+        const { data } = await axios.get(`${baseURL}/api/Hall/get_halls`);
+        console.log(data);
+        dispatch({ type: GET_ALL_HALLS_SUCCESS, payload: data });
+    } catch (e) {
+        console.error(e);
+        dispatch({ type: GET_ALL_HALLS_FAILURE });
+        toast.error(e.response?.data || "Failed to get hall list.");
+    }
+}
