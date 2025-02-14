@@ -2,23 +2,16 @@ import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
 import EditFilmCard from './EditFilmCard/EditFilmCard';
 import DeleteFilmCard from './DeleteFilmCard/DeleteFilmCard';
-import { useDispatch } from 'react-redux';
-import { deleteFilm, updateFilm } from '@/redux/Film/Action';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteFilm, getFilmList, updateFilm } from '@/redux/Film/Action';
 
 const ListOfFilms = () => {
     const dispatch = useDispatch();
+    const films = useSelector(store => store.film?.films || []);
 
-    const [films, setFilms] = useState([
-        {
-            id: 1,
-            imageUrl: "https://uk.wikipedia.org/wiki/%D0%9A%D1%96%D1%82#/media/%D0%A4%D0%B0%D0%B9%D0%BB:Felis_silvestris_silvestris.jpg",
-            name: 'Film 1',
-            description: "Description 1",
-            releaseYear: 2000,
-            ageRating: "10+",
-            genres: ["Genre 1", "Genre 2"]
-        },
-    ]);
+    useEffect(() => {
+        dispatch(getFilmList());
+    }, []);
 
     const [editingFilm, setEditingFilm] = useState(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -57,7 +50,7 @@ const ListOfFilms = () => {
     const handleSaveFilm = (updatedFilm) => {
         const patches = generatePatches(editingFilm, updatedFilm);
         if (patches.length > 0) {
-            dispatch(updateFilm("DFFEEBD4-16C0-42D4-2773-08DD4C638A21", patches)); // here need to update !!!!!!!!
+            dispatch(updateFilm(editingFilm.id, patches)); // here need to update !!!!!!!!
         }
 
         setFilms(prevFilms =>
@@ -91,7 +84,7 @@ const ListOfFilms = () => {
 
     const handleDeleteFilm = () => {
         setFilms(films.filter(film => film.id !== selectedFilmId));
-        dispatch(deleteFilm("7B5C27C6-3B11-4E11-2774-08DD4C638A21")); // here need to update !!!!!!!!!!!!!!!!!!!!!!!
+        dispatch(deleteFilm(selectedFilmId)); // here need to update !!!!!!!!!!!!!!!!!!!!!!!
         setIsDialogOpen(false);
     };
 
@@ -110,17 +103,17 @@ const ListOfFilms = () => {
                     <div>Actions</div>
                 </div>
                 {films.map((film) => (
-                    <div key={film.id} className="grid grid-cols-8 px-4 py-2 border-t">
-                        <div>{film.id}</div>
+                    <div key={film.Id} className="grid grid-cols-8 px-4 py-2 border-t">
+                        <div>{film.Id}</div>
                         <div>
-                            <img src={film.imageUrl} alt="Film" className="w-20 h-20 object-cover" />
+                            <img src={film.ImageUrl} alt="Film" className="w-20 h-20 object-cover" />
                         </div>
-                        <div>{film.name}</div>
-                        <div>{film.description}</div>
-                        <div>{film.releaseYear}</div>
-                        <div>{film.ageRating}</div>
+                        <div>{film.Name}</div>
+                        <div>{film.Description}</div>
+                        <div>{film.Release_year}</div>
+                        <div>{film.Age_limit}</div>
                         <div className="grid grid-cols-1 gap-4">
-                            {film.genres?.map((genre, index) => (
+                            {film.Genres?.map((genre, index) => (
                                 <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">{genre}</div>
                             ))}
                         </div>
