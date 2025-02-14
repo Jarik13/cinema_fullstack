@@ -15,7 +15,11 @@ export const createHall = (data) => async (dispatch, getState) => {
             throw new Error("Location ID is missing.");
         }
 
-        const requestData = { ...data, locationId };
+        const requestData = { 
+            ...data, 
+            seats_count: String(data.count_of_seats), 
+            locationId 
+        };
 
         const response = await axios.post(`${baseURL}/api/Hall/create_hall`, requestData);
         console.log(response);
@@ -23,6 +27,6 @@ export const createHall = (data) => async (dispatch, getState) => {
     } catch (e) {
         console.error(e);
         dispatch({ type: CREATE_FILM_FAILURE });
-        toast.error(e.message || "Failed to create hall.");
+        toast.error(e.response?.data || "Failed to create hall.");
     }
 };
