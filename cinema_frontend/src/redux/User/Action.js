@@ -44,8 +44,6 @@ export const updateUserProfile = (email, name, emailValue, age) => async (dispat
             }
         );
 
-        console.log("Updated:", response.data);
-
         dispatch({ type: UPDATE_USER_PROFILE_SUCCESS, payload: response.data });
         await dispatch(getUserProfile());
         toast.success("Profile updated successfully!");
@@ -63,8 +61,6 @@ export const getUserList = (showToast) => async (dispatch) => {
         const response = await axios.get(`${baseURL}/api/Admin`, {
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
-
-        console.log(response);
 
         if (response && response.data) {
             dispatch({ type: GET_USER_LIST_SUCCESS, payload: response.data });
