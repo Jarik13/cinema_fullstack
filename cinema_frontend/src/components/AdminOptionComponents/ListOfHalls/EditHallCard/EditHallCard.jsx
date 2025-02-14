@@ -19,11 +19,11 @@ const EditHallCard = ({ isOpen, onClose, editHall, onChange, onSave }) => {
                         onChange={onChange}
                         placeholder="Hall number ..."
                     />
-                    <Label htmlFor="seats">Seats count</Label>
+                    <Label htmlFor="count_of_seats">Seats count</Label>
                     <Input
-                        name="seats"
+                        name="count_of_seats"
                         type="number"
-                        value={editHall.seats}
+                        value={editHall.count_of_seats}
                         onChange={onChange}
                         placeholder="213 ..."
                     />
