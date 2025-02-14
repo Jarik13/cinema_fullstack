@@ -83,8 +83,7 @@ export const blockUser = (userNameToDelete) => async (dispatch) => {
     dispatch({ type: BLOCK_USER_REQUEST });
 
     try {
-        const response = await axios.delete(`${baseURL}/api/Admin/DeleteUser`, {
-            params: { userNameToDelete },
+        const response = await axios.delete(`${baseURL}/api/Admin/DeleteUser/${userNameToDelete}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
 
