@@ -22,6 +22,10 @@ const MyTicketsCard = () => {
                   <h4 className="font-semibold">{ticket.movieName}</h4>
                   <p className="text-gray-500">Showtime: {ticket.book_buy_data}</p>
                   <p className="text-gray-400">Seat: {ticket.seat_number}</p>
+                  <p className="text-green-600 font-semibold">Price: ${ticket.price}</p>
+                  <p className={`text-sm font-medium ${ticket.status === 'Available' ? 'text-green-500' : 'text-yellow-500'}`}>
+                    Status: {ticket.status}
+                  </p>
                   <button className="text-blue-500 hover:underline mt-4">View Details</button>
                 </div>
               </CarouselItem>
