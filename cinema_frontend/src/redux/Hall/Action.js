@@ -82,3 +82,7 @@ export const deleteHall = (id) => async (dispatch) => {
         toast.error("Failed to delete hall!");
     }
 }
+
+export const openHall = (id) => async (dispatch) => {
+    
+}
