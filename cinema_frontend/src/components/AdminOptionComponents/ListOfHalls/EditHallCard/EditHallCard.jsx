@@ -19,14 +19,6 @@ const EditHallCard = ({ isOpen, onClose, editHall, onChange, onSave }) => {
                         onChange={onChange}
                         placeholder="Hall number ..."
                     />
-                    <Label htmlFor="count_of_seats">Seats count</Label>
-                    <Input
-                        name="count_of_seats"
-                        type="number"
-                        value={editHall.count_of_seats}
-                        onChange={onChange}
-                        placeholder="213 ..."
-                    />
                 </div>
                 <DialogFooter>
                     <Button onClick={onSave}>Save changes</Button>

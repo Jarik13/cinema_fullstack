@@ -43,17 +43,10 @@ export const getHallList = () => async (dispatch) => {
     }
 }
 
-export const updateHall = (id, pathes) => async (dispatch, getState) => {
+export const updateHall = (id, pathes) => async (dispatch) => {
     dispatch({ type: UPDATE_HALL_REQUEST });
 
     try {
-        const state = getState();
-        const locationId = state.location?.selectedLocation?.id;
-
-        if (!locationId) {
-            throw new Error("Location ID is missing.");
-        }
-
         const response = await axios.patch(`${baseURL}/api/Hall/update_hall_info/${id}`, pathes, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -65,6 +58,6 @@ export const updateHall = (id, pathes) => async (dispatch, getState) => {
     } catch (e) {
         console.error(e);
         dispatch({ type: UPDATE_HALL_FAILURE });
-        toast.error(e.response?.data || "Failed to create hall!");
+        toast.error(e.response?.data || "Failed to update hall!");
     }
 }
