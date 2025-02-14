@@ -21,12 +21,15 @@ const ListOfHalls = () => {
         isFirstLoad.current = false;
     }, [dispatch]);
 
-    const toggleHallStatus = (hall) => {
+    const toggleHallStatus = async (hall) => {
+        console.log(hall);
         if (hall.is_available) {
-            dispatch(closeHall(hall.id)); 
+            await dispatch(closeHall(hall.id)); 
         } else {
-            dispatch(openHall(hall.id));  
+            await dispatch(openHall(hall.id));  
         }
+
+        await dispatch(getHallList(false));
     };
 
     const openEditModal = (hall) => {

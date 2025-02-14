@@ -81,7 +81,6 @@ export const deleteHall = (id) => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         });
-        console.log(response);
         dispatch({ type: DELETE_HALL_SUCCESS });
         toast.success("Hall deleted successfully!");
     } catch (e) {
@@ -95,12 +94,12 @@ export const openHall = (id) => async (dispatch) => {
     dispatch({ type: OPEN_HALL_REQUEST });
 
     try {
-        const response = await axios.post(`${baseURL}/api/Hall/open_hall/${id}`, {
+        const response = await axios.post(`${baseURL}/api/Hall/open_hall/${id}`, {}, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
-        toast.success("Hall is openned!")
+        toast.success("Hall is openned!");
         dispatch({ type: OPEN_HALL_SUCCESS });
         console.log(response);
     } catch (e) {
@@ -114,14 +113,14 @@ export const closeHall = (id) => async (dispatch) => {
     dispatch({ type: CLOSE_HALL_REQUEST });
 
     try {
-        const response = await axios.post(`${baseURL}/api/Hall/close_hall/${id}`, {
+        const response = await axios.post(`${baseURL}/api/Hall/close_hall/${id}`, {}, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
-        toast.success("Hall is closed!")
-        dispatch({ type: CLOSE_HALL_SUCCESS })
         console.log(response);
+        toast.success("Hall is closed!")
+        dispatch({ type: CLOSE_HALL_SUCCESS });
     } catch (e) {
         console.error(e);
         dispatch({ type: CLOSE_HALL_FAILURE });
