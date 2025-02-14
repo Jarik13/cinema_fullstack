@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CLOSE_HALL_FAILURE, CLOSE_HALL_REQUEST, CLOSE_HALL_SUCCESS, CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, DELETE_HALL_FAILURE, DELETE_HALL_REQUEST, DELETE_HALL_SUCCESS, GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS, OPEN_HALL_FAILURE, OPEN_HALL_REQUEST, OPEN_HALL_SUCCESS, UPDATE_HALL_FAILURE, UPDATE_HALL_REQUEST, UPDATE_HALL_SUCCESS } from "./ActionType";
+import { CLOSE_HALL_FAILURE, CLOSE_HALL_REQUEST, CLOSE_HALL_SUCCESS, CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, DELETE_HALL_FAILURE, DELETE_HALL_REQUEST, DELETE_HALL_SUCCESS, GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS, GET_HALL_FAILURE, GET_HALL_REQUEST, OPEN_HALL_FAILURE, OPEN_HALL_REQUEST, OPEN_HALL_SUCCESS, UPDATE_HALL_FAILURE, UPDATE_HALL_REQUEST, UPDATE_HALL_SUCCESS } from "./ActionType";
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -50,6 +50,24 @@ export const getHallList = (showToast) => async (dispatch) => {
         console.error(e);
         dispatch({ type: GET_ALL_HALLS_FAILURE });
         toast.error(e.response?.data || "Failed to get hall list!");
+    }
+}
+
+export const getHallById = (id) => async (dispatch) => {
+    dispatch({ type: GET_HALL_REQUEST });
+
+    try {
+        const { data } = await axios.get(`${baseURL}/api/Hall/get_one_hall/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        toast.success("Hall getted successfully!");
+        console.log(data);
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: GET_HALL_FAILURE });
+        toast.error()
     }
 }
 
