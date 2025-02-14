@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_FILM_FAILURE, CREATE_FILM_REQUEST, CREATE_FILM_SUCCESS, DELETE_FILM_FAILURE, DELETE_FILM_REQUEST, DELETE_FILM_SUCCESS, UPDATE_FILM_FAILURE, UPDATE_FILM_REQUEST, UPDATE_FILM_SUCCESS } from "./ActionType"
+import { CREATE_FILM_FAILURE, CREATE_FILM_REQUEST, CREATE_FILM_SUCCESS, DELETE_FILM_FAILURE, DELETE_FILM_REQUEST, DELETE_FILM_SUCCESS, GET_ALL_FILMS_FAILURE, GET_ALL_FILMS_REQUEST, UPDATE_FILM_FAILURE, UPDATE_FILM_REQUEST, UPDATE_FILM_SUCCESS } from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -52,7 +52,7 @@ export const deleteFilm = (id) => async (dispatch) => {
     dispatch({ type: DELETE_FILM_REQUEST });
 
     try {
-        const { data } = await axios.delete(`${baseURL}/api/Admin/DeleteFilm/${id}`,  {
+        const { data } = await axios.delete(`${baseURL}/api/Admin/DeleteFilm/${id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
@@ -63,4 +63,22 @@ export const deleteFilm = (id) => async (dispatch) => {
         dispatch({ type: DELETE_FILM_FAILURE });
         toast.error(e.response?.message);
     }
-} 
+}
+
+export const getFilmList = () => async (dispatch) => {
+    dispatch({ type: GET_ALL_FILMS_REQUEST });
+
+    try {
+        const { data } = await axios.get(`${baseURL}/api/Admin/ReadFilms`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+
+        console.log(data);
+        toast.success("Films getted successfully!");
+    } catch (e) {
+        dispatch({ type: GET_ALL_FILMS_FAILURE });
+        toast.error(e.response?.message);
+    }
+}
