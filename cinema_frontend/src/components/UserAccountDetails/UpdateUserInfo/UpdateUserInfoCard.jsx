@@ -13,12 +13,12 @@ import { Label } from "@/components/ui/label";
 import { useDispatch } from "react-redux";
 import { updateUserProfile } from "@/redux/User/Action";
 
-const UpdateUserInfoCard = ({ email }) => {
+const UpdateUserInfoCard = () => {
     const dispatch = useDispatch();
 
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [name, setName] = useState("");
-    const [emailValue, setEmailValue] = useState("");
+    const [email, setEmail] = useState("");
     const [age, setAge] = useState("");
     const [ageError, setAgeError] = useState("");
 
@@ -38,7 +38,7 @@ const UpdateUserInfoCard = ({ email }) => {
         e.preventDefault();
         setAgeError("");
 
-        dispatch(updateUserProfile(email, name, emailValue, age));
+        dispatch(updateUserProfile(name, email, age));
 
         setIsDialogOpen(false);
     };
@@ -73,8 +73,8 @@ const UpdateUserInfoCard = ({ email }) => {
                                     type="email"
                                     placeholder="Your email ..."
                                     className="w-full"
-                                    value={emailValue}
-                                    onChange={(e) => setEmailValue(e.target.value)}
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
                             <div className="space-y-2">
@@ -94,7 +94,7 @@ const UpdateUserInfoCard = ({ email }) => {
                             <DialogClose asChild>
                                 <Button variant="secondary">Cancel</Button>
                             </DialogClose>
-                            <Button type="submit" variant="destructive" disabled={!!ageError || !name || !emailValue || !age}>
+                            <Button type="submit" variant="destructive" disabled={!!ageError || !name || !email || !age}>
                                 Save changes
                             </Button>
                         </div>

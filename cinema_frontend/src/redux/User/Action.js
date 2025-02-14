@@ -14,20 +14,20 @@ import { toast } from "react-toastify";
 import { getUserProfile } from "../Auth/Action";
 import { baseURL } from "@/config/constants";
 
-export const updateUserProfile = (email, name, emailValue, age) => async (dispatch) => {
+export const updateUserProfile = (name, email, age) => async (dispatch) => {
     dispatch({ type: UPDATE_USER_PROFILE_REQUEST });
 
     try {
         const patches = [];
 
         if (name) {
-            patches.push({ path: "/Name", value: name });
+            patches.push({ path: "/name", value: name });
         }
-        if (emailValue) {
-            patches.push({ path: "/Email", value: emailValue });
+        if (email) {
+            patches.push({ path: "/email", value: email });
         }
         if (age) {
-            patches.push({ path: "/Age", value: age });
+            patches.push({ path: "/age", value: age });
         }
 
         if (patches.length === 0) {
@@ -35,14 +35,15 @@ export const updateUserProfile = (email, name, emailValue, age) => async (dispat
         }
 
         const response = await axios.patch(
-            `http://localhost:5161/api/Profile/UpdateProfile/${email}`,
+            `${baseURL}/UpdateProfile`,
             patches,
             {
                 headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
                     "Content-Type": "application/json-patch+json"
                 }
             }
-        );
+        );        
 
         dispatch({ type: UPDATE_USER_PROFILE_SUCCESS, payload: response.data });
         await dispatch(getUserProfile());
