@@ -7,15 +7,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 
 const genres = ["Genre 1", "Genre 2", "Genre 3", "Genre 4"];
-const ageRatings = ["0+", "3+", "6+", "12+", "16+", "18+"];
 
 const EditFilmCard = ({ film, onSave, onClose }) => {
     const form = useForm({
         defaultValues: {
-            name: film?.name || "",
-            description: film?.description || "",
-            releaseYear: film?.releaseYear || 1930,
-            genres: film?.genres || [],
+            Name: film?.Name || "",
+            Description: film?.Description || "",
+            Release_year: film?.Release_year || 1930,
+            Genres: film?.Genres || [],
         },
         mode: "onChange",
     });
@@ -23,7 +22,7 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
     const { handleSubmit, setValue, watch } = form;
     const modalRef = useRef(null);
 
-    const genresValue = watch('genres');
+    const genresValue = watch('Genres');
 
     const handleClickOutside = (e) => {
         if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -46,7 +45,6 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
     };
 
     const onSubmit = (data) => {
-        console.log(data);
         const updatedFilm = { ...film, ...data };
         onSave(updatedFilm);
     };
@@ -66,7 +64,7 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <FormField
                             control={form.control}
-                            name="name"
+                            name="Name"
                             rules={{ required: "Name is required" }}
                             render={({ field }) => (
                                 <FormItem>
@@ -84,7 +82,7 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="description"
+                            name="Description"
                             rules={{ required: "Description is required" }}
                             render={({ field }) => (
                                 <FormItem>
@@ -102,16 +100,16 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="releaseYear"
+                            name="Release_year"
                             rules={{
                                 required: "Release year is required",
                                 validate: (value) => {
                                     if (value === "" || isNaN(value)) {
-                                        setValue("releaseYear", 1930);
+                                        setValue("Release_year", 1930);
                                         return "Release year must be a valid number";
                                     }
                                     if (value < 1930) {
-                                        setValue("releaseYear", 1930);
+                                        setValue("Release_year", 1930);
                                         return "Release year cannot be less than 1930";
                                     }
                                     return true;
@@ -133,7 +131,7 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="genres"
+                            name="Genres"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Genres</FormLabel>

@@ -74,8 +74,6 @@ export const getFilmList = () => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
         });
-
-        console.log(data);
         dispatch({ type: GET_ALL_FILMS_SUCCESS, payload: data });
         toast.success("Films getted successfully!");
     } catch (e) {

@@ -28,36 +28,32 @@ const ListOfFilms = () => {
     const generatePatches = (oldFilm, newFilm) => {
         const patches = [];
 
-        if (oldFilm.name !== newFilm.name) {
-            patches.push({ op: "replace", path: "/name", value: newFilm.name });
+        if (oldFilm.Name !== newFilm.Name) {
+            patches.push({ op: "replace", path: "/name", value: newFilm.Name });
         }
 
-        if (oldFilm.description !== newFilm.description) {
-            patches.push({ op: "replace", path: "/description", value: newFilm.description });
+        if (oldFilm.Description !== newFilm.Description) {
+            patches.push({ op: "replace", path: "/description", value: newFilm.Description });
         }
 
-        if (oldFilm.releaseYear !== newFilm.releaseYear) {
-            patches.push({ op: "replace", path: "/releaseyear", value: String(newFilm.releaseYear) });
+        if (oldFilm.Release_year !== newFilm.Release_year) {
+            patches.push({ op: "replace", path: "/releaseyear", value: String(newFilm.Release_year) });
         }
 
-        if (JSON.stringify(oldFilm.genres) !== JSON.stringify(newFilm.genres)) {
-            patches.push({ op: "replace", path: "/genres", value: "Drama" }); // here need to update !!!!!!!!
+        if (JSON.stringify(oldFilm.Genres) !== JSON.stringify(newFilm.Genres)) {
+            patches.push({ op: "replace", path: "/genres", value: newFilm.Genres }); 
         }
 
         return patches;
     };
 
-    const handleSaveFilm = (updatedFilm) => {
+    const handleSaveFilm = async (updatedFilm) => {
         const patches = generatePatches(editingFilm, updatedFilm);
         if (patches.length > 0) {
-            dispatch(updateFilm(editingFilm.id, patches)); // here need to update !!!!!!!!
+            await dispatch(updateFilm(editingFilm.Id, patches)); 
         }
 
-        setFilms(prevFilms =>
-            prevFilms.map(film =>
-                film.id === updatedFilm.id ? updatedFilm : film
-            )
-        );
+        await dispatch(getFilmList());
 
         handleCloseModal();
     };
@@ -82,9 +78,9 @@ const ListOfFilms = () => {
         setIsDialogOpen(false);
     };
 
-    const handleDeleteFilm = () => {
-        setFilms(films.filter(film => film.id !== selectedFilmId));
-        dispatch(deleteFilm(selectedFilmId)); // here need to update !!!!!!!!!!!!!!!!!!!!!!!
+    const handleDeleteFilm = async () => {
+        await dispatch(deleteFilm(selectedFilmId));
+        await dispatch(getFilmList());
         setIsDialogOpen(false);
     };
 
@@ -119,7 +115,7 @@ const ListOfFilms = () => {
                         </div>
                         <div className="flex gap-2">
                             <Button variant="outline" onClick={() => handleEditClick(film)}>Edit</Button>
-                            <Button variant="destructive" onClick={() => openDeleteDialog(film.id)}>Delete</Button>
+                            <Button variant="destructive" onClick={() => openDeleteDialog(film.Id)}>Delete</Button>
                         </div>
                     </div>
                 ))}
@@ -137,7 +133,7 @@ const ListOfFilms = () => {
                 isOpen={isDialogOpen}
                 onClose={closeDeleteDialog}
                 onConfirm={handleDeleteFilm}
-                filmName={films.find(film => film.id === selectedFilmId)?.name || 'Unknown Film'}
+                filmName={films.find(film => film.Id === selectedFilmId)?.Name || 'Unknown Film'}
             />
         </div>
     )
