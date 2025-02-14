@@ -27,8 +27,8 @@ export const login = (data) => async (dispatch) => {
     try {
         const response = await axios.post(`${baseURL}/api/Login/login`, data);
 
-        if (response.data && response.data.token) {
-            const token = response.data.token;
+        if (response.data && response.data.Token) {
+            const token = response.data.Token;
             localStorage.setItem("token", token);
             dispatch({ type: LOGIN_SUCCESS, payload: token });
             await dispatch(getUserProfile());
