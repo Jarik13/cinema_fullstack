@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import EditFilmCard from './EditFilmCard/EditFilmCard';
 import DeleteFilmCard from './DeleteFilmCard/DeleteFilmCard';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,8 +9,11 @@ const ListOfFilms = () => {
     const dispatch = useDispatch();
     const films = useSelector(store => store.film?.films || []);
 
+    const isFirstLoad = useRef(true);
+
     useEffect(() => {
-        dispatch(getFilmList());
+        dispatch(getFilmList(isFirstLoad.current));
+        isFirstLoad.current = false;
     }, []);
 
     const [editingFilm, setEditingFilm] = useState(null);
@@ -53,7 +56,7 @@ const ListOfFilms = () => {
             await dispatch(updateFilm(editingFilm.Id, patches)); 
         }
 
-        await dispatch(getFilmList());
+        await dispatch(getFilmList(false));
 
         handleCloseModal();
     };
@@ -80,7 +83,7 @@ const ListOfFilms = () => {
 
     const handleDeleteFilm = async () => {
         await dispatch(deleteFilm(selectedFilmId));
-        await dispatch(getFilmList());
+        await dispatch(getFilmList(true));
         setIsDialogOpen(false);
     };
 

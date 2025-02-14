@@ -65,7 +65,7 @@ export const deleteFilm = (id) => async (dispatch) => {
     }
 }
 
-export const getFilmList = () => async (dispatch) => {
+export const getFilmList = (showToast) => async (dispatch) => {
     dispatch({ type: GET_ALL_FILMS_REQUEST });
 
     try {
@@ -75,7 +75,9 @@ export const getFilmList = () => async (dispatch) => {
             },
         });
         dispatch({ type: GET_ALL_FILMS_SUCCESS, payload: data });
-        toast.success("Films getted successfully!");
+        if (showToast) {
+            toast.success("Films getted successfully!");
+        }
     } catch (e) {
         dispatch({ type: GET_ALL_FILMS_FAILURE });
         toast.error(e.response?.message);
