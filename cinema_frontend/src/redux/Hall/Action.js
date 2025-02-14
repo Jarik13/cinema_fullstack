@@ -22,12 +22,11 @@ export const createHall = (data) => async (dispatch, getState) => {
         };
 
         const response = await axios.post(`${baseURL}/api/Hall/create_hall`, requestData);
-        console.log(response);
         toast.success("Hall created successfully!");
     } catch (e) {
         console.error(e);
         dispatch({ type: CREATE_FILM_FAILURE });
-        toast.error(e.response?.data || "Failed to create hall.");
+        toast.error(e.response?.data || "Failed to create hall!");
     }
 };
 
@@ -36,11 +35,11 @@ export const getHallList = () => async (dispatch) => {
 
     try {
         const { data } = await axios.get(`${baseURL}/api/Hall/get_halls`);
-        console.log(data);
         dispatch({ type: GET_ALL_HALLS_SUCCESS, payload: data });
+        toast.success("Halls getted successfully!");
     } catch (e) {
         console.error(e);
         dispatch({ type: GET_ALL_HALLS_FAILURE });
-        toast.error(e.response?.data || "Failed to get hall list.");
+        toast.error(e.response?.data || "Failed to get hall list!");
     }
 }

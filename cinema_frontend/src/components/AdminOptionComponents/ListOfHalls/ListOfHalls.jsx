@@ -1,24 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import EditHallCard from './EditHallCard/EditHallCard';
 import DeleteHallCard from './DeleteHallCard/DeleteHallCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { getHallList } from '@/redux/Hall/Action';
 
 const ListOfHalls = () => {
-    const [halls, setHalls] = useState([
-        { id: 1, number: 'Hall 1', seats: 150, isOpen: true },
-        { id: 2, number: 'Hall 2', seats: 200, isOpen: true },
-        { id: 3, number: 'Hall 3', seats: 250, isOpen: true },
-        { id: 4, number: 'Hall 4', seats: 100, isOpen: true },
-        { id: 5, number: 'Hall 5', seats: 150, isOpen: true },
-        { id: 6, number: 'Hall 6', seats: 200, isOpen: true },
-        { id: 7, number: 'Hall 7', seats: 250, isOpen: true },
-        { id: 8, number: 'Hall 8', seats: 100, isOpen: true },
-    ]);
+    const dispatch = useDispatch();
+    const halls = useSelector(store => store.hall?.halls || []);
 
     const [selectedHall, setSelectedHall] = useState(null);
-    const [editHall, setEditHall] = useState({ id: '', number: '', seats: '' });
+    const [editHall, setEditHall] = useState({ id: '', number: '', count_of_seats: '' });
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+
+    useEffect(() => {
+        dispatch(getHallList()); 
+    }, [dispatch]);
 
     const toggleHallStatus = (id) => {
         setHalls(halls.map(hall =>
@@ -28,7 +26,7 @@ const ListOfHalls = () => {
 
     const openEditModal = (hall) => {
         setSelectedHall(hall);
-        setEditHall({ id: hall.id, number: hall.number, seats: hall.seats });
+        setEditHall({ id: hall.id, number: hall.number, seats: hall.count_of_seats });
         setIsEditOpen(true);
     };
 
@@ -44,7 +42,7 @@ const ListOfHalls = () => {
 
     const saveChanges = () => {
         setHalls(halls.map(hall =>
-            hall.id === editHall.id ? { ...hall, number: editHall.number, seats: Number(editHall.seats) } : hall
+            hall.id === editHall.id ? { ...hall, number: editHall.number, count_of_seats: Number(editHall.count_of_seats) } : hall
         ));
         setIsEditOpen(false);
     };
@@ -58,7 +56,7 @@ const ListOfHalls = () => {
         <div className='flex flex-col'>
             <p className="text-2xl font-bold mb-4">All hall list</p>
             <div className="border rounded-lg overflow-hidden">
-                <div className='grid grid-cols-5 bg-gray-100 font-bold px-4 py-2'>
+                <div className='grid grid-cols-[2fr_1fr_1fr_1fr_1.5fr] bg-gray-100 font-bold px-4 py-2'>
                     <div>ID</div>
                     <div>Hall number</div>
                     <div>Seats</div>
@@ -66,10 +64,10 @@ const ListOfHalls = () => {
                     <div>Actions</div>
                 </div>
                 {halls.map(hall => (
-                    <div key={hall.id} className="grid grid-cols-5 border-t px-4 py-2 items-center">
+                    <div key={hall.id} className="grid grid-cols-[2fr_1fr_1fr_1fr_1.5fr] border-t px-4 py-2 items-center">
                         <div>{hall.id}</div>
                         <div>{hall.number}</div>
-                        <div>{hall.seats}</div>
+                        <div>{hall.count_of_seats}</div>
                         <div className={hall.isOpen ? "text-green-600" : "text-red-600"}>
                             {hall.isOpen ? "Open" : "Close"}
                         </div>
