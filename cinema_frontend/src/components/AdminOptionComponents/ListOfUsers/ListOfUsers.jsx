@@ -41,11 +41,11 @@ const ListOfUsers = () => {
                     <div>Action</div>
                 </div>
                 {users.map(user => (
-                    <div key={user.id} className="grid grid-cols-[2fr_1fr_2fr_1fr_0.5fr] border-t px-4 py-2 items-center">
-                        <div>{user.id}</div>
-                        <div>{user.userName}</div>
-                        <div>{user.email}</div>
-                        <div>{user.age}</div>
+                    <div key={user.Id} className="grid grid-cols-[2fr_1fr_2fr_1fr_0.5fr] border-t px-4 py-2 items-center">
+                        <div>{user.Id}</div>
+                        <div>{user.UserName}</div>
+                        <div>{user.Email}</div>
+                        <div>{user.Age}</div>
                         <Button variant="destructive" onClick={() => handleBlockClick(user)}>Block</Button>
                     </div>
                 ))}
