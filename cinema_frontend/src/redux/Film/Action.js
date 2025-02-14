@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_FILM_FAILURE, CREATE_FILM_REQUEST, CREATE_FILM_SUCCESS, UPDATE_FILM_FAILURE, UPDATE_FILM_REQUEST, UPDATE_FILM_SUCCESS } from "./ActionType"
+import { CREATE_FILM_FAILURE, CREATE_FILM_REQUEST, CREATE_FILM_SUCCESS, DELETE_FILM_FAILURE, DELETE_FILM_REQUEST, DELETE_FILM_SUCCESS, UPDATE_FILM_FAILURE, UPDATE_FILM_REQUEST, UPDATE_FILM_SUCCESS } from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -48,3 +48,20 @@ export const updateFilm = (id, patches) => async (dispatch) => {
         toast.error(e.response?.data || "Failed to update film");
     }
 };
+
+export const deleteFilm = (id) => async (dispatch) => {
+    dispatch({ type: DELETE_FILM_REQUEST });
+
+    try {
+        const { data } = await axios.delete(`${baseURL}/api/Admin/DeleteFilm/${id}`,  {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        dispatch({ type: DELETE_FILM_SUCCESS });
+        toast.success(data);
+    } catch (e) {
+        dispatch({ type: DELETE_FILM_FAILURE });
+        toast.error(e.response?.message);
+    }
+} 

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import EditFilmCard from './EditFilmCard/EditFilmCard';
 import DeleteFilmCard from './DeleteFilmCard/DeleteFilmCard';
 import { useDispatch } from 'react-redux';
-import { updateFilm } from '@/redux/Film/Action';
+import { deleteFilm, updateFilm } from '@/redux/Film/Action';
 
 const ListOfFilms = () => {
     const dispatch = useDispatch();
@@ -89,8 +89,9 @@ const ListOfFilms = () => {
         setIsDialogOpen(false);
     };
 
-    const deleteFilm = () => {
+    const handleDeleteFilm = () => {
         setFilms(films.filter(film => film.id !== selectedFilmId));
+        dispatch(deleteFilm("7B5C27C6-3B11-4E11-2774-08DD4C638A21")); // here need to update !!!!!!!!!!!!!!!!!!!!!!!
         setIsDialogOpen(false);
     };
 
@@ -142,7 +143,7 @@ const ListOfFilms = () => {
             <DeleteFilmCard
                 isOpen={isDialogOpen}
                 onClose={closeDeleteDialog}
-                onConfirm={deleteFilm}
+                onConfirm={handleDeleteFilm}
                 filmName={films.find(film => film.id === selectedFilmId)?.name || 'Unknown Film'}
             />
         </div>
