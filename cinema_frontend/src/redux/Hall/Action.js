@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, DELETE_HALL_FAILURE, DELETE_HALL_REQUEST, DELETE_HALL_SUCCESS, GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS, UPDATE_HALL_FAILURE, UPDATE_HALL_REQUEST, UPDATE_HALL_SUCCESS } from "./ActionType";
+import { CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, DELETE_HALL_FAILURE, DELETE_HALL_REQUEST, DELETE_HALL_SUCCESS, GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS, OPEN_HALL_FAILURE, OPEN_HALL_REQUEST, UPDATE_HALL_FAILURE, UPDATE_HALL_REQUEST, UPDATE_HALL_SUCCESS } from "./ActionType";
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -84,5 +84,15 @@ export const deleteHall = (id) => async (dispatch) => {
 }
 
 export const openHall = (id) => async (dispatch) => {
-    
+    dispatch({ type: OPEN_HALL_REQUEST });
+
+    try {
+        const response = await axios.post(`${baseURL}/api/Hall/open_hall/${id}`);
+        toast.success("Hall is openned!")
+        console.log(response);
+    } catch (e) {
+        console.error(e);
+        dispatch({ type: OPEN_HALL_FAILURE });
+        toast.error("Failed to open hall!");
+    }
 }
