@@ -26,7 +26,7 @@ export const login = (data) => async (dispatch) => {
 
     try {
         const response = await axios.post(`${baseURL}/api/Login/login`, data);
-
+        console.log("Response: ", response);
         if (response.data && response.data.token) {
             const token = response.data.token;
             localStorage.setItem("token", token);
