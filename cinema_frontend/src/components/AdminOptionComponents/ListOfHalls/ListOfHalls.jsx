@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import EditHallCard from './EditHallCard/EditHallCard';
 import DeleteHallCard from './DeleteHallCard/DeleteHallCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteHall, getHallList, updateHall } from '@/redux/Hall/Action';
+import { closeHall, deleteHall, getHallList, openHall, updateHall } from '@/redux/Hall/Action';
 
 const ListOfHalls = () => {
     const dispatch = useDispatch();
@@ -21,8 +21,12 @@ const ListOfHalls = () => {
         isFirstLoad.current = false;
     }, [dispatch]);
 
-    const toggleHallStatus = (id) => {
-        // here will be updateHallStatus
+    const toggleHallStatus = (hall) => {
+        if (hall.is_available) {
+            dispatch(closeHall(hall.id)); 
+        } else {
+            dispatch(openHall(hall.id));  
+        }
     };
 
     const openEditModal = (hall) => {
@@ -75,7 +79,7 @@ const ListOfHalls = () => {
                             {hall.is_available ? "Open" : "Close"}
                         </div>
                         <div className="flex gap-2">
-                            <Button variant="outline" onClick={() => toggleHallStatus(hall.id)}>
+                            <Button variant="outline" onClick={() => toggleHallStatus(hall)}>
                                 {hall.is_available ? "Close" : "Open"}
                             </Button>
                             <Button variant="outline" onClick={() => openEditModal(hall)}>Edit</Button>

@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, DELETE_HALL_FAILURE, DELETE_HALL_REQUEST, DELETE_HALL_SUCCESS, GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS, OPEN_HALL_FAILURE, OPEN_HALL_REQUEST, UPDATE_HALL_FAILURE, UPDATE_HALL_REQUEST, UPDATE_HALL_SUCCESS } from "./ActionType";
+import { CLOSE_HALL_FAILURE, CLOSE_HALL_REQUEST, CLOSE_HALL_SUCCESS, CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, DELETE_HALL_FAILURE, DELETE_HALL_REQUEST, DELETE_HALL_SUCCESS, GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS, OPEN_HALL_FAILURE, OPEN_HALL_REQUEST, OPEN_HALL_SUCCESS, UPDATE_HALL_FAILURE, UPDATE_HALL_REQUEST, UPDATE_HALL_SUCCESS } from "./ActionType";
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -20,7 +20,11 @@ export const createHall = (data) => async (dispatch, getState) => {
             locationId
         };
 
-        const response = await axios.post(`${baseURL}/api/Hall/create_hall`, requestData);
+        const response = await axios.post(`${baseURL}/api/Hall/create_hall`, requestData, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
         toast.success("Hall created successfully!");
     } catch (e) {
         console.error(e);
@@ -33,7 +37,11 @@ export const getHallList = (showToast) => async (dispatch) => {
     dispatch({ type: GET_ALL_HALLS_REQUEST });
 
     try {
-        const { data } = await axios.get(`${baseURL}/api/Hall/get_halls`);
+        const { data } = await axios.get(`${baseURL}/api/Hall/get_halls`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
         dispatch({ type: GET_ALL_HALLS_SUCCESS, payload: data });
         if (showToast) {
             toast.success("Halls getted successfully!");
@@ -87,12 +95,36 @@ export const openHall = (id) => async (dispatch) => {
     dispatch({ type: OPEN_HALL_REQUEST });
 
     try {
-        const response = await axios.post(`${baseURL}/api/Hall/open_hall/${id}`);
+        const response = await axios.post(`${baseURL}/api/Hall/open_hall/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
         toast.success("Hall is openned!")
+        dispatch({ type: OPEN_HALL_SUCCESS });
         console.log(response);
     } catch (e) {
         console.error(e);
         dispatch({ type: OPEN_HALL_FAILURE });
         toast.error("Failed to open hall!");
+    }
+}
+
+export const closeHall = (id) => async (dispatch) => {
+    dispatch({ type: CLOSE_HALL_REQUEST });
+
+    try {
+        const response = await axios.post(`${baseURL}/api/Hall/close_hall/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        toast.success("Hall is closed!")
+        dispatch({ type: CLOSE_HALL_SUCCESS })
+        console.log(response);
+    } catch (e) {
+        console.error(e);
+        dispatch({ type: CLOSE_HALL_FAILURE });
+        toast.error("Failed to close hall!");
     }
 }
