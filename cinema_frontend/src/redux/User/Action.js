@@ -78,12 +78,13 @@ export const getUserList = (showToast) => async (dispatch) => {
     }
 };
 
-export const blockUser = (adminEmail, userNameToDelete) => async (dispatch) => {
+export const blockUser = (userNameToDelete) => async (dispatch) => {
     dispatch({ type: BLOCK_USER_REQUEST });
 
     try {
-        const response = await axios.delete("http://localhost:5161/api/Admin/deleteUser", {
-            params: { adminEmail, userNameToDelete }
+        const response = await axios.delete(`${baseURL}/api/Admin/DeleteUser`, {
+            params: { userNameToDelete },
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
 
         if (response && response.data) {

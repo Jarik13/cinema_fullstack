@@ -24,9 +24,9 @@ const ListOfUsers = () => {
     const handleConfirmBlock = async () => {
         if (!selectedUser) return;
 
-        await dispatch(blockUser(admin?.email, selectedUser?.UserName));
+        await dispatch(blockUser(selectedUser?.UserName));
         setSelectedUser(null);
-        await dispatch(getUserList(admin.email, true));
+        await dispatch(getUserList(true));
     };
 
     return (
