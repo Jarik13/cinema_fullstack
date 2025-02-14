@@ -1,15 +1,17 @@
-import Location from "@/components/Location/Location";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createHall } from "@/redux/Hall/Action";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 const AddHall = () => {
+    const dispatch = useDispatch();
+
     const form = useForm({
         defaultValues: {
             number: "",
-            seats_count: 0,
-            location_id: "", 
+            count_of_seats: 0,
         },
         mode: "onChange",
     });
@@ -17,12 +19,11 @@ const AddHall = () => {
     const { handleSubmit, setValue, reset } = form;
 
     const onSubmit = (data) => {
-        console.log(data);
+        dispatch(createHall(data));
 
         reset({
             number: "",
-            seats_count: 0,
-            location_id: "", 
+            count_of_seats: 0,
         });
     };
 
@@ -51,7 +52,7 @@ const AddHall = () => {
 
                     <FormField
                         control={form.control}
-                        name="seats_count"
+                        name="count_of_seats"
                         rules={{
                             required: "Count of seats is required",
                             validate: (value) => {

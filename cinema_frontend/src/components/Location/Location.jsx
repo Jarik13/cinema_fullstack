@@ -1,56 +1,28 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Button } from '../ui/button';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../ui/command';
 import { cn } from '@/lib/utils';
-
-const locations = [
-    {
-        value: "lviv",
-        label: "Lviv, Forum",
-    },
-    {
-        value: "kiev",
-        label: "Kiev",
-    },
-    {
-        value: "odessa",
-        label: "Odessa, Arcadia",
-    },
-    {
-        value: "dnipro",
-        label: "Dnipro, Most City",
-    },
-    {
-        value: "kharkiv",
-        label: "Kharkiv, Ave Plaza",
-    },
-    {
-        value: "chernivtsi",
-        label: "Chernivtsi, Central Square",
-    },
-    {
-        value: "uzhhorod",
-        label: "Uzhhorod, Korzo Street",
-    },
-    {
-        value: "vinnytsia",
-        label: "Vinnytsia, Roshen Fountain",
-    },
-    {
-        value: "zaporizhzhia",
-        label: "Zaporizhzhia, Khortytsia Island",
-    },
-    {
-        value: "mykolaiv",
-        label: "Mykolaiv, Soborna Street",
-    },
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { getLocationList, setSelectedLocation } from '@/redux/Location/Action';
 
 const Location = () => {
+    const dispatch = useDispatch();
+    const locations = useSelector(store => store.location?.locations || []);
+    const selectedLocation = useSelector(store => store.location?.selectedLocation || null);
+
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState("");
+
+    useEffect(() => {
+        dispatch(getLocationList()); 
+    }, [dispatch]);
+
+    const formattedLocations = locations.map(location => ({
+        id: location.id,
+        value: location.name + ", " + location.city, 
+        label: `${location.name}, ${location.city}` 
+    }));
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -61,8 +33,8 @@ const Location = () => {
                     aria-expanded={open}
                     className="w-[200px] justify-between"
                 >
-                    {value
-                        ? locations.find((location) => location.value === value)?.label
+                    {selectedLocation 
+                        ? formattedLocations.find((loc) => loc.id === selectedLocation.id)?.label
                         : "Select location..."
                     }
                     <ChevronsUpDown className="opacity-50" />
@@ -70,15 +42,15 @@ const Location = () => {
             </PopoverTrigger>
             <PopoverContent className="w-[200px] p-0">
                 <Command>
-                    <CommandInput placeholder="Search framework..." className="h-9" />
+                    <CommandInput placeholder="Search location..." className="h-9" />
                     <CommandList>
                         <CommandEmpty>No locations found.</CommandEmpty>
                         <CommandGroup>
-                            {locations.map((location) => (
+                            {formattedLocations.map((location) => (
                                 <CommandItem
-                                    key={location.value}
+                                    key={location.id}
                                     onSelect={() => {
-                                        setValue(location.value === value ? "" : location.value);
+                                        dispatch(setSelectedLocation(location)); 
                                         setOpen(false);
                                     }}
                                 >
@@ -86,7 +58,7 @@ const Location = () => {
                                     <Check
                                         className={cn(
                                             "ml-auto",
-                                            value === location.value ? "opacity-100" : "opacity-0"
+                                            selectedLocation?.id === location.id ? "opacity-100" : "opacity-0"
                                         )}
                                     />
                                 </CommandItem>
@@ -95,8 +67,8 @@ const Location = () => {
                     </CommandList>
                 </Command>
             </PopoverContent>
-        </Popover >
-    )
+        </Popover>
+    );
 }
 
-export default Location
+export default Location;
