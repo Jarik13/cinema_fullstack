@@ -1,16 +1,26 @@
 import { ChevronDownIcon, ChevronUpIcon } from 'lucide-react';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NowInCinema = () => {
+    const dispatch = useDispatch();
     const [currentFilmNumber, setCurrentFilmNumber] = useState(1);
-    const maxFilmNumber = 28;
+    const films = useSelector(store => store.film?.films);
 
     const decrement = () => {
-        setCurrentFilmNumber(prevNumber => prevNumber != 1 ? prevNumber - 1 : 1)
+        setCurrentFilmNumber(prevNumber => {
+            const newFilmNumber = prevNumber != 1 ? prevNumber - 1 : 1;
+            dispatch(setCurrentFilmNumber(newFilmNumber)); 
+            return newFilmNumber;
+        });
     }
 
     const increment = () => {
-        setCurrentFilmNumber(prevNumber => prevNumber != maxFilmNumber ? prevNumber + 1 : maxFilmNumber)
+        setCurrentFilmNumber(prevNumber => {
+            const newFilmNumber = prevNumber != films?.length ? prevNumber + 1 : films?.length;
+            dispatch(setCurrentFilmNumber(newFilmNumber)); 
+            return newFilmNumber;
+        });
     }
 
     return (
