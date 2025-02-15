@@ -26,10 +26,10 @@ const Filters = () => {
 
     const applyFilters = async () => {
         const filters = {
-            selectedGenre, 
-            movieRating, 
-            selectedYear, 
-            selectedAgeRating, 
+            selectedGenre,
+            movieRating,
+            selectedYear,
+            selectedAgeRating,
             duration
         };
 
@@ -37,6 +37,11 @@ const Filters = () => {
 
         await dispatch(getFilmList(true, filters));
     };
+
+    const resetFilters = async () => {
+        await dispatch(setFilters(null));
+        await dispatch(getFilmList(true, null));
+    }
 
     return (
         <Popover>
@@ -53,7 +58,12 @@ const Filters = () => {
                     <AgeRatingFilter ageRating={selectedAgeRating} setAgeRating={setSelectedAgeRating} />
                     <MovieRatingFilter movieRating={movieRating} setMovieRating={setMovieRating} />
 
-                    <div className="text-right">
+                    <div className="text-right flex gap-4 justify-around">
+                        <Button
+                            onClick={resetFilters}
+                        >
+                            Reset Filters
+                        </Button>
                         <Button
                             variant="destructive"
                             onClick={applyFilters}
