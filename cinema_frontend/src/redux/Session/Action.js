@@ -17,7 +17,7 @@ export const createSession = (data) => async (dispatch) => {
     } catch (e) {
         console.log(e);
         dispatch({ type: CREATE_SESSION_FAILURE });
-        toast.error("Failed to create session!");
+        toast.error(e.response?.data);
     }
 }
 
