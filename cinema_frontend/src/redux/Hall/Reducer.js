@@ -1,11 +1,13 @@
 import {
-    CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, CREATE_HALL_SUCCESS, 
-    GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS
+    CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, CREATE_HALL_SUCCESS,
+    GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS,
+    SET_SELECTED_HALL
 } from "./ActionType";
 
 const initialState = {
     hall: null,
     halls: [],
+    selectedHall: null,
     loading: false,
     error: null,
 };
@@ -19,6 +21,8 @@ export const hallReducer = (state = initialState, action) => {
             return { ...state, loading: false, hall: action.payload };
         case GET_ALL_HALLS_SUCCESS:
             return { ...state, loading: false, halls: action.payload };
+        case SET_SELECTED_HALL:
+            return { ...state, selectedHall: action.payload };
         case CREATE_HALL_FAILURE:
             return { ...state, loading: false, error: "Failed to create hall!" };
         case GET_ALL_HALLS_FAILURE:

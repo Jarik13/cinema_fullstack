@@ -13,8 +13,7 @@ export const createSession = (data) => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
-
-        console.log("Response", response);
+        toast.success("Session created successfully!");
         dispatch({ type: CREATE_SESSION_SUCCESS });
     } catch (e) {
         console.log(e);
