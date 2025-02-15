@@ -19,9 +19,9 @@ const Location = () => {
     }, [dispatch]);
 
     const formattedLocations = locations.map(location => ({
-        id: location.id,
-        value: location.name + ", " + location.city, 
-        label: `${location.name}, ${location.city}` 
+        id: location.Id,
+        value: location.Name + ", " + location.City, 
+        label: `${location.Name}, ${location.City}` 
     }));
 
     return (
@@ -58,7 +58,7 @@ const Location = () => {
                                     <Check
                                         className={cn(
                                             "ml-auto",
-                                            selectedLocation?.id === location.id ? "opacity-100" : "opacity-0"
+                                            selectedLocation?.Id === location.Id ? "opacity-100" : "opacity-0"
                                         )}
                                     />
                                 </CommandItem>
