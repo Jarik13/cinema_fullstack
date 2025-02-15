@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_SESSION_FAILURE, CREATE_SESSION_REQUEST, CREATE_SESSION_SUCCESS, GET_SESSION_LIST_FAILURE, GET_SESSION_LIST_REQUEST, GET_SESSION_LIST_SUCCESS } from "./ActionType"
+import { CREATE_SESSION_FAILURE, CREATE_SESSION_REQUEST, CREATE_SESSION_SUCCESS, GET_SESSION_LIST_FAILURE, GET_SESSION_LIST_REQUEST, GET_SESSION_LIST_SUCCESS, UPDATE_SESSION_FAILURE, UPDATE_SESSION_REQUEST, UPDATE_SESSION_SUCCESS } from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -38,5 +38,24 @@ export const getSessionList = (showToast) => async (dispatch) => {
         console.log(e);
         dispatch({ type: GET_SESSION_LIST_FAILURE });
         toast.error("Failed to get session list!");
+    }
+}
+
+export const updateSession = (id, pathes) => async (dispatch) => {
+    dispatch({ type: UPDATE_SESSION_REQUEST });
+
+    try {
+        const response = await axios.patch(`${baseURL}/api/Admin/UpdateSession/${id}`, pathes, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        console.log(response);
+        toast.success("Session updated successfully!");
+        dispatch({ type: UPDATE_SESSION_SUCCESS });
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: UPDATE_SESSION_FAILURE });
+        toast.error("Failed to create session!");
     }
 }
