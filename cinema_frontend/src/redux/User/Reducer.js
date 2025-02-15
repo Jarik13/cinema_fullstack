@@ -7,12 +7,16 @@ import {
     UPDATE_USER_PROFILE_SUCCESS,
     BLOCK_USER_REQUEST,
     BLOCK_USER_SUCCESS,
-    BLOCK_USER_FAILURE
+    BLOCK_USER_FAILURE,
+    FILTER_FILMS_REQUEST,
+    FILTER_FILMS_SUCCESS,
+    FILTER_FILMS_FAILURE
 } from "./ActionType";
 
 const initialState = {
     user: null,
     users: [],
+    films: [],
     loading: false,
     error: null,
 };
@@ -22,6 +26,7 @@ export const userReducer = (state = initialState, action) => {
         case UPDATE_USER_PROFILE_REQUEST:
         case GET_USER_LIST_REQUEST:
         case BLOCK_USER_REQUEST:
+        case FILTER_FILMS_REQUEST:
             return { ...state, loading: true, error: null };
 
         case UPDATE_USER_PROFILE_SUCCESS:
@@ -37,6 +42,9 @@ export const userReducer = (state = initialState, action) => {
                 users: state.users.filter(user => user.UserName !== action.payload)
             };
 
+        case FILTER_FILMS_SUCCESS:
+            return { ...state, loading: false, films: action.payload };
+
         case UPDATE_USER_PROFILE_FAILURE:
             return { ...state, loading: false, error: "Update profile failed!" };
 
@@ -45,6 +53,9 @@ export const userReducer = (state = initialState, action) => {
 
         case BLOCK_USER_FAILURE:
             return { ...state, loading: false, error: "Failed to block user!" };
+
+        case FILTER_FILMS_FAILURE:
+            return { ...state, loading: false, error: "Failed to filter film!" };
 
         default:
             return state;

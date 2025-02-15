@@ -1,24 +1,23 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import React, { useState } from 'react';
+import React from 'react';
 
-const YearFilter = () => {
-    const [selectedYear, setSelectedYear] = useState("");
+const YearFilter = ({ year, setYear }) => {
     const currentYear = new Date().getFullYear();
 
     const handleYearChange = (e) => {
         const value = e.target.value;
         if (/^\d*$/.test(value)) {
-            setSelectedYear(value);
+            setYear(value);
         }
     };
 
     const handleYearBlur = () => {
-        const value = parseInt(selectedYear, 10);
+        const value = parseInt(year, 10);
         if (isNaN(value) || value < 1930) {
-            setSelectedYear(1930); 
+            setYear(1930); 
         } else if (value > currentYear) {
-            setSelectedYear(currentYear);
+            setYear(currentYear);
         }
     };
 
@@ -31,7 +30,7 @@ const YearFilter = () => {
                 id="year"
                 type="text"
                 placeholder="Enter year"
-                value={selectedYear}
+                value={year}
                 onChange={handleYearChange}
                 onBlur={handleYearBlur}
                 min={1930}

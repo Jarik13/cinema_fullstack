@@ -2,9 +2,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectTrigger, SelectContent, SelectItem } from '@/components/ui/select';
 import React, { useState } from 'react';
 
-const MovieRatingFilter = () => {
-    const [sortDirection, setSortDirection] = useState("highest"); // "highest" or "lowest"
-
+const MovieRatingFilter = ({ movieRating, setMovieRating }) => {
     return (
         <div>
             <div className="mt-4">
@@ -12,11 +10,11 @@ const MovieRatingFilter = () => {
                     Sort By
                 </Label>
                 <Select
-                    value={sortDirection}
-                    onValueChange={setSortDirection}
+                    value={movieRating}
+                    onValueChange={setMovieRating}
                 >
                     <SelectTrigger id="sortDirection">
-                        {sortDirection === "highest" ? "Highest to Lowest" : "Lowest to Highest"}
+                        {movieRating === "highest" ? "Highest to Lowest" : "Lowest to Highest"}
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="highest">Highest to Lowest Movie Rating</SelectItem>

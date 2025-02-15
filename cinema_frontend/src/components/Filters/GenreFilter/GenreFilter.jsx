@@ -1,20 +1,18 @@
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
-import React, { useState } from 'react';
+import React from 'react';
 
 const genres = ["Action", "Comedy", "Drama", "Horror", "Romance", "Sci-Fi"];
 
-const GenreFilter = () => {
-    const [selectedGenre, setSelectedGenre] = useState("all");
-
+const GenreFilter = ({ genre, setGenre }) => {
     return (
         <div>
             <Label htmlFor="genre" className="font-semibold">
                 Genre
             </Label>
-            <Select value={selectedGenre} onValueChange={setSelectedGenre}>
+            <Select onValueChange={setGenre}>
                 <SelectTrigger id="genre">
-                    {selectedGenre === "all" ? "All" : selectedGenre}
+                    {genre === "all" ? "All" : genre }
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="all">All</SelectItem>
@@ -26,7 +24,7 @@ const GenreFilter = () => {
                 </SelectContent>
             </Select>
         </div>
-    )
+    );
 }
 
 export default GenreFilter;

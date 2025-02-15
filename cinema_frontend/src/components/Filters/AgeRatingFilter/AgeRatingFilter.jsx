@@ -4,17 +4,15 @@ import React, { useState } from 'react';
 
 const ageRatings = ["0+", "3+", "6+", "12+", "16+", "18+"];
 
-const AgeRatingFilter = () => {
-    const [selectedAgeRating, setSelectedAgeRating] = useState("all");
-
+const AgeRatingFilter = ({ ageRating, setAgeRating }) => {
     return (
         <div>
             <Label htmlFor="ageRating" className="font-semibold">
                 Age Rating
             </Label>
-            <Select value={selectedAgeRating} onValueChange={setSelectedAgeRating}>
+            <Select value={ageRating} onValueChange={setAgeRating}>
                 <SelectTrigger id="ageRating">
-                    {selectedAgeRating === "all" ? "All" : selectedAgeRating}
+                    {ageRating === "all" ? "All" : ageRating}
                 </SelectTrigger>
                 <SelectContent>
                     <SelectItem value="all">All</SelectItem>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Popover,
     PopoverTrigger,
@@ -11,8 +11,22 @@ import YearFilter from "./YearFilter/YearFilter";
 import DurationFilter from "./DurationFilter/DurationFilter";
 import AgeRatingFilter from "./AgeRatingFilter/AgeRatingFilter";
 import MovieRatingFilter from "./MovieRatingFilter/MovieRatingFilter";
+import { useDispatch } from "react-redux";
+import { filterFilms } from "@/redux/User/Action";
 
 const Filters = () => {
+    const dispatch = useDispatch();
+
+    const [selectedGenre, setSelectedGenre] = useState("all");
+    const [selectedYear, setSelectedYear] = useState(1930);
+    const [duration, setDuration] = useState([0, 240]);
+    const [selectedAgeRating, setSelectedAgeRating] = useState("all");
+    const [movieRating, setMovieRating] = useState("highest");
+
+    const applyFilters = () => {
+        dispatch(filterFilms(selectedGenre, movieRating, selectedYear, selectedAgeRating, duration));
+    }
+
     return (
         <Popover>
             <PopoverTrigger>
@@ -22,24 +36,16 @@ const Filters = () => {
             </PopoverTrigger>
             <PopoverContent className="w-80 p-4">
                 <div className="space-y-4">
-                    <GenreFilter />
-                    <YearFilter />
-                    <DurationFilter />
-                    <AgeRatingFilter />
-                    <MovieRatingFilter />
+                    <GenreFilter genre={selectedGenre} setGenre={setSelectedGenre} />
+                    <YearFilter year={selectedYear} setYear={setSelectedYear} />
+                    <DurationFilter duration={duration} setDuration={setDuration} />
+                    <AgeRatingFilter ageRating={selectedAgeRating} setAgeRating={setSelectedAgeRating} />
+                    <MovieRatingFilter movieRating={movieRating} setMovieRating={setMovieRating} />
 
                     <div className="text-right">
                         <Button
                             variant="destructive"
-                            onClick={() =>
-                                console.log({
-                                    selectedGenre,
-                                    selectedYear,
-                                    duration,
-                                    selectedAgeRating,
-                                    movieRating,
-                                })
-                            }
+                            onClick={applyFilters}
                         >
                             Apply Filters
                         </Button>

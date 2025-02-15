@@ -3,6 +3,9 @@ import {
     BLOCK_USER_FAILURE,
     BLOCK_USER_REQUEST,
     BLOCK_USER_SUCCESS,
+    FILTER_FILMS_FAILURE,
+    FILTER_FILMS_REQUEST,
+    FILTER_FILMS_SUCCESS,
     GET_USER_LIST_FAILURE,
     GET_USER_LIST_REQUEST,
     GET_USER_LIST_SUCCESS,
@@ -96,5 +99,30 @@ export const blockUser = (userNameToDelete) => async (dispatch) => {
 
         const errorMessage = error.response?.data || "Failed to block user!";
         toast.error(errorMessage);
+    }
+};
+
+export const filterFilms = (genre, rating, year, sortOrder, duration) => async (dispatch) => {
+    dispatch({ type: FILTER_FILMS_REQUEST });
+
+    try {
+        const response = await axios.get(`${baseURL}/api/User/Filters`, {
+            params: {
+                Genre: genre,
+                Rating: rating,
+                Year: year,
+                SortOrder: sortOrder,
+                Duration: duration
+            }
+        });
+
+        dispatch({
+            type: FILTER_FILMS_SUCCESS,
+            payload: response.data
+        });
+    } catch (e) {
+        console.error(e);
+        dispatch({ type: FILTER_FILMS_FAILURE });
+        toast.error("Failed to filter films!");
     }
 };
