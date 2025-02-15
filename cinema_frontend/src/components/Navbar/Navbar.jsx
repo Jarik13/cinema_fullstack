@@ -16,13 +16,24 @@ const Navbar = () => {
             <Location />
         </div>
         <div className='flex justify-between items-center gap-8'>
-            <Button variant="ghost" size="lg" className="text-xl underline decoration-2" onClick={() => navigate("/")}>In the cinema</Button>
+            <Button 
+              variant="ghost" size="lg" className="text-xl underline decoration-2" 
+              onClick={() => navigate("/")}
+            >
+              In the cinema
+            </Button>
             <Button 
               variant="destructive" 
               size="lg"
               onClick={() => navigate("/watch-online")}
             >
               Watch online
+            </Button>
+            <Button 
+              variant="ghost" size="lg" className="text-xl underline decoration-2"
+              onClick={() => navigate("/actions")}
+            >
+              Hot Price Actions
             </Button>
         </div>
         <div className='flex justify-between items-center gap-8'>
