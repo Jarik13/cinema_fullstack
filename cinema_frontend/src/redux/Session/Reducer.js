@@ -27,13 +27,7 @@ export const sessionReducer = (state = initialState, action) => {
         case GET_SESSION_LIST_SUCCESS:
             return { ...state, loading: false, sessions: action.payload };
         case UPDATE_SESSION_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                sessions: state.sessions.map((session) =>
-                    session.Id === action.payload.Id ? action.payload : session
-                ),
-            };
+            return {  ...state, loading: false };
         case CREATE_SESSION_FAILURE:
             return { ...state, loading: false, error: "Failed to create session!" };
         case GET_SESSION_LIST_FAILURE:

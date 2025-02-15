@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import EditSessionCard from './EditSessionCard/EditSessionCard';
 import DeleteSessionCard from './DeleteSessionCard/DeleteSessionCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSessionList } from '@/redux/Session/Action';
+import { deleteSession, getSessionList, updateSession } from '@/redux/Session/Action';
 
 const ListOfSessions = () => {
     const dispatch = useDispatch();
@@ -15,8 +15,6 @@ const ListOfSessions = () => {
         dispatch(getSessionList(isFirstLoad.current));
         isFirstLoad.current = false;
     }, [dispatch])
-
-    console.log(sessions);
 
     const [editingSession, setEditingSession] = useState(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -30,8 +28,22 @@ const ListOfSessions = () => {
         setEditingSession(null);
     };
 
-    const handleSaveSession = (updatedSession) => {
-        // here will be updateSession !!!!!!!!!
+    const generatePatches = (newSession) => {
+        const patches = [];
+
+        patches.push({ path: "/hall", value: newSession?.hallId });
+        patches.push({ path: "/film", value: newSession?.filmId });
+        patches.push({ path: "/starttime", value: String(newSession?.startTime) });
+        patches.push({ path: "/endtime", value: String(newSession?.endTime) });
+        patches.push({ path: "/date", value: String(newSession?.date) });
+
+        return patches;
+    };
+
+    const handleSaveSession = async (updatedSession) => {
+        const patches = generatePatches(updatedSession);
+        await dispatch(updateSession(editingSession.Id, patches));
+        await dispatch(getSessionList(true));
         handleCloseModal();
     };
 
@@ -55,9 +67,12 @@ const ListOfSessions = () => {
         setIsDialogOpen(false);
     };
 
-    const deleteSession = () => {
-        // here will be deleteSession !!!!!!!!!
-        closeDeleteDialog();
+    const handleDeleteSession = async () => {
+        if (selectedSessionId) {
+            await dispatch(deleteSession(selectedSessionId));
+            await dispatch(getSessionList(true));
+            closeDeleteDialog();
+        }
     };
 
     return (
@@ -81,24 +96,24 @@ const ListOfSessions = () => {
                         <div>{session.End_time}</div>
                         <div className="flex gap-2">
                             <Button variant="outline" onClick={() => handleEditClick(session)}>Edit</Button>
-                            <Button variant="destructive" onClick={() => openDeleteDialog(session.id)}>Delete</Button>
+                            <Button variant="destructive" onClick={() => openDeleteDialog(session.Id)}>Delete</Button>
                         </div>
                     </div>
                 ))}
             </div>
-            
+
             {editingSession && (
                 <EditSessionCard
                     session={editingSession}
-                    onSave={handleSaveSession}  
+                    onSave={handleSaveSession}
                     onClose={handleCloseModal}
                 />
             )}
-            
+
             <DeleteSessionCard
                 isOpen={isDialogOpen}
                 onClose={closeDeleteDialog}
-                onConfirm={deleteSession}
+                onConfirm={handleDeleteSession}
             />
         </div>
     );

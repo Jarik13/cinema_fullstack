@@ -1,20 +1,33 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useForm } from "react-hook-form";
-
-const halls = ["Hall 1", "Hall 2", "Hall 3", "Hall 4"];
-const films = ["Film 1", "Film 2", "Film 3", "Film 4"];
+import { useDispatch, useSelector } from 'react-redux';
+import { getHallList, setSelectedHall } from '@/redux/Hall/Action';
+import { getFilmList, setSelectedFilm } from '@/redux/Film/Action';
 
 const EditSessionCard = ({ session, onSave, onClose }) => {
+    const dispatch = useDispatch();
+    const halls = useSelector(store => store.hall?.halls || []);
+    const films = useSelector(store => store.film?.films || []);
+
+    useEffect(() => {
+        dispatch(getHallList(false));
+        dispatch(getFilmList(false));
+    }, [dispatch])
+
+    const selectedHall = useSelector(store => store.hall?.selectedHall || null);
+    const selectedFilm = useSelector(store => store.film?.selectedFilm || null);
+
     const form = useForm({
         defaultValues: {
-            hall: session?.hall || "",
-            film: session?.film || "",
-            start_time: session?.start_time || "",
-            end_time: session?.end_time || "",
+            hall: session?.hall || {},
+            film: session?.film || {},
+            startTime: session?.startTime || "",
+            endTime: session?.endTime || "",
+            date: session?.date || "",
         },
         mode: "onChange",
     });
@@ -24,13 +37,18 @@ const EditSessionCard = ({ session, onSave, onClose }) => {
 
     const handleClickOutside = (e) => {
         if (modalRef.current && !modalRef.current.contains(e.target)) {
-            onClose(); 
+            onClose();
         }
     };
 
     const onSubmit = (data) => {
-        console.log(data);
-        const updatedSession = { ...session, ...data };
+        const updatedSession = {
+            hallId: selectedHall.Id,
+            filmId: selectedFilm.Id,
+            startTime: data.startTime + ":00",
+            endTime: data.endTime + ":00",
+            date: data.date
+        }
         onSave(updatedSession);
     };
 
@@ -42,7 +60,7 @@ const EditSessionCard = ({ session, onSave, onClose }) => {
             <div
                 ref={modalRef}
                 className="p-4 border rounded-lg bg-gray-50 w-1/3"
-                onClick={(e) => e.stopPropagation()} 
+                onClick={(e) => e.stopPropagation()}
             >
                 <h2 className="text-xl font-bold mb-4">Edit Session</h2>
                 <Form {...form}>
@@ -55,13 +73,16 @@ const EditSessionCard = ({ session, onSave, onClose }) => {
                                 <FormItem>
                                     <FormLabel>Hall</FormLabel>
                                     <FormControl>
-                                        <Select onValueChange={field.onChange} value={field.value}>
+                                        <Select onValueChange={(value) => {
+                                            const hall = halls.find(h => "Hall " + h.Number === value);
+                                            if (hall) dispatch(setSelectedHall(hall));
+                                        }}>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select a hall" />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {halls.map((hall, index) => (
-                                                    <SelectItem key={index} value={hall}>{hall}</SelectItem>
+                                                    <SelectItem key={hall.Id} value={"Hall " + hall.Number}>Hall {hall.Number}</SelectItem>
                                                 ))}
                                             </SelectContent>
                                         </Select>
@@ -82,19 +103,22 @@ const EditSessionCard = ({ session, onSave, onClose }) => {
                                 <FormItem>
                                     <FormLabel>Film</FormLabel>
                                     <FormControl>
-                                        <Select onValueChange={field.onChange} value={field.value}>
+                                        <Select onValueChange={(value) => {
+                                            const film = films.find(f => f.Name === value);
+                                            if (film) dispatch(setSelectedFilm(film));
+                                        }}>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select a film" />
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {films.map((film, index) => (
-                                                    <SelectItem key={index} value={film}>{film}</SelectItem>
+                                                    <SelectItem key={film.Id} value={film.Name}>{film.Name}</SelectItem>
                                                 ))}
                                             </SelectContent>
                                         </Select>
                                     </FormControl>
                                     <FormDescription>
-                                        This is the film that will be shown.
+                                        This is film what will be shown.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
@@ -103,14 +127,17 @@ const EditSessionCard = ({ session, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="start_time"
+                            name="startTime"
                             rules={{ required: "Start time is required" }}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Start Time</FormLabel>
                                     <FormControl>
-                                        <Input {...field} type="text" placeholder="Start Time" />
+                                        <Input type="time" {...field} />
                                     </FormControl>
+                                    <FormDescription>
+                                        Time when session will end.
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -118,14 +145,35 @@ const EditSessionCard = ({ session, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="end_time"
+                            name="endTime"
                             rules={{ required: "End time is required" }}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>End Time</FormLabel>
                                     <FormControl>
-                                        <Input {...field} type="text" placeholder="End Time" />
+                                        <Input type="time" {...field} />
                                     </FormControl>
+                                    <FormDescription>
+                                        Time when session will end.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="date"
+                            rules={{ required: "Date is required" }}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Date</FormLabel>
+                                    <FormControl>
+                                        <Input type="date" {...field} />
+                                    </FormControl>
+                                    <FormDescription>
+                                        Date when session will end.
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
