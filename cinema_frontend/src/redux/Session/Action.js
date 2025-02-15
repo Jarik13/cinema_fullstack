@@ -3,7 +3,6 @@ import { CREATE_SESSION_FAILURE, CREATE_SESSION_REQUEST, CREATE_SESSION_SUCCESS 
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
-
 export const createSession = (data) => async (dispatch) => {
     dispatch({ type: CREATE_SESSION_REQUEST });
 
@@ -21,3 +20,4 @@ export const createSession = (data) => async (dispatch) => {
         toast.error("Failed to create session!");
     }
 }
+
