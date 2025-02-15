@@ -19,13 +19,19 @@ const Filters = () => {
 
     const [selectedGenre, setSelectedGenre] = useState("all");
     const [selectedYear, setSelectedYear] = useState(1930);
-    const [duration, setDuration] = useState([0, 240]);
-    const [selectedAgeRating, setSelectedAgeRating] = useState("all");
-    const [movieRating, setMovieRating] = useState("highest");
+    const [duration, setDuration] = useState("01:30");
+    const [selectedAgeRating, setSelectedAgeRating] = useState(0);
+    const [movieRating, setMovieRating] = useState([0, 10]);
 
     const applyFilters = () => {
+        console.log("selectedGenre:", selectedGenre);
+        console.log("movieRating:", movieRating);
+        console.log("selectedYear:", selectedYear);
+        console.log("selectedAgeRating:", selectedAgeRating);
+        console.log("duration:", duration);
+    
         dispatch(filterFilms(selectedGenre, movieRating, selectedYear, selectedAgeRating, duration));
-    }
+    };    
 
     return (
         <Popover>

@@ -1,8 +1,6 @@
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
-import React, { useState } from 'react';
-
-const ageRatings = ["0+", "3+", "6+", "12+", "16+", "18+"];
+import React from 'react';
 
 const AgeRatingFilter = ({ ageRating, setAgeRating }) => {
     return (
@@ -10,21 +8,15 @@ const AgeRatingFilter = ({ ageRating, setAgeRating }) => {
             <Label htmlFor="ageRating" className="font-semibold">
                 Age Rating
             </Label>
-            <Select value={ageRating} onValueChange={setAgeRating}>
-                <SelectTrigger id="ageRating">
-                    {ageRating === "all" ? "All" : ageRating}
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
-                    {ageRatings.map((rating) => (
-                        <SelectItem key={rating} value={rating}>
-                            {rating}
-                        </SelectItem>
-                    ))}
-                </SelectContent>
-            </Select>
+            <Input
+                id="ageRating"
+                type="number"
+                value={ageRating || ''}
+                onChange={(e) => setAgeRating(e.target.value)}
+                placeholder="Enter Age Rating"
+            />
         </div>
-    )
-}
+    );
+};
 
 export default AgeRatingFilter;

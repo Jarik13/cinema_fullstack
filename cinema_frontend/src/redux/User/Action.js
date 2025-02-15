@@ -109,12 +109,13 @@ export const filterFilms = (genre, rating, year, sortOrder, duration) => async (
         const response = await axios.get(`${baseURL}/api/User/Filters`, {
             params: {
                 Genre: genre,
-                Rating: rating,
+                Rating: rating, 
                 Year: year,
-                SortOrder: sortOrder,
-                Duration: duration
+
             }
-        });
+        });       
+        
+        console.log(response);
 
         dispatch({
             type: FILTER_FILMS_SUCCESS,
