@@ -14,6 +14,7 @@ import SnacksListPage from './pages/SnacksListPage/SnacksListPage';
 import WatchFilmsOnlinePage from './pages/WatchFilmsOnlinePage/WatchFilmsOnlinePage';
 import FilmDetailsOnlinePage from './pages/FilmDetailsOnlinePage/FilmDetailsOnlinePage';
 import AdminPanelPage from './pages/AdminPanelPage/AdminPanelPage';
+import ActionsPage from './pages/ActionsPage/ActionsPage';
 
 const App = () => {
   return (
@@ -48,6 +49,8 @@ const MainApp = () => {
 
           <Route path='/watch-online' element={<WatchFilmsOnlinePage />} />
           <Route path='/watch-online/:filmId' element={<FilmDetailsOnlinePage />} />
+
+          <Route path='/actions' element={<ActionsPage />} />
         </Routes>
       }
     </div>
