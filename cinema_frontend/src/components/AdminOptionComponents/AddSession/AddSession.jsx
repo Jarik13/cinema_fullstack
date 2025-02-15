@@ -2,12 +2,26 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { getFilmList } from "@/redux/Film/Action";
+import { getHallList } from "@/redux/Hall/Action";
+import { createSession } from "@/redux/Session/Action";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-
-const halls = ["Hall 1", "Hall 2", "Hall 3", "Hall 4"];
-const films = ["Movie A", "Movie B", "Movie C", "Movie D"];
+import { useDispatch, useSelector } from "react-redux";
 
 const AddSession = () => {
+    const dispatch = useDispatch();
+    const halls = useSelector((store) => store.hall?.halls || []);
+    const films = useSelector((store) => store.film?.films || []);
+
+    console.log("Halls: ", halls);
+    console.log("Films: ", films);
+
+    useEffect(() => {
+        dispatch(getHallList());
+        dispatch(getFilmList());
+    }, [dispatch]);
+
     const form = useForm({
         defaultValues: {
             hall: "",
@@ -22,6 +36,7 @@ const AddSession = () => {
 
     const onSubmit = (data) => {
         console.log(data);
+        dispatch(createSession(data));
 
         reset({
             hall: "",
@@ -34,7 +49,7 @@ const AddSession = () => {
     return (
         <div className="p-4 border rounded bg-gray-50 w-1/2">
             <h2 className="text-xl font-bold mb-4">Add a New Session</h2>
-            <Form {...form}>
+            {/* <Form {...form}>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                     <FormField
                         control={form.control}
@@ -130,7 +145,7 @@ const AddSession = () => {
                         Save Session
                     </Button>
                 </form>
-            </Form>
+            </Form> */}
         </div>
     );
 }

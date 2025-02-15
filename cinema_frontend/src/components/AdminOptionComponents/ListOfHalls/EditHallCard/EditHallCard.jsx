@@ -14,8 +14,8 @@ const EditHallCard = ({ isOpen, onClose, editHall, onChange, onSave }) => {
                 <div className="flex flex-col gap-4">
                     <Label htmlFor="name">Hall number</Label>
                     <Input
-                        name="number"
-                        value={editHall.number}
+                        name="Number"
+                        value={editHall.Number}
                         onChange={onChange}
                         placeholder="Hall number ..."
                     />

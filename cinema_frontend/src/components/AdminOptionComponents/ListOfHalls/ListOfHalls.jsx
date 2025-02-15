@@ -10,11 +10,13 @@ const ListOfHalls = () => {
     const halls = useSelector(store => store.hall?.halls || []);
 
     const [selectedHall, setSelectedHall] = useState(null);
-    const [editHall, setEditHall] = useState({ id: '', number: '', count_of_seats: '' });
+    const [editHall, setEditHall] = useState({ Id: '', Number: '', Count_of_seats: '' });
     const [isEditOpen, setIsEditOpen] = useState(false);
     const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
     const isFirstLoad = useRef(true);
+
+    console.log(halls);
 
     useEffect(() => {
         dispatch(getHallList(isFirstLoad.current));
@@ -23,10 +25,10 @@ const ListOfHalls = () => {
 
     const toggleHallStatus = async (hall) => {
         console.log(hall);
-        if (hall.is_available) {
-            await dispatch(closeHall(hall.id)); 
+        if (hall.Is_available) {
+            await dispatch(closeHall(hall.Id)); 
         } else {
-            await dispatch(openHall(hall.id));  
+            await dispatch(openHall(hall.Id));  
         }
 
         await dispatch(getHallList(false));
@@ -34,7 +36,7 @@ const ListOfHalls = () => {
 
     const openEditModal = (hall) => {
         setSelectedHall(hall);
-        setEditHall({ id: hall.id, number: hall.number, seats: hall.count_of_seats });
+        setEditHall({ Id: hall.Id, Number: hall.Number, Count_of_seats: hall.Count_of_seats });
         setIsEditOpen(true);
     };
 
@@ -49,15 +51,15 @@ const ListOfHalls = () => {
     };
 
     const saveChanges = async () => {
-        await dispatch(updateHall(editHall.id, [
-            { op: "replace", path: "/Number", value: Number(editHall.number) },
+        await dispatch(updateHall(editHall.Id, [
+            { op: "replace", path: "/Number", value: Number(editHall.Number) },
         ]));
         await dispatch(getHallList(true));
         setIsEditOpen(false);
     };
 
     const handleDeleteHall = async () => {
-        await dispatch(deleteHall(selectedHall.id));
+        await dispatch(deleteHall(selectedHall.Id));
         await dispatch(getHallList(true));
         setIsDeleteOpen(false);
     };
@@ -74,16 +76,16 @@ const ListOfHalls = () => {
                     <div>Actions</div>
                 </div>
                 {halls.map(hall => (
-                    <div key={hall.id} className="grid grid-cols-[2fr_1fr_1fr_1fr_1.5fr] border-t px-4 py-2 items-center">
-                        <div>{hall.id}</div>
-                        <div>{hall.number}</div>
-                        <div>{hall.count_of_seats}</div>
-                        <div className={hall.is_available ? "text-green-600" : "text-red-600"}>
-                            {hall.is_available ? "Open" : "Close"}
+                    <div key={hall.Id} className="grid grid-cols-[2fr_1fr_1fr_1fr_1.5fr] border-t px-4 py-2 items-center">
+                        <div>{hall.Id}</div>
+                        <div>{hall.Number}</div>
+                        <div>{hall.Count_of_seats}</div>
+                        <div className={hall.Is_available ? "text-green-600" : "text-red-600"}>
+                            {hall.Is_available ? "Open" : "Close"}
                         </div>
                         <div className="flex gap-2">
                             <Button variant="outline" onClick={() => toggleHallStatus(hall)}>
-                                {hall.is_available ? "Close" : "Open"}
+                                {hall.Is_available ? "Close" : "Open"}
                             </Button>
                             <Button variant="outline" onClick={() => openEditModal(hall)}>Edit</Button>
                             <Button variant="destructive" onClick={() => openDeleteModal(hall)}>Delete</Button>
@@ -104,7 +106,7 @@ const ListOfHalls = () => {
                 isOpen={isDeleteOpen}
                 onClose={() => setIsDeleteOpen(false)}
                 onConfirm={handleDeleteHall}
-                hallName={selectedHall?.number}
+                hallNumber={selectedHall?.Number}
             />
         </div>
     );
