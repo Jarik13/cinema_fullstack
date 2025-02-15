@@ -9,6 +9,7 @@ import {
     GET_USER_LIST_FAILURE,
     GET_USER_LIST_REQUEST,
     GET_USER_LIST_SUCCESS,
+    SET_FILTERS,
     UPDATE_USER_PROFILE_FAILURE,
     UPDATE_USER_PROFILE_REQUEST,
     UPDATE_USER_PROFILE_SUCCESS
@@ -111,7 +112,7 @@ export const filterFilms = (genre, rating, year, sortOrder, duration) => async (
                 Genre: genre,
                 Rating: rating, 
                 Year: year,
-
+                
             }
         });       
         
@@ -127,3 +128,8 @@ export const filterFilms = (genre, rating, year, sortOrder, duration) => async (
         toast.error("Failed to filter films!");
     }
 };
+
+export const setFilters = (filters) => async (dispatch) => ({
+    type: SET_FILTERS,
+    payload: filters,
+});

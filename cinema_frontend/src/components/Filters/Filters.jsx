@@ -12,7 +12,8 @@ import DurationFilter from "./DurationFilter/DurationFilter";
 import AgeRatingFilter from "./AgeRatingFilter/AgeRatingFilter";
 import MovieRatingFilter from "./MovieRatingFilter/MovieRatingFilter";
 import { useDispatch } from "react-redux";
-import { filterFilms } from "@/redux/User/Action";
+import { filterFilms, setFilters } from "@/redux/User/Action";
+import { getFilmList } from "@/redux/Film/Action";
 
 const Filters = () => {
     const dispatch = useDispatch();
@@ -23,15 +24,19 @@ const Filters = () => {
     const [selectedAgeRating, setSelectedAgeRating] = useState(0);
     const [movieRating, setMovieRating] = useState([0, 10]);
 
-    const applyFilters = () => {
-        console.log("selectedGenre:", selectedGenre);
-        console.log("movieRating:", movieRating);
-        console.log("selectedYear:", selectedYear);
-        console.log("selectedAgeRating:", selectedAgeRating);
-        console.log("duration:", duration);
-    
-        dispatch(filterFilms(selectedGenre, movieRating, selectedYear, selectedAgeRating, duration));
-    };    
+    const applyFilters = async () => {
+        const filters = {
+            selectedGenre, 
+            movieRating, 
+            selectedYear, 
+            selectedAgeRating, 
+            duration
+        };
+
+        await dispatch(setFilters(filters));
+
+        await dispatch(getFilmList(true, filters));
+    };
 
     return (
         <Popover>

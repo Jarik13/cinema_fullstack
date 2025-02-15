@@ -1,22 +1,30 @@
-import { 
-    GET_USER_LIST_FAILURE, 
-    GET_USER_LIST_REQUEST, 
-    GET_USER_LIST_SUCCESS, 
-    UPDATE_USER_PROFILE_FAILURE, 
-    UPDATE_USER_PROFILE_REQUEST, 
+import {
+    GET_USER_LIST_FAILURE,
+    GET_USER_LIST_REQUEST,
+    GET_USER_LIST_SUCCESS,
+    UPDATE_USER_PROFILE_FAILURE,
+    UPDATE_USER_PROFILE_REQUEST,
     UPDATE_USER_PROFILE_SUCCESS,
     BLOCK_USER_REQUEST,
     BLOCK_USER_SUCCESS,
     BLOCK_USER_FAILURE,
     FILTER_FILMS_REQUEST,
     FILTER_FILMS_SUCCESS,
-    FILTER_FILMS_FAILURE
+    FILTER_FILMS_FAILURE,
+    SET_FILTERS
 } from "./ActionType";
 
 const initialState = {
     user: null,
     users: [],
     films: [],
+    filters: {
+        selectedGenre: 'all',
+        selectedYear: 1930,
+        selectedAgeRating: 0,
+        movieRating: 10,
+        duration: '01:30',
+    },
     loading: false,
     error: null,
 };
@@ -36,9 +44,9 @@ export const userReducer = (state = initialState, action) => {
             return { ...state, loading: false, users: action.payload };
 
         case BLOCK_USER_SUCCESS:
-            return { 
-                ...state, 
-                loading: false, 
+            return {
+                ...state,
+                loading: false,
                 users: state.users.filter(user => user.UserName !== action.payload)
             };
 
@@ -56,6 +64,9 @@ export const userReducer = (state = initialState, action) => {
 
         case FILTER_FILMS_FAILURE:
             return { ...state, loading: false, error: "Failed to filter film!" };
+
+        case SET_FILTERS: 
+            return { ...state, filters: { ...state.filters, ...action.payload } };
 
         default:
             return state;

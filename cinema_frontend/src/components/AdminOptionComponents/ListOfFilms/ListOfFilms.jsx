@@ -10,9 +10,10 @@ const ListOfFilms = () => {
     const films = useSelector(store => store.film?.films || []);
 
     const isFirstLoad = useRef(true);
+    const filters = useSelector(store => store.user?.filters);
 
     useEffect(() => {
-        dispatch(getFilmList(isFirstLoad.current));
+        dispatch(getFilmList(isFirstLoad.current, filters));
         isFirstLoad.current = false;
     }, []);
 
@@ -56,7 +57,7 @@ const ListOfFilms = () => {
             await dispatch(updateFilm(editingFilm.Id, patches)); 
         }
 
-        await dispatch(getFilmList(false));
+        await dispatch(getFilmList(false, null));
 
         handleCloseModal();
     };
@@ -83,7 +84,7 @@ const ListOfFilms = () => {
 
     const handleDeleteFilm = async () => {
         await dispatch(deleteFilm(selectedFilmId));
-        await dispatch(getFilmList(true));
+        await dispatch(getFilmList(true, null));
         setIsDialogOpen(false);
     };
 
