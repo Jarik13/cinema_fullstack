@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Button } from '../ui/button';
 import { Check, ChevronsUpDown } from 'lucide-react';
@@ -14,8 +14,11 @@ const Location = () => {
 
     const [open, setOpen] = useState(false);
 
+    const isFirstLoad = useRef(true);
+
     useEffect(() => {
-        dispatch(getLocationList()); 
+        dispatch(getLocationList(isFirstLoad.current)); 
+        isFirstLoad.current = false;
     }, [dispatch]);
 
     const formattedLocations = locations.map(location => ({

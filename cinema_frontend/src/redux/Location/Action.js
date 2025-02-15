@@ -3,7 +3,7 @@ import { GET_ALL_LOCATIONS_FAILURE, GET_ALL_LOCATIONS_REQUEST, GET_ALL_LOCATIONS
 import { baseURL } from "@/config/constants";
 import { toast } from "react-toastify";
 
-export const getLocationList = () => async (dispatch) => {
+export const getLocationList = (showToast) => async (dispatch) => {
     dispatch({ type: GET_ALL_LOCATIONS_REQUEST });
 
     try {
@@ -12,7 +12,9 @@ export const getLocationList = () => async (dispatch) => {
     } catch (e) {
         console.log(e);
         dispatch({ type: GET_ALL_LOCATIONS_FAILURE });
-        toast.error("Faild to get locations!");
+        if (showToast) {
+            toast.error("Faild to get locations!");
+        }
     }
 }
 

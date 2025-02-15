@@ -1,9 +1,13 @@
 import React from 'react';
 import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const MovieDetails = () => {
   const navigate = useNavigate();
+  
+  const selectedLocation = useSelector(store => store.location?.selectedLocation || null);
+  console.log(selectedLocation);
 
   return (
     <div className='flex justify-between'>
@@ -13,7 +17,7 @@ const MovieDetails = () => {
             <Button 
               variant="destructive" 
               className="mt-2"
-              onClick={() => navigate("1/sessions")}
+              onClick={() => navigate(`${selectedLocation.id}/sessions`)}
             >
               Choose Session
             </Button>
