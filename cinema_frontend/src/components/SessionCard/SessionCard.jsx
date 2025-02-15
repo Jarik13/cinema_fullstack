@@ -1,24 +1,25 @@
 import React from 'react';
 import SessionsList from './SessionsList/SessionsList';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const SessionCard = ({ startTime, endTime, hallName, availableSeats, lowestTicketPrice }) => {
+const SessionCard = ({ session }) => {
     const navigate = useNavigate();
+    const locationId = useParams();
 
     return (
         <div 
             className="text-black p-4 rounded-md shadow-md w-80 border border-white relative cursor-pointer"
-            onClick={() => navigate('/1/sessions/1')}
+            onClick={() => navigate(`/${locationId}/sessions/${session.Id}`)}
         >
             <div className="flex justify-between text-sm mb-2">
-                <span>{startTime} - {endTime}</span>
-                <span>{hallName}</span>
+                <span>{session.Start_time} - {session.End_time}</span>
+                <span>{session.Hall}</span>
             </div>
             <div className="bg-gray-200 text-center py-4 rounded-md border border-white">
                 <SessionsList />
             </div>
             <div className="text-center text-sm mt-2">
-                <span>Places left {availableSeats} from {lowestTicketPrice} UAH</span>
+                <span>{session.Film}</span>
             </div>
         </div>
     );
