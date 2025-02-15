@@ -31,7 +31,9 @@ export const getSessionList = (showToast) => async (dispatch) => {
             }
         });
         dispatch({ type: GET_SESSION_LIST_SUCCESS, payload: data });
-        toast.success("Session list getted successfully!");
+        if (showToast) {
+            toast.success("Session list getted successfully!");
+        }
     } catch (e) {
         console.log(e);
         dispatch({ type: GET_SESSION_LIST_FAILURE });
