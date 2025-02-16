@@ -1,23 +1,20 @@
 import { Button } from '@/components/ui/button';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import EditSnackCard from './EditSnackCard/EditSnackCard';
 import DeleteSnackCard from './DeleteSnackCard/DeleteSnackCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSnackList } from '@/redux/Snack/Action';
 
 const ListOfSnacks = () => {
-    const [snacks, setSnacks] = useState([
-        { id: 1, name: 'Popcorn', price: 50 },
-        { id: 2, name: 'Nachos', price: 70 },
-        { id: 3, name: 'Soda', price: 40 },
-        { id: 4, name: 'Candy', price: 30 },
-        { id: 5, name: 'Chips', price: 60 },
-        { id: 6, name: 'Ice Cream', price: 90 },
-        { id: 7, name: 'Chocolate Bar', price: 55 },
-        { id: 8, name: 'Hot Dog', price: 100 },
-        { id: 9, name: 'Muffin', price: 25 },
-        { id: 10, name: 'Cupcake', price: 35 },
-        { id: 11, name: 'Burger', price: 110 },
-        { id: 12, name: 'Fries', price: 40 },
-    ]);
+    const dispatch = useDispatch();
+    const snacks = useSelector(store => store.snack?.snacks);
+
+    const isFirstLoad = useRef(true);
+
+    useEffect(() => {
+        dispatch(getSnackList(isFirstLoad.current));
+        isFirstLoad.current = false;
+    }, [dispatch])
 
     const [editingSnack, setEditingSnack] = useState(null);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -32,11 +29,7 @@ const ListOfSnacks = () => {
     };
 
     const handleSaveSnack = (updatedSnack) => {
-        setSnacks(prevSnacks =>
-            prevSnacks.map(snack =>
-                snack.id === updatedSnack.id ? updatedSnack : snack
-            )
-        );
+        // here will be updateSnack()
         handleCloseModal();
     };
 
@@ -61,7 +54,7 @@ const ListOfSnacks = () => {
     };
 
     const deleteSnack = () => {
-        setSnacks(snacks.filter(snack => snack.id !== selectedSnackId));
+        // here will be deleteSnack()
         closeDeleteDialog();
     };
 
@@ -75,9 +68,9 @@ const ListOfSnacks = () => {
                     <div>Price</div>
                     <div>Actions</div>
                 </div>
-                {snacks.map(snack => (
-                    <div key={snack.id} className="grid grid-cols-4 border-t px-4 py-2 items-center">
-                        <div>{snack.id}</div>
+                {snacks.map((snack, index) => (
+                    <div key={index} className="grid grid-cols-4 border-t px-4 py-2 items-center">
+                        <div>{index + 1}</div> 
                         <div>{snack.name}</div>
                         <div>{snack.price}</div>
                         <div className="flex gap-2">
@@ -96,7 +89,7 @@ const ListOfSnacks = () => {
                 />
             )}
             <DeleteSnackCard
-                name={snacks.find(snack => snack.id === selectedSnackId)?.name || 'Unknown Film'}
+                name={snacks.find(snack => snack.id === selectedSnackId)?.name || 'Unknown Snack'}
                 isOpen={isDialogOpen}
                 onClose={closeDeleteDialog}
                 onConfirm={deleteSnack}
