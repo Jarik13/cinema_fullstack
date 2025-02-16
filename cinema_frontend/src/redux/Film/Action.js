@@ -72,7 +72,7 @@ export const getFilmList = (showToast, filters) => async (dispatch) => {
     let data;  
 
     try {
-        if (!filters) {
+        if (!filters || filters.selectedGenre === "all") {
             const response = await axios.get(`${baseURL}/api/Admin/ReadFilms`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
