@@ -43,7 +43,7 @@ const HallPage = () => {
 
       <div className='flex gap-4'>
         <HallShape selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} sessionId={params.sessionId} />
-        <BuyTicketList selectedSeats={selectedSeats} />
+        <BuyTicketList selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} />
       </div>
     </div>
   )

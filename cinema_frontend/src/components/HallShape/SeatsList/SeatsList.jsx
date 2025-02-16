@@ -24,10 +24,6 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
     }
   }, [dispatch, session?.Id]);
 
-  useEffect(() => {
-    console.log('Selected Seats:', selectedSeats);
-  }, [selectedSeats]);
-
   const sortedTickets = tickets.sort((a, b) => a.Seat_number - b.Seat_number);
 
   const countOfSeats = hall?.Count_of_seats || 0;
