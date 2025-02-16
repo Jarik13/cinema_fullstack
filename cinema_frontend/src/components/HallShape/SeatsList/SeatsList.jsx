@@ -1,16 +1,48 @@
-import React, { useState } from 'react';
+import { getHallById, getHallList } from '@/redux/Hall/Action';
+import { getSessionList } from '@/redux/Session/Action';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const SeatsList = ({ selectedSeats, setSelectedSeats }) => {
-  const rows = [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-  ];
+const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
+  const dispatch = useDispatch();
+  const sessions = useSelector(store => store.session?.sessions);
+  const halls = useSelector(store => store.hall?.halls);
+
+  const session = sessions?.find(s => s.Id === sessionId);
+
+  useEffect(() => {
+    dispatch(getHallList(false));
+    dispatch(getSessionList(false));
+  }, [dispatch]);
+
+  const hall = halls?.find(h => h.Id === session?.HallId);
+
+  const countOfSeats = hall?.Count_of_seats || 0;
+  const rows = [];
+  let seatCount = 0;
+
+  const rowSizes = [15, 24, 29];
+  for (let i = 0; i < rowSizes.length; i++) {
+    let row = [];
+    for (let j = 0; j < rowSizes[i]; j++) {
+      if (seatCount < countOfSeats) {
+        row.push(seatCount);
+        seatCount++;
+      }
+    }
+    rows.push(row);
+  }
+
+  while (seatCount < countOfSeats) {
+    let row = [];
+    for (let i = 0; i < 29; i++) {
+      if (seatCount < countOfSeats) {
+        row.push(seatCount);
+        seatCount++;
+      }
+    }
+    rows.push(row);
+  }
 
   const handleSeatClick = (seatNumber) => {
     if (selectedSeats.includes(seatNumber)) {
@@ -37,7 +69,7 @@ const SeatsList = ({ selectedSeats, setSelectedSeats }) => {
                 ></div>
               ))}
               {row.map((_, colIndex) => {
-                const currentSeat = rowIndex * 100 + colIndex + 100; 
+                const currentSeat = rowIndex * 100 + colIndex + 100;
                 return (
                   <div
                     key={currentSeat}

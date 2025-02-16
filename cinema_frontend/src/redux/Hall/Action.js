@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CLOSE_HALL_FAILURE, CLOSE_HALL_REQUEST, CLOSE_HALL_SUCCESS, CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, DELETE_HALL_FAILURE, DELETE_HALL_REQUEST, DELETE_HALL_SUCCESS, GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS, GET_HALL_FAILURE, GET_HALL_REQUEST, OPEN_HALL_FAILURE, OPEN_HALL_REQUEST, OPEN_HALL_SUCCESS, SET_SELECTED_HALL, UPDATE_HALL_FAILURE, UPDATE_HALL_REQUEST, UPDATE_HALL_SUCCESS } from "./ActionType";
+import { CLOSE_HALL_FAILURE, CLOSE_HALL_REQUEST, CLOSE_HALL_SUCCESS, CREATE_HALL_FAILURE, CREATE_HALL_REQUEST, DELETE_HALL_FAILURE, DELETE_HALL_REQUEST, DELETE_HALL_SUCCESS, GET_ALL_HALLS_FAILURE, GET_ALL_HALLS_REQUEST, GET_ALL_HALLS_SUCCESS, GET_HALL_FAILURE, GET_HALL_REQUEST, GET_HALL_SUCCESS, OPEN_HALL_FAILURE, OPEN_HALL_REQUEST, OPEN_HALL_SUCCESS, SET_SELECTED_HALL, UPDATE_HALL_FAILURE, UPDATE_HALL_REQUEST, UPDATE_HALL_SUCCESS } from "./ActionType";
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -62,8 +62,8 @@ export const getHallById = (id) => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
+        dispatch({ type: GET_HALL_SUCCESS, payload: data });
         toast.success("Hall getted successfully!");
-        console.log(data);
     } catch (e) {
         console.log(e);
         dispatch({ type: GET_HALL_FAILURE });

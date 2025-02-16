@@ -2,9 +2,11 @@ import React from 'react';
 import { MapPinCheckIcon, TicketCheckIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const BuyTicketList = ({ selectedSeats }) => {
     const navigate = useNavigate();
+    const selectedLocation = useSelector(store => store.location?.selectedLocation || null);
 
     const tickets = selectedSeats.map((seatNumber) => {
         const row = Math.floor(seatNumber / 100);
@@ -24,7 +26,7 @@ const BuyTicketList = ({ selectedSeats }) => {
             <div className='flex flex-col gap-4 text-xl'>
                 <div className='flex items-center gap-2'>
                     <MapPinCheckIcon className='w-5 h-5 text-gray-500' />
-                    <h3>Lviv, Forum</h3>
+                    <h3>{selectedLocation?.label || "None"}</h3>   {/* here need to update */}
                 </div>
                 <div className='flex items-center gap-2'>
                     <TicketCheckIcon className='w-5 h-5 text-gray-500' />
