@@ -9,6 +9,9 @@ import {
     GET_USER_LIST_FAILURE,
     GET_USER_LIST_REQUEST,
     GET_USER_LIST_SUCCESS,
+    SEARCH_FILMS_FAILURE,
+    SEARCH_FILMS_REQUEST,
+    SEARCH_FILMS_SUCCESS,
     SET_FILTERS,
     UPDATE_USER_PROFILE_FAILURE,
     UPDATE_USER_PROFILE_REQUEST,
@@ -133,3 +136,19 @@ export const setFilters = (filters) => async (dispatch) => ({
     type: SET_FILTERS,
     payload: filters,
 });
+
+export const searchFilms = (query) => async (dispatch) => {
+    dispatch({ type: SEARCH_FILMS_REQUEST });
+
+    try {
+        const { data } = await axios.get(`${baseURL}/api/User/Search`, {
+            params: {
+                searchRequest: query
+            }
+        });
+        dispatch({ type: SEARCH_FILMS_SUCCESS, payload: data })
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: SEARCH_FILMS_FAILURE });
+    }
+}
