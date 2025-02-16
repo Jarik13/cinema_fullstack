@@ -18,10 +18,10 @@ import { getFilmList } from "@/redux/Film/Action";
 const Filters = () => {
     const dispatch = useDispatch();
 
-    const [selectedGenre, setSelectedGenre] = useState("all");
-    const [selectedYear, setSelectedYear] = useState(1930);
-    const [duration, setDuration] = useState("01:30");
-    const [selectedAgeRating, setSelectedAgeRating] = useState(0);
+    const [selectedGenre, setSelectedGenre] = useState(null);
+    const [selectedYear, setSelectedYear] = useState(null);
+    const [duration, setDuration] = useState(null);
+    const [selectedAgeRating, setSelectedAgeRating] = useState(null);
     const [movieRating, setMovieRating] = useState([0, 10]);
 
     const applyFilters = async () => {
@@ -39,6 +39,10 @@ const Filters = () => {
     };
 
     const resetFilters = async () => {
+        setSelectedGenre(null);
+        setSelectedYear(null);
+        setDuration(null);
+        setSelectedAgeRating(null);
         await dispatch(setFilters(null));
         await dispatch(getFilmList(true, null));
     }

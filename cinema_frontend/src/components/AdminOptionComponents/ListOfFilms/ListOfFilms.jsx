@@ -10,10 +10,9 @@ const ListOfFilms = () => {
     const films = useSelector(store => store.film?.films || []);
 
     const isFirstLoad = useRef(true);
-    const filters = useSelector(store => store.user?.filters);
 
     useEffect(() => {
-        dispatch(getFilmList(isFirstLoad.current, filters));
+        dispatch(getFilmList(isFirstLoad.current, null));
         isFirstLoad.current = false;
     }, []);
 
@@ -45,7 +44,7 @@ const ListOfFilms = () => {
         }
 
         if (JSON.stringify(oldFilm.Genres) !== JSON.stringify(newFilm.Genres)) {
-            patches.push({ op: "replace", path: "/genres", value: newFilm.Genres }); 
+            patches.push({ op: "replace", path: "/genres", value: newFilm.Genres });
         }
 
         return patches;
@@ -54,10 +53,10 @@ const ListOfFilms = () => {
     const handleSaveFilm = async (updatedFilm) => {
         const patches = generatePatches(editingFilm, updatedFilm);
         if (patches.length > 0) {
-            await dispatch(updateFilm(editingFilm.Id, patches)); 
+            await dispatch(updateFilm(editingFilm.Id, patches));
         }
 
-        await dispatch(getFilmList(false, null));
+        await dispatch(getFilmList(false));
 
         handleCloseModal();
     };
@@ -113,9 +112,13 @@ const ListOfFilms = () => {
                         <div>{film.Release_year}</div>
                         <div>{film.Age_limit}</div>
                         <div className="grid grid-cols-1 gap-4">
-                            {film.Genres?.map((genre, index) => (
-                                <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">{genre}</div>
-                            ))}
+                            {film.Genres && film.Genres.length > 0 ? (
+                                film.Genres.map((genre, index) => (
+                                    <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">{genre}</div>
+                                ))
+                            ) : (
+                                <div className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-gray-200">No Genres</div>
+                            )}
                         </div>
                         <div className="flex gap-2">
                             <Button variant="outline" onClick={() => handleEditClick(film)}>Edit</Button>

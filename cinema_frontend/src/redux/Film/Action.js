@@ -66,7 +66,7 @@ export const deleteFilm = (id) => async (dispatch) => {
     }
 }
 
-export const getFilmList = (showToast, filters = null) => async (dispatch) => {
+export const getFilmList = (showToast, filters) => async (dispatch) => {
     dispatch({ type: GET_ALL_FILMS_REQUEST });
 
     let data;  
@@ -83,14 +83,12 @@ export const getFilmList = (showToast, filters = null) => async (dispatch) => {
             const response = await axios.get(`${baseURL}/api/User/Filters`, {
                 params: {
                     Genre: filters.selectedGenre,
-                    Rating: filters.movieRating,
+                    Rating: filters.selectedAgeRating,
                     Year: filters.selectedYear,
                 }
             });
             data = response.data;  
-            console.log(data);
         }
-
         dispatch({ type: GET_ALL_FILMS_SUCCESS, payload: data });
         if (showToast) {
             toast.success("Films fetched successfully!");
@@ -101,7 +99,6 @@ export const getFilmList = (showToast, filters = null) => async (dispatch) => {
         toast.error(e.response?.message || "Failed to fetch films");
     }
 };
-
 
 export const setSelectedFilm = (film) => ({
     type: SET_SELECTED_FILM,

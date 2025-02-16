@@ -13,9 +13,11 @@ const YearFilter = ({ year, setYear }) => {
     };
 
     const handleYearBlur = () => {
+        if (year === '') return;
+
         const value = parseInt(year, 10);
         if (isNaN(value) || value < 1930) {
-            setYear(1930); 
+            setYear(1930);
         } else if (value > currentYear) {
             setYear(currentYear);
         }
