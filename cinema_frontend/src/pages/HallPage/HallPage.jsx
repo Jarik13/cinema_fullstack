@@ -10,13 +10,21 @@ const HallPage = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const sessions = useSelector(store => store.session?.sessions);
-  
+
   useEffect(() => {
     dispatch(getSessionList(false));
-  }, [dispatch])
-    
+  }, [dispatch]);
+
   const session = sessions?.find(s => s.Id === params.sessionId);
-  const [selectedSeats, setSelectedSeats] = useState([]);
+
+  const [selectedSeats, setSelectedSeats] = useState(() => {
+    const savedSeats = localStorage.getItem(`selectedSeats_${params.sessionId}`);
+    return savedSeats ? JSON.parse(savedSeats) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(`selectedSeats_${params.sessionId}`, JSON.stringify(selectedSeats));
+  }, [selectedSeats, params.sessionId]);
 
   return (
     <div className='flex flex-col w-full p-4'>
@@ -46,7 +54,7 @@ const HallPage = () => {
         <BuyTicketList selectedSeats={selectedSeats} setSelectedSeats={setSelectedSeats} />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default HallPage;
