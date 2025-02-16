@@ -1,12 +1,15 @@
 import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import { getUserTickets } from '@/redux/Ticket/Action';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ListOfTickets = () => {
-    const [tickets, setTickets] = useState([
-        { id: 1, user: 'yaroslav@gmail.com', hall: "Hall 1", status: "Bought", seat_number: 2, price: 132 },
-        { id: 2, user: 'katya@gmail.com', hall: "Hall 1", status: "Bought", seat_number: 1, price: 100 },
-        { id: 3, user: 'roksolana@gmail.com', hall: "Hall 1", status: "Booked", seat_number: 3, price: 100 },
-    ]);
+    const dispatch = useDispatch();
+    const tickets = useSelector(store => store.ticket?.tickets || []);
+    console.log(tickets);
+    useEffect(() => {
+        dispatch(getUserTickets());
+    }, [dispatch])
 
     return (
         <div className='flex flex-col'>

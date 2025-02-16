@@ -7,11 +7,13 @@ export const getUserTickets = () => async (dispatch) => {
     dispatch({ type: GET_USER_TICKETS_REQUEST });
 
     try {
-        const { data } = await axios.get(`${baseURL}/api/TicketHelper/tickets`, {
+        const { data } = await axios.get(`${baseURL}/api/Ticket/view_all_users_tickets`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
+
+        console.log(data);
 
         dispatch({ type: GET_USER_TICKETS_SUCCESS, payload: data });
     } catch (e) {
