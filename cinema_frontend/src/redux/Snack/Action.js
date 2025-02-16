@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_SNACK_FAILURE, CREATE_SNACK_REQUEST, CREATE_SNACK_SUCCESS, DELETE_SNACK_FAILURE, DELETE_SNACK_REQUEST, DELETE_SNACK_SUCCESS, GET_SNACK_LIST_FAILURE, GET_SNACK_LIST_REQUEST, GET_SNACK_LIST_SUCCESS } from "./ActionType"
+import { CREATE_SNACK_FAILURE, CREATE_SNACK_REQUEST, CREATE_SNACK_SUCCESS, DELETE_SNACK_FAILURE, DELETE_SNACK_REQUEST, DELETE_SNACK_SUCCESS, GET_SNACK_LIST_FAILURE, GET_SNACK_LIST_REQUEST, GET_SNACK_LIST_SUCCESS, UPDATE_SNACK_FAILURE, UPDATE_SNACK_REQUEST, UPDATE_SNACK_SUCCESS } from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -56,5 +56,23 @@ export const deleteSnack = (id) => async (dispatch) => {
         console.log(e);
         dispatch({ type: DELETE_SNACK_FAILURE });
         toast.error(e.response?.message || "Failed to delete snack!");
+    }
+}
+
+export const updateSnack = (id, patches) => async (dispatch) => {
+    dispatch({ type: UPDATE_SNACK_REQUEST });
+
+    try {
+        const { data } = await axios.patch(`${baseURL}/api/Snack/update_snack/${id}`, patches, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        dispatch({ type: UPDATE_SNACK_SUCCESS });
+        toast.success(data || "Snack updated successfully!");
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: UPDATE_SNACK_FAILURE });
+        toast.error(e.response?.message || "Failed to update snack!");
     }
 }

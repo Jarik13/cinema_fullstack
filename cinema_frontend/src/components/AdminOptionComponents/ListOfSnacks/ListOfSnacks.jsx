@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import EditSnackCard from './EditSnackCard/EditSnackCard';
 import DeleteSnackCard from './DeleteSnackCard/DeleteSnackCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteSnack, getSnackList } from '@/redux/Snack/Action';
+import { deleteSnack, getSnackList, updateSnack } from '@/redux/Snack/Action';
 
 const ListOfSnacks = () => {
     const dispatch = useDispatch();
@@ -28,8 +28,19 @@ const ListOfSnacks = () => {
         setEditingSnack(null);
     };
 
-    const handleSaveSnack = (updatedSnack) => {
-        // here will be updateSnack()
+    const handleSaveSnack = async (updatedSnack) => {
+        const patches = [];
+
+        if (updatedSnack.price !== editingSnack.price) {
+            patches.push({ op: 'replace', path: '/price', value: updatedSnack.price });
+        }
+
+        if (updatedSnack.name !== editingSnack.name) {
+            patches.push({ op: 'replace', path: '/name', value: updatedSnack.name });
+        }
+
+        await dispatch(updateSnack(editingSnack.id, patches));
+        await dispatch(getSnackList(false));
         handleCloseModal();
     };
 
@@ -73,7 +84,7 @@ const ListOfSnacks = () => {
                 </div>
                 {snacks.map(snack => (
                     <div key={snack.id} className="grid grid-cols-[2fr_1fr_1fr_1fr] border-t px-4 py-2 items-center">
-                        <div>{snack.id}</div> 
+                        <div>{snack.id}</div>
                         <div>{snack.name}</div>
                         <div>{snack.price}</div>
                         <div className="flex gap-2">
