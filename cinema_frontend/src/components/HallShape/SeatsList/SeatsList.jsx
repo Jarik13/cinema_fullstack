@@ -1,7 +1,7 @@
 import { getHallById, getHallList } from '@/redux/Hall/Action';
 import { getSessionList } from '@/redux/Session/Action';
 import { getTicketsBySessionId } from '@/redux/Ticket/Action';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
@@ -25,6 +25,10 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
   }, [dispatch, session?.Id]);
 
   const sortedTickets = tickets.sort((a, b) => a.Seat_number - b.Seat_number);
+
+  const boughtSeats = new Set(
+    sortedTickets.filter(ticket => ticket.Status === "Booked").map(ticket => ticket.Seat_number)
+  );
 
   const countOfSeats = hall?.Count_of_seats || 0;
   const rows = [];
@@ -54,6 +58,8 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
   }
 
   const handleSeatClick = (seatNumber) => {
+    if (boughtSeats.has(seatNumber + 1)) return; 
+
     const ticket = sortedTickets.find(ticket => ticket.Seat_number === seatNumber + 1);
 
     if (selectedSeats.includes(ticket)) {
@@ -81,13 +87,16 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
               ))}
               {row.map((_, colIndex) => {
                 const currentSeat = rowIndex * 100 + colIndex + 100;
+                const isBought = boughtSeats.has(currentSeat + 1);
+                const isSelected = selectedSeats.some(ticket => ticket.Seat_number === currentSeat + 1);
+
                 return (
                   <div
                     key={currentSeat}
                     onClick={() => handleSeatClick(currentSeat)}
-                    className={`w-8 h-8 flex items-center justify-center border 
-                      cursor-pointer rounded-sm text-white hover:border-4 hover:border-yellow-500 
-                      ${selectedSeats.some(ticket => ticket.Seat_number === currentSeat + 1) ? 'bg-yellow-500' : 'bg-gray-400'}`}
+                    className={`w-8 h-8 flex items-center justify-center border cursor-pointer rounded-sm text-white 
+                        ${isBought ? 'bg-gray-800 cursor-not-allowed' : 'hover:border-4 hover:border-yellow-500'} 
+                        ${isSelected ? 'bg-yellow-500' : isBought ? 'bg-gray-800' : 'bg-gray-400'}`}
                   >
                     {currentSeat + 1}
                   </div>
