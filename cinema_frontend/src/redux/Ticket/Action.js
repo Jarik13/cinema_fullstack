@@ -32,7 +32,6 @@ export const getTicketsBySessionId = (id) => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
-        console.log(response);
         dispatch({ type: GET_TICKETS_BY_SESSION_ID_SUCCESS, payload: response.data });
     } catch (e) {
         console.log(e);

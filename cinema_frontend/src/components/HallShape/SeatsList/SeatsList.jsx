@@ -24,8 +24,11 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
     }
   }, [dispatch, session?.Id]);
 
+  useEffect(() => {
+    console.log('Selected Seats:', selectedSeats);
+  }, [selectedSeats]);
 
-  console.log(tickets);
+  const sortedTickets = tickets.sort((a, b) => a.Seat_number - b.Seat_number);
 
   const countOfSeats = hall?.Count_of_seats || 0;
   const rows = [];
@@ -55,10 +58,12 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
   }
 
   const handleSeatClick = (seatNumber) => {
-    if (selectedSeats.includes(seatNumber)) {
-      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatNumber));
+    const ticket = sortedTickets.find(ticket => ticket.Seat_number === seatNumber + 1);
+
+    if (selectedSeats.includes(ticket)) {
+      setSelectedSeats(selectedSeats.filter((seat) => seat.Seat_number !== ticket.Seat_number));
     } else {
-      setSelectedSeats([...selectedSeats, seatNumber]);
+      setSelectedSeats([...selectedSeats, ticket]);
     }
   };
 
@@ -84,8 +89,9 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
                   <div
                     key={currentSeat}
                     onClick={() => handleSeatClick(currentSeat)}
-                    className={`w-8 h-8 flex items-center justify-center border cursor-pointer rounded-sm text-white hover:border-4 hover:border-yellow-500 ${selectedSeats.includes(currentSeat) ? 'bg-yellow-500' : 'bg-gray-400'
-                      }`}
+                    className={`w-8 h-8 flex items-center justify-center border 
+                      cursor-pointer rounded-sm text-white hover:border-4 hover:border-yellow-500 
+                      ${selectedSeats.some(ticket => ticket.Seat_number === currentSeat + 1) ? 'bg-yellow-500' : 'bg-gray-400'}`}
                   >
                     {currentSeat + 1}
                   </div>
