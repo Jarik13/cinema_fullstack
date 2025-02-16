@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import EditSnackCard from './EditSnackCard/EditSnackCard';
 import DeleteSnackCard from './DeleteSnackCard/DeleteSnackCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSnackList } from '@/redux/Snack/Action';
+import { deleteSnack, getSnackList } from '@/redux/Snack/Action';
 
 const ListOfSnacks = () => {
     const dispatch = useDispatch();
@@ -53,8 +53,11 @@ const ListOfSnacks = () => {
         setIsDialogOpen(false);
     };
 
-    const deleteSnack = () => {
-        // here will be deleteSnack()
+    const handleDeleteSnack = async () => {
+        if (selectedSnackId) {
+            await dispatch(deleteSnack(selectedSnackId));
+            await dispatch(getSnackList(false));
+        }
         closeDeleteDialog();
     };
 
@@ -62,15 +65,15 @@ const ListOfSnacks = () => {
         <div className='flex flex-col'>
             <p className="text-2xl font-bold mb-4">All Snack List</p>
             <div className="border rounded-lg overflow-hidden">
-                <div className='grid grid-cols-4 bg-gray-100 font-bold px-4 py-2'>
+                <div className='grid grid-cols-[2fr_1fr_1fr_1fr] bg-gray-100 font-bold px-4 py-2'>
                     <div>ID</div>
                     <div>Name</div>
                     <div>Price</div>
                     <div>Actions</div>
                 </div>
-                {snacks.map((snack, index) => (
-                    <div key={index} className="grid grid-cols-4 border-t px-4 py-2 items-center">
-                        <div>{index + 1}</div> 
+                {snacks.map(snack => (
+                    <div key={snack.id} className="grid grid-cols-[2fr_1fr_1fr_1fr] border-t px-4 py-2 items-center">
+                        <div>{snack.id}</div> 
                         <div>{snack.name}</div>
                         <div>{snack.price}</div>
                         <div className="flex gap-2">
@@ -92,7 +95,7 @@ const ListOfSnacks = () => {
                 name={snacks.find(snack => snack.id === selectedSnackId)?.name || 'Unknown Snack'}
                 isOpen={isDialogOpen}
                 onClose={closeDeleteDialog}
-                onConfirm={deleteSnack}
+                onConfirm={handleDeleteSnack}
             />
         </div>
     );

@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_SNACK_FAILURE, CREATE_SNACK_REQUEST, CREATE_SNACK_SUCCESS, GET_SNACK_LIST_FAILURE, GET_SNACK_LIST_REQUEST, GET_SNACK_LIST_SUCCESS } from "./ActionType"
+import { CREATE_SNACK_FAILURE, CREATE_SNACK_REQUEST, CREATE_SNACK_SUCCESS, DELETE_SNACK_FAILURE, DELETE_SNACK_REQUEST, DELETE_SNACK_SUCCESS, GET_SNACK_LIST_FAILURE, GET_SNACK_LIST_REQUEST, GET_SNACK_LIST_SUCCESS } from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -38,5 +38,23 @@ export const getSnackList = (showToast) => async (dispatch) => {
         console.log(e);
         dispatch({ type: GET_SNACK_LIST_FAILURE });
         toast.error(e.response?.message || "Failed to get snack list!");
+    }
+}
+
+export const deleteSnack = (id) => async (dispatch) => {
+    dispatch({ type: DELETE_SNACK_REQUEST });
+
+    try {
+        const { data } = await axios.delete(`${baseURL}/api/Snack/delete_snack/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        dispatch({ type: DELETE_SNACK_SUCCESS});
+        toast.success(data || "Snack deleted successfully!");
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: DELETE_SNACK_FAILURE });
+        toast.error(e.response?.message || "Failed to delete snack!");
     }
 }
