@@ -21,10 +21,10 @@ const MovieDetails = () => {
   const film = films[currentFilmNumber - 1];
 
   return (
-    <div className='flex justify-between'>
+    <div className='grid grid-cols-[3fr_2fr] gap-10'>
       <div className='text-3xl'>
         <h1>{film?.Name || "Film name"}</h1>
-        <h2 className='text-xl mb-4'>{film?.Description || "Film description"}</h2>
+        <h2 className='text-[16px] mb-4'>{film?.Description || "Film description"}</h2>
         <Button
           variant="destructive"
           className="mt-2"
