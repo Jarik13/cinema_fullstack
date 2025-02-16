@@ -12,8 +12,8 @@ export const createSnack = (snack) => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
-        console.log(data);
         dispatch({ type: CREATE_SNACK_SUCCESS, payload: data });
+        toast.success("Snack created successfully!");
     } catch (e) {
         console.log(e);
         dispatch({ type: CREATE_SNACK_FAILURE });
