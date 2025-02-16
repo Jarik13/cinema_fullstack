@@ -1,5 +1,6 @@
 import { getHallById, getHallList } from '@/redux/Hall/Action';
 import { getSessionList } from '@/redux/Session/Action';
+import { getTicketsBySessionId } from '@/redux/Ticket/Action';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,15 +8,24 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
   const dispatch = useDispatch();
   const sessions = useSelector(store => store.session?.sessions);
   const halls = useSelector(store => store.hall?.halls);
+  const tickets = useSelector(store => store.ticket?.tickets || []);
 
   const session = sessions?.find(s => s.Id === sessionId);
+  const hall = halls?.find(h => h.Id === session?.HallId);
 
   useEffect(() => {
     dispatch(getHallList(false));
     dispatch(getSessionList(false));
   }, [dispatch]);
 
-  const hall = halls?.find(h => h.Id === session?.HallId);
+  useEffect(() => {
+    if (session?.Id) {
+      dispatch(getTicketsBySessionId(session.Id));
+    }
+  }, [dispatch, session?.Id]);
+
+
+  console.log(tickets);
 
   const countOfSeats = hall?.Count_of_seats || 0;
   const rows = [];
