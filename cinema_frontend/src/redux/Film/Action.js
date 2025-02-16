@@ -73,7 +73,11 @@ export const getFilmList = (showToast, filters) => async (dispatch) => {
 
     try {
         if (!filters || filters.selectedGenre === "all") {
-            const response = await axios.get(`${baseURL}/api/User/View`);
+            const response = await axios.get(`${baseURL}/api/Admin/ReadFilms`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
             data = response.data;  
         } else {
             const response = await axios.get(`${baseURL}/api/User/Filters`, {
