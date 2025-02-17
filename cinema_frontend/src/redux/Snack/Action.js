@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_SNACK_FAILURE, CREATE_SNACK_REQUEST, CREATE_SNACK_SUCCESS, DELETE_SNACK_FAILURE, DELETE_SNACK_REQUEST, DELETE_SNACK_SUCCESS, GET_SNACK_LIST_FAILURE, GET_SNACK_LIST_REQUEST, GET_SNACK_LIST_SUCCESS, UPDATE_SNACK_FAILURE, UPDATE_SNACK_REQUEST, UPDATE_SNACK_SUCCESS } from "./ActionType"
+import { BUY_SNACK_FAILURE, BUY_SNACK_REQUEST, BUY_SNACK_SUCCESS, CREATE_SNACK_FAILURE, CREATE_SNACK_REQUEST, CREATE_SNACK_SUCCESS, DELETE_SNACK_FAILURE, DELETE_SNACK_REQUEST, DELETE_SNACK_SUCCESS, GET_SNACK_LIST_FAILURE, GET_SNACK_LIST_REQUEST, GET_SNACK_LIST_SUCCESS, UPDATE_SNACK_FAILURE, UPDATE_SNACK_REQUEST, UPDATE_SNACK_SUCCESS } from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -73,6 +73,24 @@ export const updateSnack = (id, patches) => async (dispatch) => {
     } catch (e) {
         console.log(e);
         dispatch({ type: UPDATE_SNACK_FAILURE });
+        toast.error(e.response?.message || "Failed to update snack!");
+    }
+}
+
+export const buySnacks = (snacks) => async (dispatch) => {
+    dispatch({ type: BUY_SNACK_REQUEST });
+
+    try {
+        const { data } = await axios.post(`${baseURL}/api/Snack/buy_snacks`, snacks, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        dispatch({ type: BUY_SNACK_SUCCESS });
+        toast.success(data || "Snack bought successfully!");
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: BUY_SNACK_FAILURE });
         toast.error(e.response?.message || "Failed to update snack!");
     }
 }
