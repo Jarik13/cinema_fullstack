@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getHallList } from '@/redux/Hall/Action';
 import { getSessionList } from '@/redux/Session/Action';
 import { getLocationList } from '@/redux/Location/Action';
+import { getFilmList } from '@/redux/Film/Action';
 
 const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
     const params = useParams();
@@ -14,15 +15,18 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
     const dispatch = useDispatch();
     const sessions = useSelector(store => store.session?.sessions);
     const halls = useSelector(store => store.hall?.halls);
+    const films = useSelector(store => store.film?.films || []);
     const locations = useSelector(store => store.location?.locations || []);
 
     const session = sessions?.find(s => s.Id === params.sessionId);
     const hall = halls?.find(h => h.Id === session?.HallId);
+    const film = films?.find(f => f.Id === session?.FilmId);
     const location = locations?.find(l => l.Id === hall.LocationId);
 
     useEffect(() => {
         dispatch(getHallList(false));
         dispatch(getSessionList(false));
+        dispatch(getFilmList(false));
         dispatch(getLocationList(false));
     }, [dispatch]);
 
@@ -55,7 +59,7 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
                 </div>
                 <div className='flex items-center gap-2'>
                     <TicketCheckIcon className='w-5 h-5 text-gray-500' />
-                    <h3>From 10+</h3>
+                    <h3>From {film?.Age_limit}+</h3>
                 </div>
             </div>
 
