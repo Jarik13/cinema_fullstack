@@ -7,6 +7,7 @@ import { getHallList } from '@/redux/Hall/Action';
 import { getSessionList } from '@/redux/Session/Action';
 import { getLocationList } from '@/redux/Location/Action';
 import { getFilmList } from '@/redux/Film/Action';
+import { bookTickets } from '@/redux/Ticket/Action';
 
 const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
     const params = useParams();
@@ -30,6 +31,17 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
         dispatch(getLocationList(false));
     }, [dispatch]);
 
+    const ticketsId = selectedSeats?.filter(t => t?.Id).map(t => t.Id);
+    console.log(ticketsId);
+
+    const handleBookTickets = (ticketsId) => {
+        if (ticketsId) {
+            dispatch(bookTickets(ticketsId));
+        }
+
+        console.log(ticketsId);
+        navigate(`/my-profile`);
+    }
 
     const tickets = selectedSeats.map((ticket) => {
         return {
@@ -91,7 +103,7 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
                     </div>
                     <div className='flex gap-4 justify-around'>
                         <Button
-                            onClick={() => navigate(`/my-profile`)}
+                            onClick={() => handleBookTickets(ticketsId)}
                         >
                             Book tickets
                         </Button>

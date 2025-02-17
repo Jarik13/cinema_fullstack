@@ -43,13 +43,12 @@ export const bookTickets = (tickets) => async (dispatch) => {
     dispatch({ type: BOOK_TICKET_REQUEST });
 
     try {
-        const response = await axios.post(`${baseURL}/api/Ticket/book_ticket`, tickets, {
+        const { data } = await axios.post(`${baseURL}/api/Ticket/book_ticket`, tickets, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
-        console.log(response);
-        toast.success(response?.data || "Tickets booked successfully!");
+        toast.success(data || "Tickets booked successfully!");
     } catch (e) {
         console.log(e);
         dispatch({ type: BOOK_TICKET_FAILURE });
