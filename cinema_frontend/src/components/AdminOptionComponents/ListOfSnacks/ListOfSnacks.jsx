@@ -31,15 +31,15 @@ const ListOfSnacks = () => {
     const handleSaveSnack = async (updatedSnack) => {
         const patches = [];
 
-        if (updatedSnack.price !== editingSnack.price) {
-            patches.push({ op: 'replace', path: '/price', value: updatedSnack.price });
+        if (updatedSnack.Price !== editingSnack.Price) {
+            patches.push({ op: 'replace', path: '/Price', value: updatedSnack.Price });
         }
 
-        if (updatedSnack.name !== editingSnack.name) {
-            patches.push({ op: 'replace', path: '/name', value: updatedSnack.name });
+        if (updatedSnack.Name !== editingSnack.Name) {
+            patches.push({ op: 'replace', path: '/Name', value: updatedSnack.Name });
         }
 
-        await dispatch(updateSnack(editingSnack.id, patches));
+        await dispatch(updateSnack(editingSnack.Id, patches));
         await dispatch(getSnackList(false));
         handleCloseModal();
     };
@@ -83,13 +83,13 @@ const ListOfSnacks = () => {
                     <div>Actions</div>
                 </div>
                 {snacks.map(snack => (
-                    <div key={snack.id} className="grid grid-cols-[2fr_1fr_1fr_1fr] border-t px-4 py-2 items-center">
-                        <div>{snack.id}</div>
-                        <div>{snack.name}</div>
-                        <div>{snack.price}</div>
+                    <div key={snack.Id} className="grid grid-cols-[2fr_1fr_1fr_1fr] border-t px-4 py-2 items-center">
+                        <div>{snack.Id}</div>
+                        <div>{snack.Name}</div>
+                        <div>{snack.Price}</div>
                         <div className="flex gap-2">
                             <Button variant="outline" onClick={() => handleEditClick(snack)}>Edit</Button>
-                            <Button variant="destructive" onClick={() => openDeleteDialog(snack.id)}>Delete</Button>
+                            <Button variant="destructive" onClick={() => openDeleteDialog(snack.Id)}>Delete</Button>
                         </div>
                     </div>
                 ))}
@@ -103,7 +103,7 @@ const ListOfSnacks = () => {
                 />
             )}
             <DeleteSnackCard
-                name={snacks.find(snack => snack.id === selectedSnackId)?.name || 'Unknown Snack'}
+                name={snacks.find(snack => snack.Id === selectedSnackId)?.Name || 'Unknown Snack'}
                 isOpen={isDialogOpen}
                 onClose={closeDeleteDialog}
                 onConfirm={handleDeleteSnack}
