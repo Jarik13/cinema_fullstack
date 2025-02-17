@@ -89,12 +89,19 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
                         <h4>Total Tickets: {totalTickets}</h4>
                         <h4>Total Price: ${totalPrice}</h4>
                     </div>
-                    <Button
-                        variant="destructive"
-                        onClick={() => navigate(`/${params.locationId}/sessions/${params.sessionId}/snacks`)}
-                    >
-                        Proceed to Payment
-                    </Button>
+                    <div className='flex gap-4 justify-around'>
+                        <Button
+                            onClick={() => navigate(`/my-profile`)}
+                        >
+                            Book tickets
+                        </Button>
+                        <Button
+                            variant="destructive"
+                            onClick={() => navigate(`/${params.locationId}/sessions/${params.sessionId}/snacks`)}
+                        >
+                            Proceed to Payment
+                        </Button>
+                    </div>
                 </div>
             ) : (
                 <div className='text-center text-xl p-10 border-t-2 border-b-2'>
