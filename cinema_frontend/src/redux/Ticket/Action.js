@@ -3,7 +3,7 @@ import axios from "axios";
 import { baseURL } from "@/config/constants";
 import { BOOK_TICKET_FAILURE, BOOK_TICKET_REQUEST, GET_TICKETS_BY_SESSION_ID_FAILURE, GET_TICKETS_BY_SESSION_ID_REQUEST, GET_TICKETS_BY_SESSION_ID_SUCCESS, VIEW_USER_TICKETS_FAILURE, VIEW_USER_TICKETS_REQUEST, VIEW_USER_TICKETS_SUCCESS } from "./ActionType";
 
-export const getUserTickets = () => async (dispatch) => {
+export const viewAllUserTickets = () => async (dispatch) => {
     dispatch({ type: VIEW_USER_TICKETS_REQUEST });
 
     try {
@@ -39,7 +39,7 @@ export const getTicketsBySessionId = (id) => async (dispatch) => {
     }
 }
 
-export const bookTickets = (tickets) = async (dispatch) => {
+export const bookTickets = (tickets) => async (dispatch) => {
     dispatch({ type: BOOK_TICKET_REQUEST });
 
     try {
