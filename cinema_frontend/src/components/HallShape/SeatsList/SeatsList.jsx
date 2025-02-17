@@ -1,22 +1,71 @@
-import React, { useState } from 'react';
+import { getHallList } from '@/redux/Hall/Action';
+import { getSessionList } from '@/redux/Session/Action';
+import { getTicketsBySessionId } from '@/redux/Ticket/Action';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const SeatsList = ({ selectedSeats, setSelectedSeats }) => {
-  const rows = [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28],
-  ];
+const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
+  const dispatch = useDispatch();
+  const sessions = useSelector(store => store.session?.sessions);
+  const halls = useSelector(store => store.hall?.halls);
+  const tickets = useSelector(store => store.ticket?.tickets || []);
+
+  const session = sessions?.find(s => s.Id === sessionId);
+  const hall = halls?.find(h => h.Id === session?.HallId);
+
+  useEffect(() => {
+    dispatch(getHallList(false));
+    dispatch(getSessionList(false));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (session?.Id) {
+      dispatch(getTicketsBySessionId(session.Id));
+    }
+  }, [dispatch, session?.Id]);
+
+  const sortedTickets = tickets.sort((a, b) => a.Seat_number - b.Seat_number);
+
+  const boughtSeats = new Set(
+    sortedTickets.filter(ticket => ticket.Status === "Booked").map(ticket => ticket.Seat_number)
+  );
+
+  const countOfSeats = hall?.Count_of_seats || 0;
+  const rows = [];
+  let seatCount = 0;
+
+  const rowSizes = [15, 24, 29];
+  for (let i = 0; i < rowSizes.length; i++) {
+    let row = [];
+    for (let j = 0; j < rowSizes[i]; j++) {
+      if (seatCount < countOfSeats) {
+        row.push(seatCount);
+        seatCount++;
+      }
+    }
+    rows.push(row);
+  }
+
+  while (seatCount < countOfSeats) {
+    let row = [];
+    for (let i = 0; i < 29; i++) {
+      if (seatCount < countOfSeats) {
+        row.push(seatCount);
+        seatCount++;
+      }
+    }
+    rows.push(row);
+  }
 
   const handleSeatClick = (seatNumber) => {
-    if (selectedSeats.includes(seatNumber)) {
-      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatNumber));
+    if (boughtSeats.has(seatNumber + 1)) return; 
+
+    const ticket = sortedTickets.find(ticket => ticket.Seat_number === seatNumber + 1);
+
+    if (selectedSeats.includes(ticket)) {
+      setSelectedSeats(selectedSeats.filter((seat) => seat.Seat_number !== ticket.Seat_number));
     } else {
-      setSelectedSeats([...selectedSeats, seatNumber]);
+      setSelectedSeats([...selectedSeats, ticket]);
     }
   };
 
@@ -37,13 +86,17 @@ const SeatsList = ({ selectedSeats, setSelectedSeats }) => {
                 ></div>
               ))}
               {row.map((_, colIndex) => {
-                const currentSeat = rowIndex * 100 + colIndex + 100; 
+                const currentSeat = rowIndex * 100 + colIndex + 100;
+                const isBought = boughtSeats.has(currentSeat + 1);
+                const isSelected = selectedSeats.some(ticket => ticket.Seat_number === currentSeat + 1);
+
                 return (
                   <div
                     key={currentSeat}
                     onClick={() => handleSeatClick(currentSeat)}
-                    className={`w-8 h-8 flex items-center justify-center border cursor-pointer rounded-sm text-white hover:border-4 hover:border-yellow-500 ${selectedSeats.includes(currentSeat) ? 'bg-yellow-500' : 'bg-gray-400'
-                      }`}
+                    className={`w-8 h-8 flex items-center justify-center border cursor-pointer rounded-sm text-white 
+                        ${isBought ? 'bg-gray-800 cursor-not-allowed' : 'hover:border-4 hover:border-yellow-500'} 
+                        ${isSelected ? 'bg-yellow-500' : isBought ? 'bg-gray-800' : 'bg-gray-400'}`}
                   >
                     {currentSeat + 1}
                   </div>

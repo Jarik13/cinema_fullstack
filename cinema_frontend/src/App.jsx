@@ -43,8 +43,8 @@ const MainApp = () => {
           <Route path='/auth' element={<AuthPage />} />
           <Route path='/my-profile' element={<UserProfilePage />} />
           <Route path='/:locationId/sessions' element={<ChooseSessionPage />} />
-          <Route path='/:locationId/sessions/:hallId' element={<HallPage />} />
-          <Route path='/:locationId/sessions/:hallId/snacks' element={<SnacksListPage />} />
+          <Route path='/:locationId/sessions/:sessionId' element={<HallPage />} />
+          <Route path='/:locationId/sessions/:sessionId/snacks' element={<SnacksListPage />} />
 
           <Route path='/watch-online' element={<WatchFilmsOnlinePage />} />
           <Route path='/watch-online/:filmId' element={<FilmDetailsOnlinePage />} />
