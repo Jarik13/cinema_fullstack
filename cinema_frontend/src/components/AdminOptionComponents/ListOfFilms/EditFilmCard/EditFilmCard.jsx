@@ -142,7 +142,7 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
                                             </SelectTrigger>
                                             <SelectContent>
                                                 {genres.map((genre, index) => (
-                                                    <SelectItem key={index} value={genre}>{genre}</SelectItem>
+                                                    <SelectItem key={index} value={genre || genre?.Name}>{genre || genre?.Name}</SelectItem>
                                                 ))}
                                             </SelectContent>
                                         </Select>
@@ -159,7 +159,7 @@ const EditFilmCard = ({ film, onSave, onClose }) => {
                                                     className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white"
                                                     onClick={() => handleGenreRemove(genre)}
                                                 >
-                                                    {genre}
+                                                    {genre || genre?.Name}
                                                 </div>
                                             ))}
                                         </div>

@@ -33,6 +33,8 @@ const Filters = () => {
             duration
         };
 
+        console.log(filters);
+
         await dispatch(setFilters(filters));
 
         await dispatch(getFilmList(true, filters));
