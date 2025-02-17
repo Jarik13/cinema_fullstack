@@ -1,4 +1,4 @@
-import { getHallById, getHallList } from '@/redux/Hall/Action';
+import { getHallList } from '@/redux/Hall/Action';
 import { getSessionList } from '@/redux/Session/Action';
 import { getTicketsBySessionId } from '@/redux/Ticket/Action';
 import React, { useEffect } from 'react';

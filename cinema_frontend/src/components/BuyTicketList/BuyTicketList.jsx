@@ -1,13 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { MapPinCheckIcon, TicketCheckIcon } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getHallList } from '@/redux/Hall/Action';
+import { getSessionList } from '@/redux/Session/Action';
+import { getLocationList } from '@/redux/Location/Action';
 
 const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
     const params = useParams();
     const navigate = useNavigate();
-    const selectedLocation = useSelector(store => store.location?.selectedLocation || null);
+
+    const dispatch = useDispatch();
+    const sessions = useSelector(store => store.session?.sessions);
+    const halls = useSelector(store => store.hall?.halls);
+    const locations = useSelector(store => store.location?.locations || []);
+
+    const session = sessions?.find(s => s.Id === params.sessionId);
+    const hall = halls?.find(h => h.Id === session?.HallId);
+    const location = locations?.find(l => l.Id === hall.LocationId);
+
+    useEffect(() => {
+        dispatch(getHallList(false));
+        dispatch(getSessionList(false));
+        dispatch(getLocationList(false));
+    }, [dispatch]);
+
 
     const tickets = selectedSeats.map((ticket) => {
         return {
@@ -33,7 +51,7 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
             <div className='flex flex-col gap-4 text-xl'>
                 <div className='flex items-center gap-2'>
                     <MapPinCheckIcon className='w-5 h-5 text-gray-500' />
-                    <h3>{selectedLocation?.label || "No location selected"}</h3>
+                    <h3>{location?.Name + ", " + location?.City || "No location selected"}</h3>
                 </div>
                 <div className='flex items-center gap-2'>
                     <TicketCheckIcon className='w-5 h-5 text-gray-500' />
