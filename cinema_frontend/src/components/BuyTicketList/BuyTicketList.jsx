@@ -21,7 +21,7 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
     const session = sessions?.find(s => s.Id === params.sessionId);
     const hall = halls?.find(h => h.Id === session?.HallId);
     const film = films?.find(f => f.Id === session?.FilmId);
-    const location = locations?.find(l => l.Id === hall.LocationId);
+    const location = locations?.find(l => l.Id === hall?.LocationId);
 
     useEffect(() => {
         dispatch(getHallList(false));
