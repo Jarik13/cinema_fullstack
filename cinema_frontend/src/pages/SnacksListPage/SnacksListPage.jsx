@@ -1,25 +1,46 @@
 import GoToHomePage from '@/components/GoToHomePage/GoToHomePage';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSnackList, buySnacks } from '@/redux/Snack/Action';
+import { buyTickets } from '@/redux/Ticket/Action';
 
 const SnacksListPage = () => {
     const params = useParams();
+    const dispatch = useDispatch();
+    const snacks = useSelector(store => store.snack?.snacks);
+    const userTickets = useSelector(store => store.ticket?.tickets || []);
+    const isFirstLoad = useRef(true);
 
-    const [snacks, setSnacks] = useState([
-        { id: 1, name: 'Popcorn', price: 50, quantity: 0 },
-        { id: 2, name: 'Nachos', price: 70, quantity: 0 },
-        { id: 3, name: 'Soda', price: 40, quantity: 0 },
-        { id: 4, name: 'Candy', price: 30, quantity: 0 },
-        { id: 5, name: 'Chips', price: 60, quantity: 0 },
-        { id: 6, name: 'Ice Cream', price: 90, quantity: 0 },
-        { id: 7, name: 'Chocolate Bar', price: 55, quantity: 0 },
-        { id: 8, name: 'Hot Dog', price: 100, quantity: 0 },
-        { id: 9, name: 'Muffin', price: 25, quantity: 0 },
-        { id: 10, name: 'Cupcake', price: 35, quantity: 0 },
-        { id: 11, name: 'Burger', price: 110, quantity: 0 },
-        { id: 12, name: 'Fries', price: 40, quantity: 0 },
-    ]);
+    useEffect(() => {
+        dispatch(getSnackList(isFirstLoad.current));
+        isFirstLoad.current = false;
+    }, [dispatch]);
+
+    const [snackQuantities, setSnackQuantities] = useState({});
+
+    useEffect(() => {
+        const initialQuantities = snacks.reduce((acc, snack) => {
+            acc[snack.Id] = 0;
+            return acc;
+        }, {});
+        setSnackQuantities(initialQuantities);
+    }, [snacks]);
+
+    const incrementQuantity = (id) => {
+        setSnackQuantities(prev => ({
+            ...prev,
+            [id]: (prev[id] || 0) + 1
+        }));
+    };
+
+    const decrementQuantity = (id) => {
+        setSnackQuantities(prev => ({
+            ...prev,
+            [id]: Math.max((prev[id] || 0) - 1, 0)
+        }));
+    };
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 6;
@@ -28,28 +49,36 @@ const SnacksListPage = () => {
     const indexOfFirstSnack = indexOfLastSnack - itemsPerPage;
     const currentSnacks = snacks.slice(indexOfFirstSnack, indexOfLastSnack);
 
-    const incrementQuantity = (id) => {
-        setSnacks(snacks.map(snack =>
-            snack.id === id ? { ...snack, quantity: snack.quantity + 1 } : snack
-        ));
-    };
-
-    const decrementQuantity = (id) => {
-        setSnacks(snacks.map(snack =>
-            snack.id === id && snack.quantity > 0
-                ? { ...snack, quantity: snack.quantity - 1 }
-                : snack
-        ));
-    };
-
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
 
     const totalPages = Math.ceil(snacks.length / itemsPerPage);
 
-    const selectedSnacks = snacks.filter(snack => snack.quantity > 0);
-    const totalPrice = selectedSnacks.reduce((total, snack) => total + snack.price * snack.quantity, 0);
+    const selectedSnacks = snacks.filter(snack => snackQuantities[snack.Id] > 0);
+    const totalPrice = selectedSnacks.reduce((total, snack) => total + snack.Price * snackQuantities[snack.Id], 0);
+
+    const handlePayment = async () => {
+        const selectedSnackIds = selectedSnacks.flatMap(snack => 
+            Array.from({ length: snackQuantities[snack.Id] }, () => snack.Id)
+        );
+
+        const selectedTicketIds = userTickets
+            .filter(ticket => ticket?.Status === "Booked")
+            .map(ticket => ticket?.Id);
+
+        if (selectedTicketIds.length === 0) {
+            alert("No tickets to buy.");
+            return;
+        }
+
+        await dispatch(buyTickets(selectedTicketIds));
+        if (selectedSnackIds.length > 0) {
+            await dispatch(buySnacks(selectedSnackIds));
+        }
+
+        alert("Purchase successful!");
+    };
 
     return (
         <div className='flex flex-col lg:flex-row w-full p-4 gap-6'>
@@ -59,28 +88,28 @@ const SnacksListPage = () => {
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6'>
                     {currentSnacks.map(snack => (
                         <div
-                            key={snack.id}
+                            key={snack.Id}
                             className='border rounded-lg py-4 px-2 shadow-lg flex flex-col items-center bg-white'
                         >
                             <div className='w-full h-32 bg-gray-300 rounded-lg mb-4'></div>
 
                             <div className='flex gap-4 items-center mb-2'>
-                                <h3 className='text-xl font-semibold'>{snack.name}</h3>
-                                <p className='text-lg text-gray-600'>$ {snack.price}</p>
+                                <h3 className='text-xl font-semibold'>{snack.Name}</h3>
+                                <p className='text-lg text-gray-600'>$ {snack.Price}</p>
                             </div>
 
                             <div className='flex items-center gap-4'>
                                 <Button
                                     variant="ghost"
-                                    onClick={() => decrementQuantity(snack.id)}
-                                    disabled={snack.quantity === 0}
+                                    onClick={() => decrementQuantity(snack.Id)}
+                                    disabled={snackQuantities[snack.Id] === 0}
                                 >
                                     -
                                 </Button>
-                                <span className='text-lg'>{snack.quantity}</span>
+                                <span className='text-lg'>{snackQuantities[snack.Id] || 0}</span>
                                 <Button
                                     variant="ghost"
-                                    onClick={() => incrementQuantity(snack.id)}
+                                    onClick={() => incrementQuantity(snack.Id)}
                                 >
                                     +
                                 </Button>
@@ -116,15 +145,15 @@ const SnacksListPage = () => {
                 <h2 className='text-xl font-semibold mb-4'>Selected Snacks</h2>
                 <div>
                     {selectedSnacks.map(snack => (
-                        <div key={snack.id} className='flex justify-between items-center mb-2'>
-                            <span>{snack.name} x{snack.quantity}</span>
-                            <span>${snack.price * snack.quantity}</span>
+                        <div key={snack.Id} className='flex justify-between items-center mb-2'>
+                            <span>{snack.Name} x{snackQuantities[snack.Id]}</span>
+                            <span>${snack.Price * snackQuantities[snack.Id]}</span>
                         </div>
                     ))}
                 </div>
                 <div className='flex justify-between items-center mt-6'>
                     <h3 className='text-lg font-semibold'>Total Price: ${totalPrice}</h3>
-                    <Button variant="destructive" onClick={() => alert('Proceeding to payment...')}>
+                    <Button variant="destructive" onClick={handlePayment}>
                         Proceed to Payment
                     </Button>
                 </div>
