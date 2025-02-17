@@ -27,7 +27,7 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
   const sortedTickets = tickets.sort((a, b) => a.Seat_number - b.Seat_number);
 
   const boughtSeats = new Set(
-    sortedTickets.filter(ticket => ticket.Status === "Booked").map(ticket => ticket.Seat_number)
+    sortedTickets.filter(ticket => ticket?.Status === "Booked").map(ticket => ticket?.Seat_number)
   );
 
   const countOfSeats = hall?.Count_of_seats || 0;
@@ -60,10 +60,10 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
   const handleSeatClick = (seatNumber) => {
     if (boughtSeats.has(seatNumber + 1)) return; 
 
-    const ticket = sortedTickets.find(ticket => ticket.Seat_number === seatNumber + 1);
+    const ticket = sortedTickets.find(ticket => ticket?.Seat_number === seatNumber + 1);
 
     if (selectedSeats.includes(ticket)) {
-      setSelectedSeats(selectedSeats.filter((seat) => seat.Seat_number !== ticket.Seat_number));
+      setSelectedSeats(selectedSeats.filter((seat) => seat?.Seat_number !== ticket?.Seat_number));
     } else {
       setSelectedSeats([...selectedSeats, ticket]);
     }
@@ -88,7 +88,7 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
               {row.map((_, colIndex) => {
                 const currentSeat = rowIndex * 100 + colIndex + 100;
                 const isBought = boughtSeats.has(currentSeat + 1);
-                const isSelected = selectedSeats.some(ticket => ticket.Seat_number === currentSeat + 1);
+                const isSelected = selectedSeats.some(ticket => ticket?.Seat_number === currentSeat + 1);
 
                 return (
                   <div

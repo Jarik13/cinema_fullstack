@@ -33,16 +33,16 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
 
     const tickets = selectedSeats.map((ticket) => {
         return {
-            row: Math.floor(ticket.Seat_number / 100),
-            seat: (ticket.Seat_number % 100),
-            price: ticket.Price,
-            id: ticket.Seat_number,
+            row: Math.floor(ticket?.Seat_number / 100),
+            seat: (ticket?.Seat_number % 100),
+            price: ticket?.Price,
+            id: ticket?.Seat_number,
         };
     });
 
     const removeTicket = (id) => {
         setSelectedSeats(prevSeats => {
-            const updatedSeats = prevSeats.filter(ticket => ticket.Seat_number !== id);
+            const updatedSeats = prevSeats.filter(ticket => ticket?.Seat_number !== id);
             return updatedSeats;
         });
     };
