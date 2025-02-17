@@ -8,6 +8,7 @@ import { deleteFilm, getFilmList, updateFilm } from '@/redux/Film/Action';
 const ListOfFilms = () => {
     const dispatch = useDispatch();
     const films = useSelector(store => store.film?.films || []);
+    const filters = useSelector(store => store.userReducer?.filters || null);
 
     const isFirstLoad = useRef(true);
 
@@ -114,7 +115,9 @@ const ListOfFilms = () => {
                         <div className="grid grid-cols-1 gap-4">
                             {film.Genres && film.Genres.length > 0 ? (
                                 film.Genres.map((genre, index) => (
-                                    <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">{genre}</div>
+                                    <div key={index} className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-white">
+                                        {genre?.Name || genre}
+                                    </div>
                                 ))
                             ) : (
                                 <div className="w-20 px-3 py-1 text-[12px] shadow-lg rounded-lg bg-gray-200">No Genres</div>
