@@ -12,7 +12,7 @@ const ListOfTickets = () => {
 
     useEffect(() => {
         dispatch(getUserTickets());
-        dispatch(getUserList());
+        dispatch(getUserList(false));
     }, [dispatch]);
 
     const getUsername = (userId) => {
