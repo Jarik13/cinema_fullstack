@@ -132,7 +132,7 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
           <h3>Bought</h3>
         </div>
         <div className="flex items-center gap-3">
-          <div className="w-5 h-5 rounded-sm bg-orange-500"></div>
+          <div className="w-5 h-5 rounded-sm bg-blue-500"></div>
           <h3>-</h3>
           <h3>Booked</h3>
         </div>
