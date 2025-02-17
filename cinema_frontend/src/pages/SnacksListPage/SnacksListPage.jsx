@@ -1,8 +1,11 @@
 import GoToHomePage from '@/components/GoToHomePage/GoToHomePage';
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { useParams } from 'react-router-dom';
 
 const SnacksListPage = () => {
+    const params = useParams();
+
     const [snacks, setSnacks] = useState([
         { id: 1, name: 'Popcorn', price: 50, quantity: 0 },
         { id: 2, name: 'Nachos', price: 70, quantity: 0 },
@@ -51,7 +54,7 @@ const SnacksListPage = () => {
     return (
         <div className='flex flex-col lg:flex-row w-full p-4 gap-6'>
             <div className='flex-1'>
-                <GoToHomePage message={"Choose your favourite snacks"} navigation={"/1/sessions/1"} />
+                <GoToHomePage message={"Choose your favourite snacks"} navigation={`/${params.locationId}/sessions/${params.sessionId}`} />
 
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6'>
                     {currentSnacks.map(snack => (
