@@ -69,7 +69,7 @@ export const updateSnack = (id, patches) => async (dispatch) => {
             }
         });
         dispatch({ type: UPDATE_SNACK_SUCCESS });
-        toast.success(data || "Snack updated successfully!");
+        toast.success("Snack updated successfully!");
     } catch (e) {
         console.log(e);
         dispatch({ type: UPDATE_SNACK_FAILURE });
