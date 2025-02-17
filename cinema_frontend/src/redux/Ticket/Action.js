@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import axios from "axios";
 import { baseURL } from "@/config/constants";
-import { BOOK_TICKET_FAILURE, BOOK_TICKET_REQUEST, GET_TICKETS_BY_SESSION_ID_FAILURE, GET_TICKETS_BY_SESSION_ID_REQUEST, GET_TICKETS_BY_SESSION_ID_SUCCESS, VIEW_USER_TICKETS_FAILURE, VIEW_USER_TICKETS_REQUEST, VIEW_USER_TICKETS_SUCCESS } from "./ActionType";
+import { BOOK_TICKET_FAILURE, BOOK_TICKET_REQUEST, GET_TICKETS_BY_SESSION_ID_FAILURE, GET_TICKETS_BY_SESSION_ID_REQUEST, GET_TICKETS_BY_SESSION_ID_SUCCESS, GET_USER_TICKETS_REQUEST, GET_USER_TICKETS_SUCCESS, VIEW_USER_TICKETS_FAILURE, VIEW_USER_TICKETS_REQUEST, VIEW_USER_TICKETS_SUCCESS } from "./ActionType";
 
 export const viewAllUserTickets = () => async (dispatch) => {
     dispatch({ type: VIEW_USER_TICKETS_REQUEST });
@@ -13,6 +13,24 @@ export const viewAllUserTickets = () => async (dispatch) => {
             }
         });
         dispatch({ type: VIEW_USER_TICKETS_SUCCESS, payload: data });
+    } catch (e) {
+        toast(e.data);
+        dispatch({ type: VIEW_USER_TICKETS_FAILURE });
+        console.log(e);
+    }
+}
+
+export const getUserTickets = () => async (dispatch) => {
+    dispatch({ type: GET_USER_TICKETS_REQUEST });
+
+    try {
+        const { data } = await axios.get(`${baseURL}/api/Ticket/get_user_tickets`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        dispatch({ type: GET_USER_TICKETS_SUCCESS, payload: data });
+        toast.success("Tickets got successfully!");
     } catch (e) {
         toast(e.data);
         dispatch({ type: VIEW_USER_TICKETS_FAILURE });
