@@ -32,14 +32,12 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
     }, [dispatch]);
 
     const ticketsId = selectedSeats?.filter(t => t?.Id).map(t => t.Id);
-    console.log(ticketsId);
 
     const handleBookTickets = (ticketsId) => {
         if (ticketsId) {
             dispatch(bookTickets(ticketsId));
         }
 
-        console.log(ticketsId);
         navigate(`/my-profile`);
     }
 

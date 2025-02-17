@@ -20,7 +20,7 @@ export const viewAllUserTickets = () => async (dispatch) => {
     }
 }
 
-export const getUserTickets = () => async (dispatch) => {
+export const getUserTickets = (showToast) => async (dispatch) => {
     dispatch({ type: GET_USER_TICKETS_REQUEST });
 
     try {
@@ -30,9 +30,11 @@ export const getUserTickets = () => async (dispatch) => {
             }
         });
         dispatch({ type: GET_USER_TICKETS_SUCCESS, payload: data });
-        toast.success("Tickets got successfully!");
+        if (showToast) {
+            toast.success("Tickets got successfully!");
+        }
     } catch (e) {
-        toast(e.data);
+        toast.error(e.response?.data);
         dispatch({ type: VIEW_USER_TICKETS_FAILURE });
         console.log(e);
     }
@@ -53,6 +55,7 @@ export const getTicketsBySessionId = (id) => async (dispatch) => {
         dispatch({ type: GET_TICKETS_BY_SESSION_ID_SUCCESS, payload: response.data });
     } catch (e) {
         console.log(e);
+        toast.error(e.response?.data);
         dispatch({ type: GET_TICKETS_BY_SESSION_ID_FAILURE });
     }
 }
@@ -68,8 +71,7 @@ export const bookTickets = (tickets) => async (dispatch) => {
         });
         toast.success(data || "Tickets booked successfully!");
     } catch (e) {
-        console.log(e);
+        toast.error(e.response?.data);
         dispatch({ type: BOOK_TICKET_FAILURE });
-        toast.error("Failed to book tickets!");
     }
 }

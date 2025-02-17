@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserTickets } from '@/redux/Ticket/Action';
@@ -6,9 +6,11 @@ import { getUserTickets } from '@/redux/Ticket/Action';
 const MyTicketsCard = () => {
   const dispatch = useDispatch();
   const tickets = useSelector((state) => state.ticket?.tickets || []);
+  const isFirstLoad = useRef(true);
 
   useEffect(() => {
-    dispatch(getUserTickets());
+    dispatch(getUserTickets(isFirstLoad.current));
+    isFirstLoad.current = false;
   }, [dispatch]);
 
   return (
