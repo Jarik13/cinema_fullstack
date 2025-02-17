@@ -27,6 +27,10 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
   const sortedTickets = tickets.sort((a, b) => a.Seat_number - b.Seat_number);
 
   const boughtSeats = new Set(
+    sortedTickets.filter(ticket => ticket?.Status === "Bought").map(ticket => ticket?.Seat_number)
+  );
+
+  const bookedSeats = new Set(
     sortedTickets.filter(ticket => ticket?.Status === "Booked").map(ticket => ticket?.Seat_number)
   );
 
@@ -58,7 +62,7 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
   }
 
   const handleSeatClick = (seatNumber) => {
-    if (boughtSeats.has(seatNumber + 1)) return; 
+    if (boughtSeats.has(seatNumber + 1) || bookedSeats.has(seatNumber + 1)) return;
 
     const ticket = sortedTickets.find(ticket => ticket?.Seat_number === seatNumber + 1);
 
@@ -80,14 +84,12 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
           return (
             <div key={rowIndex} className="flex justify-center gap-1">
               {Array.from({ length: emptySeats }, (_, i) => (
-                <div
-                  key={`empty-${rowIndex}-${i}`}
-                  className="w-8 h-8 opacity-0"
-                ></div>
+                <div key={`empty-${rowIndex}-${i}`} className="w-8 h-8 opacity-0"></div>
               ))}
               {row.map((_, colIndex) => {
                 const currentSeat = rowIndex * 100 + colIndex + 100;
                 const isBought = boughtSeats.has(currentSeat + 1);
+                const isBooked = bookedSeats.has(currentSeat + 1);
                 const isSelected = selectedSeats.some(ticket => ticket?.Seat_number === currentSeat + 1);
 
                 return (
@@ -95,18 +97,19 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
                     key={currentSeat}
                     onClick={() => handleSeatClick(currentSeat)}
                     className={`w-8 h-8 flex items-center justify-center border cursor-pointer rounded-sm text-white 
-                        ${isBought ? 'bg-gray-800 cursor-not-allowed' : 'hover:border-4 hover:border-yellow-500'} 
-                        ${isSelected ? 'bg-yellow-500' : isBought ? 'bg-gray-800' : 'bg-gray-400'}`}
+                      ${isBought ? 'bg-gray-800 cursor-not-allowed' :
+                        isBooked ? 'bg-blue-500 cursor-not-allowed' :
+                          isSelected ? 'bg-yellow-500' : 'bg-gray-400'
+                      } 
+                        ${isBought || isBooked ? '' : 'hover:border-4 hover:border-yellow-500'
+                      }`}
                   >
                     {currentSeat + 1}
                   </div>
                 );
               })}
               {Array.from({ length: emptySeats }, (_, i) => (
-                <div
-                  key={`empty-right-${rowIndex}-${i}`}
-                  className="w-8 h-8 opacity-0"
-                ></div>
+                <div key={`empty-right-${rowIndex}-${i}`} className="w-8 h-8 opacity-0"></div>
               ))}
             </div>
           );
@@ -127,6 +130,11 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
           <div className="w-5 h-5 rounded-sm bg-gray-800"></div>
           <h3>-</h3>
           <h3>Bought</h3>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="w-5 h-5 rounded-sm bg-orange-500"></div>
+          <h3>-</h3>
+          <h3>Booked</h3>
         </div>
       </div>
     </>
