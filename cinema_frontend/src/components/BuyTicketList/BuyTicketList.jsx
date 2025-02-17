@@ -7,17 +7,18 @@ import { getHallList } from '@/redux/Hall/Action';
 import { getSessionList } from '@/redux/Session/Action';
 import { getLocationList } from '@/redux/Location/Action';
 import { getFilmList } from '@/redux/Film/Action';
-import { bookTickets } from '@/redux/Ticket/Action';
+import { getUserTickets, bookTickets } from '@/redux/Ticket/Action';
 
 const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
     const params = useParams();
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
+
     const sessions = useSelector(store => store.session?.sessions);
     const halls = useSelector(store => store.hall?.halls);
     const films = useSelector(store => store.film?.films || []);
     const locations = useSelector(store => store.location?.locations || []);
+    const userTickets = useSelector(store => store.ticket?.tickets || []);
 
     const session = sessions?.find(s => s.Id === params.sessionId);
     const hall = halls?.find(h => h.Id === session?.HallId);
@@ -29,36 +30,37 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
         dispatch(getSessionList(false));
         dispatch(getFilmList(false));
         dispatch(getLocationList(false));
+        dispatch(getUserTickets(false)); 
     }, [dispatch]);
 
-    const ticketsId = selectedSeats?.filter(t => t?.Id).map(t => t.Id);
+    const bookedSeats = userTickets.filter(ticket => ticket?.Status === "Booked");
+    const allTickets = [...selectedSeats, ...bookedSeats];
 
-    const handleBookTickets = (ticketsId) => {
-        if (ticketsId) {
+    const ticketsId = selectedSeats?.map(t => t?.Id);
+
+    const handleBookTickets = () => {
+        if (ticketsId.length > 0) {
             dispatch(bookTickets(ticketsId));
+            setSelectedSeats([]);
+            localStorage.removeItem(`selectedSeats_${params.sessionId}`);
+            navigate(`/my-profile`);
         }
-
-        navigate(`/my-profile`);
-    }
-
-    const tickets = selectedSeats.map((ticket) => {
-        return {
-            row: Math.floor(ticket?.Seat_number / 100),
-            seat: (ticket?.Seat_number % 100),
-            price: ticket?.Price,
-            id: ticket?.Seat_number,
-        };
-    });
-
-    const removeTicket = (id) => {
-        setSelectedSeats(prevSeats => {
-            const updatedSeats = prevSeats.filter(ticket => ticket?.Seat_number !== id);
-            return updatedSeats;
-        });
     };
 
-    const totalTickets = tickets.length;
-    const totalPrice = tickets.reduce((sum, ticket) => sum + ticket.price, 0);
+    const formattedTickets = allTickets.map(ticket => ({
+        row: Math.floor(ticket?.Seat_number / 100),
+        seat: ticket?.Seat_number % 100,
+        price: ticket?.Price,
+        id: ticket?.Seat_number,
+        status: ticket?.Status,
+    }));
+
+    const removeTicket = (id) => {
+        setSelectedSeats(prevSeats => prevSeats.filter(ticket => ticket?.Seat_number !== id));
+    };
+
+    const totalTickets = formattedTickets.length;
+    const totalPrice = formattedTickets.reduce((sum, ticket) => sum + ticket.price, 0);
 
     return (
         <div className='flex flex-col w-1/4 gap-8 p-2'>
@@ -74,35 +76,36 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
             </div>
 
             <div className='flex flex-col gap-4'>
-                {tickets.map((ticket) => (
+                {formattedTickets.map(ticket => (
                     <div key={ticket.id} className='flex justify-between items-center border-b pb-2'>
                         <div>
                             <h4>Row: {ticket.row}, Seat: {ticket.seat}</h4>
+                            {ticket.status === "Booked" && <span className="text-orange-500">(Booked)</span>}
                         </div>
                         <div className='flex items-center gap-2'>
                             <h4 className='font-bold'>${ticket.price}</h4>
-                            <Button
-                                variant="ghost"
-                                className='text-red-500 hover:text-red-700'
-                                onClick={() => removeTicket(ticket.id)}
-                            >
-                                X
-                            </Button>
+                            {ticket.status !== "Booked" && (
+                                <Button
+                                    variant="ghost"
+                                    className='text-red-500 hover:text-red-700'
+                                    onClick={() => removeTicket(ticket.id)}
+                                >
+                                    X
+                                </Button>
+                            )}
                         </div>
                     </div>
                 ))}
             </div>
 
-            {tickets.length > 0 ? (
+            {formattedTickets.length > 0 ? (
                 <div className='flex flex-col gap-4'>
                     <div className='flex items-center justify-between text-xl'>
                         <h4>Total Tickets: {totalTickets}</h4>
                         <h4>Total Price: ${totalPrice}</h4>
                     </div>
                     <div className='flex gap-4 justify-around'>
-                        <Button
-                            onClick={() => handleBookTickets(ticketsId)}
-                        >
+                        <Button onClick={handleBookTickets}>
                             Book tickets
                         </Button>
                         <Button
