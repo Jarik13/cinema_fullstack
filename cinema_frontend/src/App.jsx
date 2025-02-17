@@ -14,7 +14,7 @@ import SnacksListPage from './pages/SnacksListPage/SnacksListPage';
 import WatchFilmsOnlinePage from './pages/WatchFilmsOnlinePage/WatchFilmsOnlinePage';
 import FilmDetailsOnlinePage from './pages/FilmDetailsOnlinePage/FilmDetailsOnlinePage';
 import AdminPanelPage from './pages/AdminPanelPage/AdminPanelPage';
-import ProtectedRoute from './components/AdminOptionComponents/ProtectedRoute/ProtectedRoute ';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute ';
 
 const App = () => {
   return (
