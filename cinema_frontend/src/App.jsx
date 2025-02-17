@@ -14,6 +14,7 @@ import SnacksListPage from './pages/SnacksListPage/SnacksListPage';
 import WatchFilmsOnlinePage from './pages/WatchFilmsOnlinePage/WatchFilmsOnlinePage';
 import FilmDetailsOnlinePage from './pages/FilmDetailsOnlinePage/FilmDetailsOnlinePage';
 import AdminPanelPage from './pages/AdminPanelPage/AdminPanelPage';
+import ProtectedRoute from './components/AdminOptionComponents/ProtectedRoute/ProtectedRoute ';
 
 const App = () => {
   return (
@@ -43,8 +44,11 @@ const MainApp = () => {
           <Route path='/auth' element={<AuthPage />} />
           <Route path='/my-profile' element={<UserProfilePage />} />
           <Route path='/:locationId/sessions' element={<ChooseSessionPage />} />
-          <Route path='/:locationId/sessions/:sessionId' element={<HallPage />} />
-          <Route path='/:locationId/sessions/:sessionId/snacks' element={<SnacksListPage />} />
+
+          <Route element={<ProtectedRoute />}>
+            <Route path='/:locationId/sessions/:sessionId' element={<HallPage />} />
+            <Route path='/:locationId/sessions/:sessionId/snacks' element={<SnacksListPage />} />
+          </Route>
 
           <Route path='/watch-online' element={<WatchFilmsOnlinePage />} />
           <Route path='/watch-online/:filmId' element={<FilmDetailsOnlinePage />} />
