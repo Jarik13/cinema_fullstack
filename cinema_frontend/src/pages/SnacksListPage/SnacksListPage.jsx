@@ -3,13 +3,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSnackList } from '@/redux/Snack/Action';
+import { getSnackList, buySnacks } from '@/redux/Snack/Action';
+import { buyTickets } from '@/redux/Ticket/Action';
 
 const SnacksListPage = () => {
     const params = useParams();
     const dispatch = useDispatch();
     const snacks = useSelector(store => store.snack?.snacks);
-
+    const userTickets = useSelector(store => store.ticket?.tickets || []);
     const isFirstLoad = useRef(true);
 
     useEffect(() => {
@@ -57,6 +58,28 @@ const SnacksListPage = () => {
     const selectedSnacks = snacks.filter(snack => snackQuantities[snack.Id] > 0);
     const totalPrice = selectedSnacks.reduce((total, snack) => total + snack.Price * snackQuantities[snack.Id], 0);
 
+    const handlePayment = async () => {
+        const selectedSnackIds = selectedSnacks.flatMap(snack => 
+            Array.from({ length: snackQuantities[snack.Id] }, () => snack.Id)
+        );
+
+        const selectedTicketIds = userTickets
+            .filter(ticket => ticket.Status === "Booked")
+            .map(ticket => ticket.Id);
+
+        if (selectedTicketIds.length === 0) {
+            alert("No tickets to buy.");
+            return;
+        }
+
+        await dispatch(buyTickets(selectedTicketIds));
+        if (selectedSnackIds.length > 0) {
+            await dispatch(buySnacks(selectedSnackIds));
+        }
+
+        alert("Purchase successful!");
+    };
+
     return (
         <div className='flex flex-col lg:flex-row w-full p-4 gap-6'>
             <div className='flex-1'>
@@ -65,7 +88,7 @@ const SnacksListPage = () => {
                 <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6'>
                     {currentSnacks.map(snack => (
                         <div
-                            key={snack.id}
+                            key={snack.Id}
                             className='border rounded-lg py-4 px-2 shadow-lg flex flex-col items-center bg-white'
                         >
                             <div className='w-full h-32 bg-gray-300 rounded-lg mb-4'></div>
@@ -130,7 +153,7 @@ const SnacksListPage = () => {
                 </div>
                 <div className='flex justify-between items-center mt-6'>
                     <h3 className='text-lg font-semibold'>Total Price: ${totalPrice}</h3>
-                    <Button variant="destructive" onClick={() => alert('Proceeding to payment...')}>
+                    <Button variant="destructive" onClick={handlePayment}>
                         Proceed to Payment
                     </Button>
                 </div>
