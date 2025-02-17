@@ -17,11 +17,9 @@ const SnacksListPage = () => {
         isFirstLoad.current = false;
     }, [dispatch]);
 
-    // Додаємо локальний стан для кількості снеків
     const [snackQuantities, setSnackQuantities] = useState({});
 
     useEffect(() => {
-        // Ініціалізуємо кількість снеків (за замовчуванням 0)
         const initialQuantities = snacks.reduce((acc, snack) => {
             acc[snack.Id] = 0;
             return acc;
