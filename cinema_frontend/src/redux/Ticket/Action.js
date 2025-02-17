@@ -80,7 +80,12 @@ export const cancelTickets = (tickets) => async (dispatch) => {
     dispatch({ type: CANCEL_TICKET_REQUEST });
 
     try {
-        
+        const { data } = await axios.post(`${baseURL}/api/Ticket/cancel_ticket`, tickets, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        toast.success(data || "Tickets canceled successfully!");
     } catch (e) {
         toast.error(e.response?.data);
         dispatch({ type: CANCEL_TICKET_FAILURE });
