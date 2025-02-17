@@ -65,9 +65,12 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
     if (boughtSeats.has(seatNumber + 1) || bookedSeats.has(seatNumber + 1)) return;
 
     const ticket = sortedTickets.find(ticket => ticket?.Seat_number === seatNumber + 1);
+    if (!ticket) return; 
 
-    if (selectedSeats.includes(ticket)) {
-      setSelectedSeats(selectedSeats.filter((seat) => seat?.Seat_number !== ticket?.Seat_number));
+    const isAlreadySelected = selectedSeats.some(seat => seat?.Seat_number === ticket?.Seat_number);
+
+    if (isAlreadySelected) {
+      setSelectedSeats(selectedSeats.filter(seat => seat?.Seat_number !== ticket?.Seat_number));
     } else {
       setSelectedSeats([...selectedSeats, ticket]);
     }
