@@ -80,7 +80,7 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
                     <div key={ticket.id} className='flex justify-between items-center border-b pb-2'>
                         <div>
                             <h4>Row: {ticket.row}, Seat: {ticket.seat}</h4>
-                            {ticket.status === "Booked" && <span className="text-orange-500">(Booked)</span>}
+                            {ticket.status === "Booked" && <span className="text-blue-500">(Booked)</span>}
                         </div>
                         <div className='flex items-center gap-2'>
                             <h4 className='font-bold'>${ticket.price}</h4>

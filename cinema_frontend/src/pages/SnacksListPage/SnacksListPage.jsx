@@ -64,8 +64,8 @@ const SnacksListPage = () => {
         );
 
         const selectedTicketIds = userTickets
-            .filter(ticket => ticket.Status === "Booked")
-            .map(ticket => ticket.Id);
+            .filter(ticket => ticket?.Status === "Booked")
+            .map(ticket => ticket?.Id);
 
         if (selectedTicketIds.length === 0) {
             alert("No tickets to buy.");

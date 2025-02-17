@@ -1,7 +1,14 @@
 import { toast } from "react-toastify";
 import axios from "axios";
 import { baseURL } from "@/config/constants";
-import { BOOK_TICKET_FAILURE, BOOK_TICKET_REQUEST, BOOK_TICKET_SUCCESS, BUY_TICKET_FAILURE, BUY_TICKET_REQUEST, BUY_TICKET_SUCCESS, CANCEL_TICKET_FAILURE, CANCEL_TICKET_REQUEST, GET_TICKETS_BY_SESSION_ID_FAILURE, GET_TICKETS_BY_SESSION_ID_REQUEST, GET_TICKETS_BY_SESSION_ID_SUCCESS, GET_USER_TICKETS_REQUEST, GET_USER_TICKETS_SUCCESS, VIEW_USER_TICKETS_FAILURE, VIEW_USER_TICKETS_REQUEST, VIEW_USER_TICKETS_SUCCESS } from "./ActionType";
+import { 
+    BOOK_TICKET_FAILURE, BOOK_TICKET_REQUEST, BOOK_TICKET_SUCCESS, 
+    BUY_TICKET_FAILURE, BUY_TICKET_REQUEST, BUY_TICKET_SUCCESS, 
+    CANCEL_TICKET_FAILURE, CANCEL_TICKET_REQUEST,
+    GET_TICKETS_BY_HALL_ID_FAILURE, GET_TICKETS_BY_HALL_ID_REQUEST, GET_TICKETS_BY_HALL_ID_SUCCESS, 
+    GET_USER_TICKETS_REQUEST, GET_USER_TICKETS_SUCCESS, 
+    VIEW_USER_TICKETS_FAILURE, VIEW_USER_TICKETS_REQUEST, VIEW_USER_TICKETS_SUCCESS 
+} from "./ActionType";
 
 export const viewAllUserTickets = () => async (dispatch) => {
     dispatch({ type: VIEW_USER_TICKETS_REQUEST });
@@ -40,23 +47,23 @@ export const getUserTickets = (showToast) => async (dispatch) => {
     }
 }
 
-export const getTicketsBySessionId = (id) => async (dispatch) => {
-    dispatch({ type: GET_TICKETS_BY_SESSION_ID_REQUEST });
+export const getTicketsByHallId = (id) => async (dispatch) => {
+    dispatch({ type: GET_TICKETS_BY_HALL_ID_REQUEST });
 
     try {
-        const response = await axios.get(`${baseURL}/api/Ticket/get_session_tickets`, {
+        const response = await axios.get(`${baseURL}/api/Ticket/get_hall_tickets`, {
             params: {
-                sessionId: id,
+                HallId: id,
             },
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
-        dispatch({ type: GET_TICKETS_BY_SESSION_ID_SUCCESS, payload: response.data });
+        dispatch({ type: GET_TICKETS_BY_HALL_ID_SUCCESS, payload: response.data });
     } catch (e) {
         console.log(e);
         toast.error(e.response?.data);
-        dispatch({ type: GET_TICKETS_BY_SESSION_ID_FAILURE });
+        dispatch({ type: GET_TICKETS_BY_HALL_ID_FAILURE });
     }
 }
 

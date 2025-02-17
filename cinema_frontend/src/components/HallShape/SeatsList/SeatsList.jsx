@@ -1,6 +1,6 @@
 import { getHallList } from '@/redux/Hall/Action';
 import { getSessionList } from '@/redux/Session/Action';
-import { getTicketsBySessionId } from '@/redux/Ticket/Action';
+import { getTicketsByHallId } from '@/redux/Ticket/Action';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -20,9 +20,9 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
 
   useEffect(() => {
     if (session?.Id) {
-      dispatch(getTicketsBySessionId(session.Id));
+      dispatch(getTicketsByHallId(session.HallId));
     }
-  }, [dispatch, session?.Id]);
+  }, [dispatch, session?.HallId]);
 
   const sortedTickets = tickets.sort((a, b) => a.Seat_number - b.Seat_number);
 
