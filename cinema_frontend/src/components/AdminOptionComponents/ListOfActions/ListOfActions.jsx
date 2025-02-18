@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import React from 'react';
+import EditActionCard from './EditActionCard/EditActionCard';
 
 const ListOfActions = () => {
     const actions = [
@@ -35,6 +36,8 @@ const ListOfActions = () => {
                     </div>
                 ))}
             </div>
+
+            <EditActionCard />
         </div>
     );
 }
