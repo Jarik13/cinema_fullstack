@@ -1,14 +1,29 @@
 import { Button } from '@/components/ui/button';
-import React from 'react';
+import React, { useState } from 'react';
 import EditActionCard from './EditActionCard/EditActionCard';
 
 const ListOfActions = () => {
-    const actions = [
-        { id: 1, discount: 20, type: 'Military', is_active: false },
-        { id: 2, discount: 15, type: 'Student', is_active: true },
-        { id: 3, discount: 10, type: 'Disability', is_active: false },
-        { id: 4, discount: 30, type: 'Military', is_active: true },
-    ];
+    const [actions, setActions] = useState([
+        { id: 1, discount: 20, type: 'Military', is_active: true },
+        { id: 2, discount: 15, type: 'Student', is_active: false },
+        { id: 3, discount: 10, type: 'Disability', is_active: true },
+        { id: 4, discount: 30, type: 'Military', is_active: false },
+    ]);
+
+    const [editingAction, setEditingAction] = useState(null);
+
+    const handleEdit = (action) => {
+        setEditingAction(action);
+    };
+
+    const handleSave = (updatedAction) => {
+        setActions((prevActions) =>
+            prevActions.map((action) =>
+                action.id === editingAction.id ? { ...action, ...updatedAction } : action
+            )
+        );
+        setEditingAction(null);
+    };
 
     return (
         <div className='flex flex-col'>
@@ -30,14 +45,20 @@ const ListOfActions = () => {
                             {action.is_active ? "Active" : "Non Active"}
                         </div>
                         <div className='flex gap-2'>
-                            <Button variant="outline">Edit</Button>
+                            <Button variant="outline" onClick={() => handleEdit(action)}>Edit</Button>
                             <Button variant="destructive">Delete</Button>
                         </div>
                     </div>
                 ))}
             </div>
 
-            <EditActionCard />
+            {editingAction && (
+                <EditActionCard
+                    editAction={editingAction}
+                    onSave={handleSave}
+                    onClose={() => setEditingAction(null)}
+                />
+            )}
         </div>
     );
 }
