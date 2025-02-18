@@ -55,7 +55,9 @@ export const updateSession = (id, patches) => async (dispatch) => {
     } catch (e) {
         console.log(e);
         dispatch({ type: UPDATE_SESSION_FAILURE });
-        toast.error(e.response?.data);
+        if (showToast) {
+            toast.error(e.response?.data);
+        }
     }
 }
 

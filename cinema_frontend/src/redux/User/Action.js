@@ -50,7 +50,7 @@ export const updateUserProfile = (name, email, age) => async (dispatch) => {
                     "Content-Type": "application/json-patch+json"
                 }
             }
-        );        
+        );
 
         dispatch({ type: UPDATE_USER_PROFILE_SUCCESS, payload: response.data });
         await dispatch(getUserProfile());
@@ -81,7 +81,9 @@ export const getUserList = (showToast) => async (dispatch) => {
         }
     } catch (e) {
         dispatch({ type: GET_USER_LIST_FAILURE });
-        toast.error("Get list of users failed!");
+        if (showToast) {
+            toast.error("Get list of users failed!");
+        }
         return null;
     }
 };
@@ -113,12 +115,12 @@ export const filterFilms = (genre, rating, year, sortOrder, duration) => async (
         const response = await axios.get(`${baseURL}/api/User/Filters`, {
             params: {
                 Genre: genre,
-                Rating: rating, 
+                Rating: rating,
                 Year: year,
-                
+
             }
-        });       
-        
+        });
+
         console.log(response);
 
         dispatch({

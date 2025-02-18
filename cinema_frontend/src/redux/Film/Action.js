@@ -68,7 +68,7 @@ export const deleteFilm = (id) => async (dispatch) => {
 export const getFilmList = (showToast, filters) => async (dispatch) => {
     dispatch({ type: GET_ALL_FILMS_REQUEST });
 
-    let data;  
+    let data;
 
     try {
         if (!filters || filters.selectedGenre === "all") {
@@ -77,7 +77,7 @@ export const getFilmList = (showToast, filters) => async (dispatch) => {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
             });
-            data = response.data;  
+            data = response.data;
         } else {
             const response = await axios.get(`${baseURL}/api/User/Filters`, {
                 params: {
@@ -86,7 +86,7 @@ export const getFilmList = (showToast, filters) => async (dispatch) => {
                     Year: filters.selectedYear,
                 }
             });
-            data = response.data;  
+            data = response.data;
         }
         dispatch({ type: GET_ALL_FILMS_SUCCESS, payload: data });
         if (showToast) {
@@ -95,7 +95,9 @@ export const getFilmList = (showToast, filters) => async (dispatch) => {
     } catch (e) {
         console.log(e);
         dispatch({ type: GET_ALL_FILMS_FAILURE });
-        toast.error(e.response?.message || "Failed to fetch films");
+        if (showToast) {
+            toast.error(e.response?.message || "Failed to fetch films");
+        }
     }
 };
 

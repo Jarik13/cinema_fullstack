@@ -37,7 +37,9 @@ export const getSnackList = (showToast) => async (dispatch) => {
     } catch (e) {
         console.log(e);
         dispatch({ type: GET_SNACK_LIST_FAILURE });
-        toast.error(e.response?.message || "Failed to get snack list!");
+        if (showToast) {
+            toast.error(e.response?.message || "Failed to get snack list!");
+        }
     }
 }
 
@@ -50,7 +52,7 @@ export const deleteSnack = (id) => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
-        dispatch({ type: DELETE_SNACK_SUCCESS});
+        dispatch({ type: DELETE_SNACK_SUCCESS });
         toast.success(data || "Snack deleted successfully!");
     } catch (e) {
         console.log(e);

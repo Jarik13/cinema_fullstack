@@ -1,16 +1,16 @@
 import { toast } from "react-toastify";
 import axios from "axios";
 import { baseURL } from "@/config/constants";
-import { 
-    BOOK_TICKET_FAILURE, BOOK_TICKET_REQUEST, BOOK_TICKET_SUCCESS, 
-    BUY_TICKET_FAILURE, BUY_TICKET_REQUEST, BUY_TICKET_SUCCESS, 
+import {
+    BOOK_TICKET_FAILURE, BOOK_TICKET_REQUEST, BOOK_TICKET_SUCCESS,
+    BUY_TICKET_FAILURE, BUY_TICKET_REQUEST, BUY_TICKET_SUCCESS,
     CANCEL_TICKET_FAILURE, CANCEL_TICKET_REQUEST,
-    GET_TICKETS_BY_HALL_ID_FAILURE, GET_TICKETS_BY_HALL_ID_REQUEST, GET_TICKETS_BY_HALL_ID_SUCCESS, 
-    GET_USER_TICKETS_REQUEST, GET_USER_TICKETS_SUCCESS, 
-    VIEW_USER_TICKETS_FAILURE, VIEW_USER_TICKETS_REQUEST, VIEW_USER_TICKETS_SUCCESS 
+    GET_TICKETS_BY_HALL_ID_FAILURE, GET_TICKETS_BY_HALL_ID_REQUEST, GET_TICKETS_BY_HALL_ID_SUCCESS,
+    GET_USER_TICKETS_REQUEST, GET_USER_TICKETS_SUCCESS,
+    VIEW_USER_TICKETS_FAILURE, VIEW_USER_TICKETS_REQUEST, VIEW_USER_TICKETS_SUCCESS
 } from "./ActionType";
 
-export const viewAllUserTickets = () => async (dispatch) => {
+export const viewAllUserTickets = (showToast) => async (dispatch) => {
     dispatch({ type: VIEW_USER_TICKETS_REQUEST });
 
     try {
@@ -21,7 +21,9 @@ export const viewAllUserTickets = () => async (dispatch) => {
         });
         dispatch({ type: VIEW_USER_TICKETS_SUCCESS, payload: data });
     } catch (e) {
-        toast(e.data);
+        if (showToast) {
+            toast.error(e.data || "Failed to view all user tickets!");
+        }
         dispatch({ type: VIEW_USER_TICKETS_FAILURE });
         console.log(e);
     }
@@ -41,7 +43,9 @@ export const getUserTickets = (showToast) => async (dispatch) => {
             toast.success("Tickets got successfully!");
         }
     } catch (e) {
-        toast.error(e.response?.data);
+        if (showToast) {
+            toast.error(e.response?.data);
+        }
         dispatch({ type: VIEW_USER_TICKETS_FAILURE });
         console.log(e);
     }

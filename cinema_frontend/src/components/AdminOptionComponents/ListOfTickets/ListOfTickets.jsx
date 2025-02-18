@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { viewAllUserTickets } from '@/redux/Ticket/Action';
 import { getUserList } from '@/redux/User/Action';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 const ListOfTickets = () => {
@@ -10,8 +10,11 @@ const ListOfTickets = () => {
     const tickets = useSelector(store => store.ticket?.tickets || []);
     const users = useSelector(store => store.userReducer?.users || []);
 
+    const isFirstLoaded = useRef(true);
+
     useEffect(() => {
-        dispatch(viewAllUserTickets());
+        dispatch(viewAllUserTickets(isFirstLoaded.current));
+        isFirstLoaded.current = false;
         dispatch(getUserList(false));
     }, [dispatch]);
 
