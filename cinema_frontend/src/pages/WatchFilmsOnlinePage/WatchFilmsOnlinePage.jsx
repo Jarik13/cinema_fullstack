@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFilmList } from '@/redux/Film/Action';
+import { saveFilmToHistory } from '@/redux/History/Action';
 
 const WatchFilmsOnlinePage = () => {
     const dispatch = useDispatch();
@@ -29,6 +30,11 @@ const WatchFilmsOnlinePage = () => {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
+    const handleSaveFilmToHistory = (id) => {
+        dispatch(saveFilmToHistory(id));
+        navigate(`/watch-online/${id}`);
+    }
 
     return (
         <div className='flex flex-col w-full p-4'>
@@ -68,7 +74,7 @@ const WatchFilmsOnlinePage = () => {
                         <h3 className='text-lg font-semibold mb-2'>{film?.Name}</h3>
                         <p className='text-sm text-gray-600 mb-2'>Age Rating: {film?.Age_limit}</p>
                         <p className='text-lg text-gray-800 font-medium mb-4'>$ 150</p>
-                        <Button variant="destructive" onClick={() => navigate(`/watch-online/${film?.Id}`)}>
+                        <Button variant="destructive" onClick={() => handleSaveFilmToHistory(film?.Id)}>
                             Watch online
                         </Button>
                     </div>
