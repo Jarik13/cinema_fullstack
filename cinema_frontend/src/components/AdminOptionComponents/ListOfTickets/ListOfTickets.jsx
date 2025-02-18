@@ -37,16 +37,16 @@ const ListOfTickets = () => {
                     <div>Booked at</div>
                 </div>
                 {tickets.map(ticket => (
-                    <div key={ticket.Id} className="grid grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr_1fr] border-t px-4 py-2 items-center">
-                        <div>{ticket.Id}</div>
-                        <div>{getUsername(ticket.UserId)}</div>
-                        <div>{ticket.FilmName}</div>
-                        <div>{ticket.Seat_number}</div>
-                        <div>${ticket.Price}</div>
-                        <div className={`${ticket.Status === "Bought" ? "text-green-600" : "text-yellow-500"}`}>
-                            {ticket.Status}
+                    <div key={ticket?.Id} className="grid grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr_1fr] border-t px-4 py-2 items-center">
+                        <div>{ticket?.Id}</div>
+                        <div>{getUsername(ticket?.UserId)}</div>
+                        <div>{ticket?.FilmName}</div>
+                        <div>{ticket?.Seat_number}</div>
+                        <div>${ticket?.Price}</div>
+                        <div className={`${ticket?.Status === "Bought" ? "text-green-600" : "text-yellow-500"}`}>
+                            {ticket?.Status}
                         </div>
-                        <div>{new Date(ticket.Book_buy_data).toLocaleString()}</div>
+                        <div>{new Date(ticket?.Book_buy_data).toLocaleString()}</div>
                     </div>
                 ))}
             </div>
