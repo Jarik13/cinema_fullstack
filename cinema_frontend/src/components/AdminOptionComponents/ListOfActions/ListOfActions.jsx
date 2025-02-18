@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import React, { useState } from 'react';
 import EditActionCard from './EditActionCard/EditActionCard';
+import DeleteActionCard from './DeleteActionCard/DeleteActionCard';
 
 const ListOfActions = () => {
     const [actions, setActions] = useState([
@@ -11,6 +12,7 @@ const ListOfActions = () => {
     ]);
 
     const [editingAction, setEditingAction] = useState(null);
+    const [deletingAction, setDeletingAction] = useState(null);
 
     const handleEdit = (action) => {
         setEditingAction(action);
@@ -23,6 +25,11 @@ const ListOfActions = () => {
             )
         );
         setEditingAction(null);
+    };
+
+    const handleDelete = (actionId) => {
+        setActions((prevActions) => prevActions.filter((action) => action.id !== actionId));
+        setDeletingAction(null);
     };
 
     return (
@@ -46,7 +53,7 @@ const ListOfActions = () => {
                         </div>
                         <div className='flex gap-2'>
                             <Button variant="outline" onClick={() => handleEdit(action)}>Edit</Button>
-                            <Button variant="destructive">Delete</Button>
+                            <Button variant="destructive" onClick={() => setDeletingAction(action)}>Delete</Button>
                         </div>
                     </div>
                 ))}
@@ -59,6 +66,12 @@ const ListOfActions = () => {
                     onClose={() => setEditingAction(null)}
                 />
             )}
+
+            <DeleteActionCard
+                isOpen={deletingAction !== null}
+                onClose={() => setDeletingAction(null)}
+                onConfirm={() => handleDelete(deletingAction.id)}
+            />
         </div>
     );
 }
