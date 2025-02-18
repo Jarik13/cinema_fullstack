@@ -64,8 +64,8 @@ const SeatsList = ({ selectedSeats, setSelectedSeats, sessionId }) => {
   const handleSeatClick = (seatNumber) => {
     if (boughtSeats.has(seatNumber + 1) || bookedSeats.has(seatNumber + 1)) return;
 
-    const ticket = sortedTickets.find(ticket => ticket?.Seat_number === seatNumber + 1);
-    if (!ticket) return; 
+    const ticket = sortedTickets.find(ticket => ticket?.Seat_number === (seatNumber + 1));
+    if (!ticket) return;
 
     const isAlreadySelected = selectedSeats.some(seat => seat?.Seat_number === ticket?.Seat_number);
 
