@@ -50,7 +50,7 @@ export const getHallList = (showToast) => async (dispatch) => {
         console.error(e);
         dispatch({ type: GET_ALL_HALLS_FAILURE });
         if (showToast) {
-            toast.error(e.response?.data || "Failed to get hall list!");
+            toast.error("Failed to get hall list!");
         }
     }
 }

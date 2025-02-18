@@ -44,7 +44,7 @@ export const getUserTickets = (showToast) => async (dispatch) => {
         }
     } catch (e) {
         if (showToast) {
-            toast.error(e.response?.data);
+            toast.error(e.response?.data || "Failed to get user tickets!");
         }
         dispatch({ type: VIEW_USER_TICKETS_FAILURE });
         console.log(e);
@@ -66,7 +66,7 @@ export const getTicketsByHallId = (id) => async (dispatch) => {
         dispatch({ type: GET_TICKETS_BY_HALL_ID_SUCCESS, payload: response.data });
     } catch (e) {
         console.log(e);
-        toast.error(e.response?.data);
+        toast.error(e.response?.data || "Failed to get tickets!");
         dispatch({ type: GET_TICKETS_BY_HALL_ID_FAILURE });
     }
 }
