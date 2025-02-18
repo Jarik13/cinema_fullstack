@@ -28,7 +28,7 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
         const updatedAction = {
             discount: data.discount,
             type: data.type,
-            active: data.active,
+            is_active: data.active === "Active",
         }
         onSave(updatedAction);
     };
