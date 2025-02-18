@@ -11,7 +11,8 @@ const AddAction = () => {
     const form = useForm({
         defaultValues: {
             discount: 0,
-            description: ""
+            description: "",
+            is_active: true,
         },
         mode: "onChange",
     });
@@ -24,6 +25,7 @@ const AddAction = () => {
         reset({
             discount: 0,
             description: "",
+            is_active: true,
         });
     };
 
