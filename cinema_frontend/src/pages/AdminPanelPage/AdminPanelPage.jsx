@@ -1,3 +1,4 @@
+import AddAction from "@/components/AdminOptionComponents/AddAction/AddAction";
 import AddFilm from "@/components/AdminOptionComponents/AddFilm/AddFilm";
 import AddHall from "@/components/AdminOptionComponents/AddHall/AddHall";
 import AddSession from "@/components/AdminOptionComponents/AddSession/AddSession";
@@ -32,6 +33,8 @@ const AdminPanelPage = () => {
                 return <AddSnack />;
             case "listOfSnacks":
                 return <ListOfSnacks />
+            case "addAction":
+                return <AddAction />
             case "listOfTickets":
                 return <ListOfTickets />;
             case "listOfUsers":
@@ -100,6 +103,13 @@ const AdminPanelPage = () => {
                         onClick={() => setActiveComponent("listOfSnacks")}
                     >
                         List snacks
+                    </Button>
+                    <Button
+                        variant={activeComponent === "addAction" ? "destructive" : "outline"}
+                        className="w-full py-2 px-4"
+                        onClick={() => setActiveComponent("addAction")}
+                    >
+                        Add actions
                     </Button>
                     <Button
                         variant={activeComponent === "listOfTickets" ? "destructive" : "outline"}
