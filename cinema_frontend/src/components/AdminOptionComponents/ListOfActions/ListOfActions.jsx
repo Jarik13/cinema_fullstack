@@ -5,10 +5,10 @@ import DeleteActionCard from './DeleteActionCard/DeleteActionCard';
 
 const ListOfActions = () => {
     const [actions, setActions] = useState([
-        { id: 1, discount: 20, type: 'Military', is_active: true },
-        { id: 2, discount: 15, type: 'Student', is_active: false },
-        { id: 3, discount: 10, type: 'Disability', is_active: true },
-        { id: 4, discount: 30, type: 'Military', is_active: false },
+        { id: 1, discount: 20, description: 'description 1', is_active: true },
+        { id: 2, discount: 15, description: 'description 2', is_active: false },
+        { id: 3, discount: 10, description: 'description 3', is_active: true },
+        { id: 4, discount: 30, description: 'description 4', is_active: false },
     ]);
 
     const [editingAction, setEditingAction] = useState(null);
@@ -34,12 +34,12 @@ const ListOfActions = () => {
 
     return (
         <div className='flex flex-col'>
-            <p className="text-2xl font-bold mb-4">All Ticket List</p>
+            <p className="text-2xl font-bold mb-4">All Action List</p>
             <div className="border rounded-lg overflow-hidden">
                 <div className='grid grid-cols-5 bg-gray-100 font-bold px-4 py-2'>
                     <div>ID</div>
                     <div>Discount</div>
-                    <div>Type</div>
+                    <div>Description</div>
                     <div>Active</div>
                     <div>Action</div>
                 </div>
@@ -47,7 +47,7 @@ const ListOfActions = () => {
                     <div key={action.id} className="grid grid-cols-5 px-4 py-2 border-b items-center">
                         <div>{action.id}</div>
                         <div>{action.discount}%</div>
-                        <div>{action.type}</div>
+                        <div>{action.description}</div>
                         <div className={action.is_active ? "text-green-600" : "text-red-600"}>
                             {action.is_active ? "Active" : "Non Active"}
                         </div>

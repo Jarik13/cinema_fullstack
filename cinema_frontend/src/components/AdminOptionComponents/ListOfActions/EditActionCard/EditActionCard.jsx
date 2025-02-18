@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -9,7 +10,7 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
     const form = useForm({
         defaultValues: {
             discount: editAction?.discount || 0,
-            type: editAction?.type || "Military",
+            description: editAction?.description || "",
             active: editAction?.is_active ? "Active" : "Non Active",
         },
         mode: "onChange",
@@ -27,7 +28,7 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
     const onSubmit = (data) => {
         const updatedAction = {
             discount: data.discount,
-            type: data.type,
+            description: data.description,
             is_active: data.active === "Active",
         }
         onSave(updatedAction);
@@ -79,25 +80,16 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="type"
-                            rules={{ required: "Discount type is required" }}
+                            name="description"
+                            rules={{ required: "Description is required" }}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Discount Type</FormLabel>
+                                    <FormLabel>Description</FormLabel>
                                     <FormControl>
-                                        <Select value={field.value} onValueChange={(value) => setValue('type', value)}>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select a discount type" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="Military">Military</SelectItem>
-                                                <SelectItem value="Student">Student</SelectItem>
-                                                <SelectItem value="Disability">Disability</SelectItem>
-                                            </SelectContent>
-                                        </Select>
+                                        <Textarea placeholder="Action description ..." {...field} />
                                     </FormControl>
                                     <FormDescription>
-                                        Select the discount type (Military, Student, or Disability).
+                                        This is public description of action.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>
