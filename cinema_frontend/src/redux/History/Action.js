@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { FILM_HISTORY_FAILURE, FILM_HISTORY_REQUEST, FILM_HISTORY_SUCCESS } from "./ActionType"
+import { FILM_HISTORY_FAILURE, FILM_HISTORY_REQUEST, FILM_HISTORY_SUCCESS, GET_USER_FILM_HISTORY_FAILURE, GET_USER_FILM_HISTORY_REQUEST } from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -17,5 +17,22 @@ export const saveFilmToHistory = (id) => async (dispatch) => {
         console.error(e);
         dispatch({ type: FILM_HISTORY_FAILURE });
         toast.error("Failed to save film to history!");
+    }
+}
+
+export const getUserFilmHistory = () => async (dispatch) => {
+    dispatch({ type: GET_USER_FILM_HISTORY_REQUEST });
+
+    try {
+        const { data } = await axios.get(`${baseURL}/api/History/ListOfHistory`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        console.log(data);
+        dispatch({ type: GET_USER_FILM_HISTORY_FAILURE, payload: data });
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: GET_USER_FILM_HISTORY_FAILURE });
     }
 }
