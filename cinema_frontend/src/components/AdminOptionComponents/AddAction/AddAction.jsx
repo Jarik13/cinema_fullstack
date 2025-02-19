@@ -3,18 +3,21 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { createSale } from '@/redux/Sale/Action';
 import { SelectValue } from '@radix-ui/react-select';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
 const AddAction = () => {
+    const dispatch = useDispatch();
     const form = useForm({
         defaultValues: {
             discount: 0,
             description: "",
-            for_what: "Snack",
-            discount_type: "Student",
-            is_active: true,
+            forWhat: "Snack",
+            discountType: "Student",
+            isActive: true,
         },
         mode: "onChange",
     });
@@ -23,13 +26,13 @@ const AddAction = () => {
 
     const onSubmit = (data) => {
         console.log(data);
-
+        dispatch(createSale(data));
         reset({
             discount: 0,
             description: "",
-            for_what: "Snack",
-            discount_type: "Student",
-            is_active: true,
+            forWhat: "Snack",
+            discountType: "Student",
+            isActive: true,
         });
     };
 
@@ -89,11 +92,11 @@ const AddAction = () => {
 
                     <FormField
                         control={form.control}
-                        name="for_what"
+                        name="forWhat"
                         rules={{ required: "Type is required" }}
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Discount Type</FormLabel>
+                                <FormLabel>Reasone</FormLabel>
                                 <Select onValueChange={field.onChange} value={field.value}>
                                     <FormControl>
                                         <SelectTrigger>
@@ -113,7 +116,7 @@ const AddAction = () => {
 
                     <FormField
                         control={form.control}
-                        name="discount_type"
+                        name="discountType"
                         rules={{ required: "Type is required" }}
                         render={({ field }) => (
                             <FormItem>
@@ -126,7 +129,7 @@ const AddAction = () => {
                                     </FormControl>
                                     <SelectContent>
                                         <SelectItem value="Student">Student</SelectItem>
-                                        <SelectItem value="BulkPurchase">BulkPurchase</SelectItem>
+                                        <SelectItem value="Purchase4">Purchase4</SelectItem>
                                         <SelectItem value="SummerForKids">SummerForKids</SelectItem>
                                         <SelectItem value="ShowDateDiscount">ShowDateDiscount</SelectItem>
                                         <SelectItem value="Reviews100Plus">Reviews100Plus</SelectItem>

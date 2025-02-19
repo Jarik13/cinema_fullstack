@@ -12,7 +12,8 @@ export const createSale = (data) => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
-        console.log(data);
+        console.log(response);
+        toast.success("Sale created successfully!");
         dispatch({ type: CREATE_SALE_SUCCESS });
     } catch (e) {
         console.log(e);
