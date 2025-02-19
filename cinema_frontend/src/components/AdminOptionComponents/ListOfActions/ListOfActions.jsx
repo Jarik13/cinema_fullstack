@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import EditActionCard from './EditActionCard/EditActionCard';
 import DeleteActionCard from './DeleteActionCard/DeleteActionCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSaleList, updateSale } from '@/redux/Sale/Action';
+import { deleteSale, getSaleList, updateSale } from '@/redux/Sale/Action';
 
 const ListOfActions = () => {
     const dispatch = useDispatch();
@@ -41,8 +41,9 @@ const ListOfActions = () => {
         setEditingAction(null);
     };
 
-    const handleDelete = (actionId) => {
-         // here will be deleteSale()
+    const handleDelete = async (actionId) => {
+        await dispatch(deleteSale(actionId));
+        await dispatch(getSaleList(true));
         setDeletingAction(null);
     };
 
@@ -88,7 +89,7 @@ const ListOfActions = () => {
             <DeleteActionCard
                 isOpen={deletingAction !== null}
                 onClose={() => setDeletingAction(null)}
-                onConfirm={() => handleDelete(deletingAction.id)}
+                onConfirm={() => handleDelete(deletingAction.Id)}
             />
         </div>
     );
