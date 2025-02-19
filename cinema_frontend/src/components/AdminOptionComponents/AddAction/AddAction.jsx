@@ -12,7 +12,8 @@ const AddAction = () => {
         defaultValues: {
             discount: 0,
             description: "",
-            type: "Snack",
+            for_what: "Snack",
+            discount_type: "Student",
             is_active: true,
         },
         mode: "onChange",
@@ -26,7 +27,8 @@ const AddAction = () => {
         reset({
             discount: 0,
             description: "",
-            type: "Snack",
+            for_what: "Snack",
+            discount_type: "Student",
             is_active: true,
         });
     };
@@ -87,7 +89,7 @@ const AddAction = () => {
 
                     <FormField
                         control={form.control}
-                        name="type"
+                        name="for_what"
                         rules={{ required: "Type is required" }}
                         render={({ field }) => (
                             <FormItem>
@@ -101,6 +103,33 @@ const AddAction = () => {
                                     <SelectContent>
                                         <SelectItem value="Snack">Snack</SelectItem>
                                         <SelectItem value="Ticket">Ticket</SelectItem>
+                                        <SelectItem value="Both">Both</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="discount_type"
+                        rules={{ required: "Type is required" }}
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Discount Type</FormLabel>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select discount type" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectItem value="Student">Student</SelectItem>
+                                        <SelectItem value="BulkPurchase">BulkPurchase</SelectItem>
+                                        <SelectItem value="SummerForKids">SummerForKids</SelectItem>
+                                        <SelectItem value="ShowDateDiscount">ShowDateDiscount</SelectItem>
+                                        <SelectItem value="Reviews100Plus">Reviews100Plus</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />
