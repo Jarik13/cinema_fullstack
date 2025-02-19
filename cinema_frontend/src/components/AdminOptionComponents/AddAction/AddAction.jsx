@@ -12,6 +12,7 @@ const AddAction = () => {
         defaultValues: {
             discount: 0,
             description: "",
+            type: "Snack",
             is_active: true,
         },
         mode: "onChange",
@@ -25,6 +26,7 @@ const AddAction = () => {
         reset({
             discount: 0,
             description: "",
+            type: "Snack",
             is_active: true,
         });
     };
@@ -78,6 +80,29 @@ const AddAction = () => {
                                 <FormDescription>
                                     This is public description of action.
                                 </FormDescription>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <FormField
+                        control={form.control}
+                        name="type"
+                        rules={{ required: "Type is required" }}
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Discount Type</FormLabel>
+                                <Select onValueChange={field.onChange} value={field.value}>
+                                    <FormControl>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select discount type" />
+                                        </SelectTrigger>
+                                    </FormControl>
+                                    <SelectContent>
+                                        <SelectItem value="Snack">Snack</SelectItem>
+                                        <SelectItem value="Ticket">Ticket</SelectItem>
+                                    </SelectContent>
+                                </Select>
                                 <FormMessage />
                             </FormItem>
                         )}
