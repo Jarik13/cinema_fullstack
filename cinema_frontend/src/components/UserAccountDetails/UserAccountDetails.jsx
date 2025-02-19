@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardHeader, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import PersonalInfoCard from './PersonalInfoCard/PersonalInfoCard';
 import PurchaseHistoryCard from './PurchaseHistoryCard/PurchaseHistoryCard';
 import MyPaymentCardsCard from './MyPaymentCardsCard/MyPaymentCardsCard';
@@ -15,44 +15,28 @@ const UserAccountDetails = () => {
     };
 
     return (
-        <div className="flex flex-col md:flex-row gap-6 p-8 text-black max-w-4xl mx-auto transform translate-y-[-50px]">
-            <div className="flex flex-col items-center md:items-start w-[320px] h-[400px]"> 
+        <div className="flex flex-col md:flex-row gap-6 p-8 text-black mx-auto transform translate-y-[-50px]">
+            <div className="w-1/3 flex flex-col items-center md:items-start">
                 <div className="w-24 h-24 rounded-full shadow-lg flex items-center justify-center mb-4">
                     <span>{user?.username}</span>
                 </div>
-                <nav className="flex flex-col gap-2 text-black w-40">
-                    <a
-                        href="#"
-                        onClick={() => handleLinkClick('personalInfo')}
-                        className={`${cardContent === 'personalInfo' ? 'underline' : ''}`}
-                    >
+                <nav className="flex flex-col gap-2 text-black w-full">
+                    <a href="#" onClick={() => handleLinkClick('personalInfo')} className={`${cardContent === 'personalInfo' ? 'underline' : ''}`}>
                         Personal Information
                     </a>
-                    <a
-                        href="#"
-                        onClick={() => handleLinkClick('filmPurchaseHistory')}
-                        className={`${cardContent === 'filmPurchaseHistory' ? 'underline' : ''}`}
-                    >
+                    <a href="#" onClick={() => handleLinkClick('filmPurchaseHistory')} className={`${cardContent === 'filmPurchaseHistory' ? 'underline' : ''}`}>
                         Film Purchase History
                     </a>
-                    <a
-                        href="#"
-                        onClick={() => handleLinkClick('ticketPurchaseHistory')}
-                        className={`${cardContent === 'ticketPurchaseHistory' ? 'underline' : ''}`}
-                    >
+                    <a href="#" onClick={() => handleLinkClick('ticketPurchaseHistory')} className={`${cardContent === 'ticketPurchaseHistory' ? 'underline' : ''}`}>
                         Ticket Purchase History
                     </a>
-                    <a
-                        href="#"
-                        onClick={() => handleLinkClick('myTickets')}
-                        className={`${cardContent === 'myTickets' ? 'underline' : ''}`}
-                    >
+                    <a href="#" onClick={() => handleLinkClick('myTickets')} className={`${cardContent === 'myTickets' ? 'underline' : ''}`}>
                         My Tickets
                     </a>
                 </nav>
             </div>
 
-            <div className="flex w-[500px]"> 
+            <div className="w-2/3 flex items-center justify-center">
                 <Card className="w-full h-full">
                     <CardHeader className="text-center text-xl">
                         {cardContent === 'personalInfo' && 'Personal Information'}

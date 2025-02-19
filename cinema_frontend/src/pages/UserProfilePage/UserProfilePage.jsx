@@ -9,8 +9,8 @@ const UserProfilePage = () => {
                 <GoToHomePage message={"My profile"} navigation={"/"} />
             </div>
 
-            <div className="flex items-center pl-10">
-                <div className="w-full max-w-lg">
+            <div className="flex items-center pl-10 w-1/2">
+                <div className="w-[100%]">
                     <UserAccountDetails />
                 </div>
             </div>

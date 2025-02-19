@@ -18,6 +18,7 @@ const MyTicketsCard = () => {
   const dispatch = useDispatch();
   const tickets = useSelector((state) => state.ticket?.tickets || []);
   const isFirstLoad = useRef(true);
+  console.log(tickets);
 
   useEffect(() => {
     dispatch(getUserTickets(isFirstLoad.current));
@@ -35,17 +36,17 @@ const MyTicketsCard = () => {
         <Carousel className="w-full max-w-xs">
           <CarouselContent>
             {tickets?.map((ticket) => (
-              <CarouselItem key={ticket?.id}>
+              <CarouselItem key={ticket?.Id}>
                 <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-300">
-                  <h3 className="text-xl font-semibold text-black">🎬 Film: <span className="text-indigo-600">{ticket?.filmName}</span></h3>
-                  <p className="text-gray-600">🛒 Bought at: <span className="text-black">{formatTime(ticket?.book_buy_data)}</span></p>
-                  <p className="text-gray-600">📅 Date: <span className="text-black">{formatDate(ticket?.book_buy_data)}</span></p>
-                  <p className="text-green-600 font-semibold">💰 Amount: <span className="text-red-500 font-semibold">${ticket?.price}</span></p>
-                  <p className="text-gray-400">🎟️ Seat number: <span className="text-black">{ticket?.seat_number}</span></p>
-                  <p className={`text-sm font-medium ${ticket?.status === 'Booked' ? 'text-blue-500' : 'text-yellow-500'}`}>
-                    Status: {ticket?.status}
+                  <h3 className="text-xl font-semibold text-black">🎬 Film: <span className="text-indigo-600">{ticket?.FilmName}</span></h3>
+                  <p className="text-gray-600">🛒 Bought at: <span className="text-black">{formatTime(ticket?.Book_buy_data)}</span></p>
+                  <p className="text-gray-600">📅 Date: <span className="text-black">{formatDate(ticket?.Book_buy_data)}</span></p>
+                  <p className="text-green-600 font-semibold">💰 Amount: <span className="text-red-500 font-semibold">${ticket?.Price}</span></p>
+                  <p className="text-gray-400">🎟️ Seat number: <span className="text-black">{ticket?.Seat_number}</span></p>
+                  <p className={`text-sm font-medium ${ticket?.Status === 'Booked' ? 'text-blue-500' : 'text-yellow-500'}`}>
+                    Status: {ticket?.Status}
                   </p>
-                  <Button variant="destructive" className="mt-4" onClick={() => handleCancelTickets(ticket.id)}>Cancel</Button>
+                  <Button variant="destructive" className="mt-4" onClick={() => handleCancelTickets(ticket.Id)}>Cancel</Button>
                 </div>
               </CarouselItem>
             ))}
