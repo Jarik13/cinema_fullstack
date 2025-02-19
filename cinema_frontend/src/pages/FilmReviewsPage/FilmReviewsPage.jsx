@@ -1,14 +1,17 @@
 import GoToHomePage from '@/components/GoToHomePage/GoToHomePage';
 import MovieDetails from '@/components/MovieDetails/MovieDetails';
 import SendReviewCard from '@/components/SendReviewCard/SendReviewCard';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { getFilmList } from '@/redux/Film/Action';
+import { getReviewsByFilmId } from '@/redux/Review/Action';
 import { getSessionList } from '@/redux/Session/Action';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const FilmReviewsPage = () => {
+    const params = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const films = useSelector(store => store.film?.films || []);
@@ -16,11 +19,11 @@ const FilmReviewsPage = () => {
     const currentFilmNumber = useSelector(store => store.film?.currentFilmNumber || 1);
     const selectedLocation = useSelector(store => store.location?.selectedLocation || null);
 
-    const [reviews, setReviews] = useState([]);
+    const reviews = useSelector(store => store.review?.reviews || []);
 
     useEffect(() => {
         dispatch(getFilmList(false, null));
-        dispatch(getSessionList(false));
+        dispatch(getSessionList(false));  
     }, [dispatch])
 
     const film = films[currentFilmNumber - 1];
@@ -72,12 +75,17 @@ const FilmReviewsPage = () => {
                     ) : (
                         <div className="space-y-4">
                             {reviews.map((review) => (
-                                <div key={review.id} className="p-3 border rounded-lg bg-white shadow">
-                                    <div className="flex justify-between items-center mb-1">
-                                        <span className="font-semibold">{review.username}</span>
-                                        <span className="text-sm text-gray-600">{review.mark}/10</span>
+                                <div key={review.id} className="p-3 border rounded-lg bg-white shadow flex items-start">
+                                    <Avatar className="w-12 h-12 mr-4">
+                                        <AvatarFallback> {review?.UserName[0].toUpperCase()} </AvatarFallback> 
+                                    </Avatar>
+                                    <div className="flex flex-col w-full">
+                                        <div className="flex justify-between items-center mb-1">
+                                            <span className="font-semibold">{review?.UserName}</span>
+                                            <span className="text-sm text-gray-600">{review?.Mark}/10</span>
+                                        </div>
+                                        <p className="text-gray-700">{review?.Content}</p>
                                     </div>
-                                    <p className="text-gray-700">{review.content}</p>
                                 </div>
                             ))}
                         </div>

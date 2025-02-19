@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { SEND_REVIEW_FAILURE, SEND_REVIEW_REQUEST, SEND_REVIEW_SUCCESS } from "./ActionType"
+import { GET_REVIEWS_BY_FILM_ID_FAILURE, GET_REVIEWS_BY_FILM_ID_REQUEST, GET_REVIEWS_BY_FILM_ID_SUCCESS, SEND_REVIEW_FAILURE, SEND_REVIEW_REQUEST, SEND_REVIEW_SUCCESS } from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -21,5 +21,27 @@ export const sendReview = (review, id) => async (dispatch) => {
         console.log(e);
         dispatch({ type: SEND_REVIEW_FAILURE });
         toast.error(e.response.message || "Failed to send review!");
+    }
+}
+
+export const getReviewsByFilmId = (id, showToast) => async (dispatch) => {
+    dispatch({ type: GET_REVIEWS_BY_FILM_ID_REQUEST });
+
+    try {
+        const { data } = await axios.get(`${baseURL}/api/Review/get_reviews_by_film_id/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        if (showToast) {
+            toast.success("Film reviews got successfully!");
+        }
+        dispatch({ type: GET_REVIEWS_BY_FILM_ID_SUCCESS, payload: data });
+    } catch (e) {
+        console.log(e);
+        if (showToast) {
+            toast.error("Failed to get film reviews!");
+        }
+        dispatch({ type: GET_REVIEWS_BY_FILM_ID_FAILURE });
     }
 }
