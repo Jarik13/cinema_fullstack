@@ -11,6 +11,7 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
         defaultValues: {
             discount: editAction?.discount || 0,
             description: editAction?.description || "",
+            type: editAction?.type || "Snack",
             active: editAction?.is_active ? "Active" : "Non Active",
         },
         mode: "onChange",
@@ -29,6 +30,7 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
         const updatedAction = {
             discount: data.discount,
             description: data.description,
+            type: "Snack",
             is_active: data.active === "Active",
         }
         onSave(updatedAction);
@@ -91,6 +93,29 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
                                     <FormDescription>
                                         This is public description of action.
                                     </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="type"
+                            rules={{ required: "Type is required" }}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Discount Type</FormLabel>
+                                    <Select onValueChange={field.onChange} value={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select discount type" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="Snack">Snack</SelectItem>
+                                            <SelectItem value="Ticket">Ticket</SelectItem>
+                                        </SelectContent>
+                                    </Select>
                                     <FormMessage />
                                 </FormItem>
                             )}
