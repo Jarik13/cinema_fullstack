@@ -1,7 +1,8 @@
-import { FILM_HISTORY_FAILURE, FILM_HISTORY_REQUEST, FILM_HISTORY_SUCCESS } from "./ActionType";
+import { FILM_HISTORY_FAILURE, FILM_HISTORY_REQUEST, FILM_HISTORY_SUCCESS, GET_USER_FILM_HISTORY_FAILURE, GET_USER_FILM_HISTORY_REQUEST, GET_USER_FILM_HISTORY_SUCCESS } from "./ActionType";
 
 const initialState = {
     history: null,
+    histories: [],
     loading: false,
     error: null,
 };
@@ -9,11 +10,16 @@ const initialState = {
 export const historyReducer = (state = initialState, action) => {
     switch (action.type) {
         case FILM_HISTORY_REQUEST:
+        case GET_USER_FILM_HISTORY_REQUEST:
             return { ...state, loading: true, error: null };
         case FILM_HISTORY_SUCCESS:
             return { ...state, loading: false, history: action.payload };
+        case GET_USER_FILM_HISTORY_SUCCESS:
+            return { ...state, loading: false, histories: action.payload };
         case FILM_HISTORY_FAILURE:
             return { ...state, loading: false, error: "Failed to save film to history!" };
+        case GET_USER_FILM_HISTORY_FAILURE:
+            return { ...state, loading: false, error: "Failed to get user films history!" };
         default:
             return state;
     }
