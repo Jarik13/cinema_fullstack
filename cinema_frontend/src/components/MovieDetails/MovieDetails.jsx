@@ -19,7 +19,7 @@ const MovieDetails = () => {
   }, [dispatch])
 
   const film = films[currentFilmNumber - 1];
-
+  
   return (
     <div className='grid grid-cols-[3fr_2fr] gap-10'>
       <div className='text-3xl'>
@@ -53,7 +53,7 @@ const MovieDetails = () => {
           <span>•</span>
           <span>{film?.Age_rating || "Film age rating"}</span>
         </div>
-        <Button variant="destructive" size="sm" onClick={() => navigate(`${film?.Id}/reviews`)}>See reviews</Button>
+        <Button variant="destructive" size="sm" onClick={() => navigate(`/${film?.Id}/reviews`)}>See reviews</Button>
       </div>
     </div>
   )

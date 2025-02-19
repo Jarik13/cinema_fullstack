@@ -64,7 +64,7 @@ const FilmReviewsPage = () => {
             </div>
 
             <div className='grid grid-cols-[1fr_3fr] gap-8 mt-10'>
-                <SendReviewCard />
+                <SendReviewCard filmId={film?.Id} />
                 <div className='p-4 border rounded-lg bg-gray-50 w-full'>
                     <h2 className="text-xl font-semibold mb-3">User Reviews</h2>
                     {reviews.length === 0 ? (
