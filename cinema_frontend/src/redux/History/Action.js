@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { FILM_HISTORY_FAILURE, FILM_HISTORY_REQUEST, FILM_HISTORY_SUCCESS, GET_USER_FILM_HISTORY_FAILURE, GET_USER_FILM_HISTORY_REQUEST } from "./ActionType"
+import { FILM_HISTORY_FAILURE, FILM_HISTORY_REQUEST, FILM_HISTORY_SUCCESS, GET_USER_FILM_HISTORY_FAILURE, GET_USER_FILM_HISTORY_REQUEST, GET_USER_FILM_HISTORY_SUCCESS } from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -29,8 +29,7 @@ export const getUserFilmHistory = () => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
-        console.log(data);
-        dispatch({ type: GET_USER_FILM_HISTORY_FAILURE, payload: data });
+        dispatch({ type: GET_USER_FILM_HISTORY_SUCCESS, payload: data });
     } catch (e) {
         console.log(e);
         dispatch({ type: GET_USER_FILM_HISTORY_FAILURE });

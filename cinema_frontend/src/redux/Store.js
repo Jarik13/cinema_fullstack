@@ -8,6 +8,7 @@ import { hallReducer } from "./Hall/Reducer";
 import { locationReducer } from "./Location/Reducer";
 import { sessionReducer } from "./Session/Reducer";
 import { snackReducer } from "./Snack/Reducer";
+import { historyReducer } from "./History/Reducer";
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -18,5 +19,6 @@ const rootReducer = combineReducers({
     location: locationReducer,
     session: sessionReducer,
     snack: snackReducer,
+    history: historyReducer,
 });
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunk))
