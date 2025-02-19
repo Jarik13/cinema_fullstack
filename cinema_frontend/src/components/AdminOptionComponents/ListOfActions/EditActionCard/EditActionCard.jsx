@@ -11,7 +11,8 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
         defaultValues: {
             discount: editAction?.discount || 0,
             description: editAction?.description || "",
-            type: editAction?.type || "Snack",
+            for_what: editAction?.type || "Snack",
+            discount_type: editAction?.discount_type || "Student",
             active: editAction?.is_active ? "Active" : "Non Active",
         },
         mode: "onChange",
@@ -30,7 +31,8 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
         const updatedAction = {
             discount: data.discount,
             description: data.description,
-            type: "Snack",
+            for_what: data.for_what,
+            discount_type: data.discount_type,
             is_active: data.active === "Active",
         }
         onSave(updatedAction);
@@ -100,7 +102,7 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="type"
+                            name="for_what"
                             rules={{ required: "Type is required" }}
                             render={({ field }) => (
                                 <FormItem>
@@ -114,6 +116,33 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
                                         <SelectContent>
                                             <SelectItem value="Snack">Snack</SelectItem>
                                             <SelectItem value="Ticket">Ticket</SelectItem>
+                                            <SelectItem value="Both">Both</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        <FormField
+                            control={form.control}
+                            name="discount_type"
+                            rules={{ required: "Type is required" }}
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Discount Type</FormLabel>
+                                    <Select onValueChange={field.onChange} value={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select discount type" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="Student">Student</SelectItem>
+                                            <SelectItem value="BulkPurchase">BulkPurchase</SelectItem>
+                                            <SelectItem value="SummerForKids">SummerForKids</SelectItem>
+                                            <SelectItem value="ShowDateDiscount">ShowDateDiscount</SelectItem>
+                                            <SelectItem value="Reviews100Plus">Reviews100Plus</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
