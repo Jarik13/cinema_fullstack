@@ -128,7 +128,7 @@ const AddAction = () => {
                                     </FormControl>
                                     <SelectContent>
                                         <SelectItem value="Student">Student</SelectItem>
-                                        <SelectItem value="Purchase4">Purchase4</SelectItem>
+                                        <SelectItem value="Purchases4">Purchases4</SelectItem>
                                         <SelectItem value="SummerForKids">SummerForKids</SelectItem>
                                         <SelectItem value="ShowDateDiscount">ShowDateDiscount</SelectItem>
                                         <SelectItem value="Reviews100Plus">Reviews100Plus</SelectItem>

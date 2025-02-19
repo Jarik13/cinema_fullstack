@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import EditActionCard from './EditActionCard/EditActionCard';
 import DeleteActionCard from './DeleteActionCard/DeleteActionCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSaleList } from '@/redux/Sale/Action';
+import { getSaleList, updateSale } from '@/redux/Sale/Action';
 
 const ListOfActions = () => {
     const dispatch = useDispatch();
@@ -22,17 +22,27 @@ const ListOfActions = () => {
         setEditingAction(action);
     };
 
-    const handleSave = (updatedAction) => {
-        setActions((prevActions) =>
-            prevActions.map((action) =>
-                action.id === editingAction.id ? { ...action, ...updatedAction } : action
-            )
-        );
+    const generatePatches = (newSale) => {
+        const patches = [];
+    
+        patches.push({ path: "/discount", value: newSale?.Discount });
+        patches.push({ path: "/description", value: newSale?.Description });
+        patches.push({ path: "/forwhat", value: newSale?.For_what });
+        patches.push({ path: "/discounttype", value: newSale?.Discount_type });
+        patches.push({ path: "/isactive", value: newSale?.Is_Active });
+    
+        return patches;
+    };    
+
+    const handleSave = async (updatedAction) => {
+        const patches = generatePatches(updatedAction);
+        await dispatch(updateSale(editingAction?.Id, patches));
+        await dispatch(getSaleList(false));
         setEditingAction(null);
     };
 
     const handleDelete = (actionId) => {
-        setActions((prevActions) => prevActions.filter((action) => action.id !== actionId));
+         // here will be deleteSale()
         setDeletingAction(null);
     };
 

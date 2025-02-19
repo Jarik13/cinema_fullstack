@@ -7,13 +7,14 @@ import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
 const EditActionCard = ({ editAction, onSave, onClose }) => {
+    console.log(editAction);
     const form = useForm({
         defaultValues: {
-            discount: editAction?.discount || 0,
-            description: editAction?.description || "",
-            for_what: editAction?.type || "Snack",
-            discount_type: editAction?.discount_type || "Student",
-            active: editAction?.is_active ? "Active" : "Non Active",
+            Discount: editAction?.Discount || 0,
+            Description: editAction?.Description || "",
+            For_what: editAction?.For_what || "Snack",
+            Discount_type: editAction?.Discount_type || "Student",
+            active: editAction?.Is_Active ? "Active" : "Non Active",
         },
         mode: "onChange",
     });
@@ -29,11 +30,11 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
 
     const onSubmit = (data) => {
         const updatedAction = {
-            discount: data.discount,
-            description: data.description,
-            for_what: data.for_what,
-            discount_type: data.discount_type,
-            is_active: data.active === "Active",
+            Discount: data.Discount,
+            Description: data.Description,
+            For_what: data.For_what,
+            Discount_type: data.Discount_type,
+            Is_Active: data.active === "Active",
         }
         onSave(updatedAction);
     };
@@ -53,7 +54,7 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <FormField
                             control={form.control}
-                            name="discount"
+                            name="Discount"
                             rules={{
                                 required: "discount is required",
                                 validate: (value) => {
@@ -84,7 +85,7 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="description"
+                            name="Description"
                             rules={{ required: "Description is required" }}
                             render={({ field }) => (
                                 <FormItem>
@@ -102,7 +103,7 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="for_what"
+                            name="For_what"
                             rules={{ required: "Type is required" }}
                             render={({ field }) => (
                                 <FormItem>
@@ -126,7 +127,7 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="discount_type"
+                            name="Discount_type"
                             rules={{ required: "Type is required" }}
                             render={({ field }) => (
                                 <FormItem>
@@ -139,7 +140,7 @@ const EditActionCard = ({ editAction, onSave, onClose }) => {
                                         </FormControl>
                                         <SelectContent>
                                             <SelectItem value="Student">Student</SelectItem>
-                                            <SelectItem value="BulkPurchase">BulkPurchase</SelectItem>
+                                            <SelectItem value="Purchases4">Purchases4</SelectItem>
                                             <SelectItem value="SummerForKids">SummerForKids</SelectItem>
                                             <SelectItem value="ShowDateDiscount">ShowDateDiscount</SelectItem>
                                             <SelectItem value="Reviews100Plus">Reviews100Plus</SelectItem>
