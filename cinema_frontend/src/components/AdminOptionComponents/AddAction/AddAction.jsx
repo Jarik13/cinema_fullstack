@@ -25,7 +25,6 @@ const AddAction = () => {
     const { handleSubmit, setValue, reset } = form;
 
     const onSubmit = (data) => {
-        console.log(data);
         dispatch(createSale(data));
         reset({
             discount: 0,
