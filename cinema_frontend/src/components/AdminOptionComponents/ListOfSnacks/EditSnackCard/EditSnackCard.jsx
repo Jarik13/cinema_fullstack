@@ -7,8 +7,8 @@ import { useForm } from 'react-hook-form';
 const EditSnackCard = ({ snack, onSave, onClose }) => {
     const form = useForm({
         defaultValues: {
-            name: snack?.name || "",
-            price: snack?.price || "",
+            Name: snack?.Name || "",
+            Price: snack?.Price || "",
         },
         mode: "onChange",
     });
@@ -16,11 +16,11 @@ const EditSnackCard = ({ snack, onSave, onClose }) => {
     const modalRef = useRef(null);
     const { handleSubmit, setValue, watch } = form;
 
-    const price = watch("price");
+    const price = watch("Price");
 
     const handlePriceChange = (e) => {
         const value = parseFloat(e.target.value);
-        setValue("price", value < 0 ? 0 : value);
+        setValue("Price", value < 0 ? 0 : value);
     };
 
     const handleClickOutside = (e) => {
@@ -30,7 +30,6 @@ const EditSnackCard = ({ snack, onSave, onClose }) => {
     };
 
     const onSubmit = (data) => {
-        console.log(data);
         const updatedSnack = { ...snack, ...data };
         onSave(updatedSnack);
     };
@@ -50,7 +49,7 @@ const EditSnackCard = ({ snack, onSave, onClose }) => {
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <FormField
                             control={form.control}
-                            name="name"
+                            name="Name"
                             rules={{ required: "Name is required" }}
                             render={({ field }) => (
                                 <FormItem>
@@ -65,7 +64,7 @@ const EditSnackCard = ({ snack, onSave, onClose }) => {
 
                         <FormField
                             control={form.control}
-                            name="price"
+                            name="Price"
                             rules={{ required: "Price is required" }}
                             render={({ field }) => (
                                 <FormItem>

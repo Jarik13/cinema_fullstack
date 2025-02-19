@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { CREATE_FILM_FAILURE, CREATE_FILM_REQUEST, CREATE_FILM_SUCCESS, DELETE_FILM_FAILURE, DELETE_FILM_REQUEST, DELETE_FILM_SUCCESS, GET_ALL_FILMS_FAILURE, GET_ALL_FILMS_REQUEST, GET_ALL_FILMS_SUCCESS, SET_SELECTED_FILM, UPDATE_FILM_FAILURE, UPDATE_FILM_REQUEST, UPDATE_FILM_SUCCESS } from "./ActionType"
+import { CREATE_FILM_FAILURE, CREATE_FILM_REQUEST, CREATE_FILM_SUCCESS, DELETE_FILM_FAILURE, DELETE_FILM_REQUEST, DELETE_FILM_SUCCESS, GET_ALL_FILMS_FAILURE, GET_ALL_FILMS_REQUEST, GET_ALL_FILMS_SUCCESS, SET_CURRENT_FILM_NUMBER, SET_SELECTED_FILM, UPDATE_FILM_FAILURE, UPDATE_FILM_REQUEST, UPDATE_FILM_SUCCESS } from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -65,26 +65,48 @@ export const deleteFilm = (id) => async (dispatch) => {
     }
 }
 
-export const getFilmList = (showToast) => async (dispatch) => {
+export const getFilmList = (showToast, filters) => async (dispatch) => {
     dispatch({ type: GET_ALL_FILMS_REQUEST });
 
+    let data;
+
     try {
-        const { data } = await axios.get(`${baseURL}/api/Admin/ReadFilms`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-        });
+        if (!filters || filters.selectedGenre === "all") {
+            const response = await axios.get(`${baseURL}/api/Admin/ReadFilms`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+            data = response.data;
+        } else {
+            const response = await axios.get(`${baseURL}/api/User/Filters`, {
+                params: {
+                    Genre: filters.selectedGenre,
+                    Rating: filters.selectedAgeRating,
+                    Year: filters.selectedYear,
+                }
+            });
+            data = response.data;
+        }
         dispatch({ type: GET_ALL_FILMS_SUCCESS, payload: data });
         if (showToast) {
-            toast.success("Films getted successfully!");
+            toast.success("Films fetched successfully!");
         }
     } catch (e) {
+        console.log(e);
         dispatch({ type: GET_ALL_FILMS_FAILURE });
-        toast.error(e.response?.message);
+        if (showToast) {
+            toast.error(e.response?.message || "Failed to fetch films");
+        }
     }
-}
+};
 
 export const setSelectedFilm = (film) => ({
     type: SET_SELECTED_FILM,
     payload: film,
+});
+
+export const setFilmNumber = (number) => ({
+    type: SET_CURRENT_FILM_NUMBER,
+    payload: number,
 });

@@ -1,37 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserFilmHistory } from '@/redux/History/Action';
+
+const formatDate = (dateString) => {
+  if (!dateString) return "N/A";
+  return dateString.split("T")[0];
+};
+
+const formatTime = (dateString) => {
+  if (!dateString) return "N/A";
+  return dateString.split("T")[1].slice(0, 5);
+};
 
 const PurchaseHistoryCard = () => {
-  const purchases = [
-    {
-      id: 2,
-      title: 'Movie A',
-      showtime: '2025-02-05 19:30',
-      date: '2025-02-05',
-      amount: '$15'
-    },
-    {
-      id: 3,
-      title: 'Movie B',
-      showtime: '2025-02-06 21:00',
-      date: '2025-02-06',
-      amount: '$15'
-    },
-    {
-      id: 4,
-      title: 'Movie A',
-      showtime: '2025-02-05 19:30',
-      date: '2025-02-05',
-      amount: '$15'
-    },
-    {
-      id: 5,
-      title: 'Movie B',
-      showtime: '2025-02-06 21:00',
-      date: '2025-02-06',
-      amount: '$15'
-    }
-  ];
+  const dispatch = useDispatch();
+  const purchases = useSelector(store => store.history?.histories || []);
+
+  useEffect(() => {
+    dispatch(getUserFilmHistory());
+  }, [dispatch]);
+
+  console.log(purchases);
 
   return (
     <div>
@@ -40,11 +30,13 @@ const PurchaseHistoryCard = () => {
           <CarouselContent>
             {purchases.map((purchase) => (
               <CarouselItem key={purchase.id}>
-                <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
-                  <h3 className="text-xl font-semibold">{purchase.title}</h3>
-                  <p className="text-gray-500">Showtime: {purchase.showtime}</p>
-                  <p className="text-gray-500">Date: {purchase.date}</p>
-                  <p className="text-gray-500">Amount: {purchase.amount}</p>
+                <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-300">
+                  <h3 className="text-xl font-semibold text-black">🎬 Film: <span className="text-indigo-600">{purchase?.filmName}</span></h3>
+                  <p className="text-gray-600">🛒 Bought at: <span className="text-black">{formatTime(purchase?.actionDate)}</span></p>
+                  <p className="text-gray-600">📅 Date: <span className="text-black">{formatDate(purchase?.actionDate)}</span></p>
+                  <p className="text-green-600 font-semibold">💰 Amount: <span className="text-red-500 font-semibold">${purchase?.price}</span></p>
+                  <p className="text-gray-400">🎟️ Seat number: <span className="text-black">{purchase?.seat_number}</span></p>
+                  <p className="text-gray-600">🏷️ Type: <span >{purchase?.type}</span></p>
                 </div>
               </CarouselItem>
             ))}

@@ -3,9 +3,16 @@ import {
     BLOCK_USER_FAILURE,
     BLOCK_USER_REQUEST,
     BLOCK_USER_SUCCESS,
+    FILTER_FILMS_FAILURE,
+    FILTER_FILMS_REQUEST,
+    FILTER_FILMS_SUCCESS,
     GET_USER_LIST_FAILURE,
     GET_USER_LIST_REQUEST,
     GET_USER_LIST_SUCCESS,
+    SEARCH_FILMS_FAILURE,
+    SEARCH_FILMS_REQUEST,
+    SEARCH_FILMS_SUCCESS,
+    SET_FILTERS,
     UPDATE_USER_PROFILE_FAILURE,
     UPDATE_USER_PROFILE_REQUEST,
     UPDATE_USER_PROFILE_SUCCESS
@@ -43,7 +50,7 @@ export const updateUserProfile = (name, email, age) => async (dispatch) => {
                     "Content-Type": "application/json-patch+json"
                 }
             }
-        );        
+        );
 
         dispatch({ type: UPDATE_USER_PROFILE_SUCCESS, payload: response.data });
         await dispatch(getUserProfile());
@@ -74,7 +81,9 @@ export const getUserList = (showToast) => async (dispatch) => {
         }
     } catch (e) {
         dispatch({ type: GET_USER_LIST_FAILURE });
-        toast.error("Get list of users failed!");
+        if (showToast) {
+            toast.error("Get list of users failed!");
+        }
         return null;
     }
 };
@@ -98,3 +107,50 @@ export const blockUser = (userNameToDelete) => async (dispatch) => {
         toast.error(errorMessage);
     }
 };
+
+export const filterFilms = (genre, rating, year, sortOrder, duration) => async (dispatch) => {
+    dispatch({ type: FILTER_FILMS_REQUEST });
+
+    try {
+        const response = await axios.get(`${baseURL}/api/User/Filters`, {
+            params: {
+                Genre: genre,
+                Rating: rating,
+                Year: year,
+
+            }
+        });
+
+        console.log(response);
+
+        dispatch({
+            type: FILTER_FILMS_SUCCESS,
+            payload: response.data
+        });
+    } catch (e) {
+        console.error(e);
+        dispatch({ type: FILTER_FILMS_FAILURE });
+        toast.error("Failed to filter films!");
+    }
+};
+
+export const setFilters = (filters) => async (dispatch) => ({
+    type: SET_FILTERS,
+    payload: filters,
+});
+
+export const searchFilms = (query) => async (dispatch) => {
+    dispatch({ type: SEARCH_FILMS_REQUEST });
+
+    try {
+        const { data } = await axios.get(`${baseURL}/api/User/Search`, {
+            params: {
+                searchRequest: query
+            }
+        });
+        dispatch({ type: SEARCH_FILMS_SUCCESS, payload: data })
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: SEARCH_FILMS_FAILURE });
+    }
+}

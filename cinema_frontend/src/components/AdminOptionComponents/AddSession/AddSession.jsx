@@ -18,8 +18,8 @@ const AddSession = () => {
     const selectedFilm = useSelector(store => store.film?.selectedFilm || null);
 
     useEffect(() => {
-        dispatch(getHallList());
-        dispatch(getFilmList());
+        dispatch(getHallList(false));
+        dispatch(getFilmList(false, null));
     }, [dispatch]);
 
     const form = useForm({

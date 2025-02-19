@@ -1,28 +1,26 @@
 import { Label } from '@/components/ui/label';
-import { Slider } from '@/components/ui/slider';
-import React, { useState } from 'react';
+import React from 'react';
 
-const DurationFilter = () => {
-    const [duration, setDuration] = useState([0, 240]);
+const DurationFilter = ({ duration, setDuration }) => {
+    const handleTimeChange = (event) => {
+        setDuration(event.target.value); 
+    };
 
     return (
         <div>
             <Label htmlFor="duration" className="font-semibold">
-                Duration (min)
+                Duration (hh:mm)
             </Label>
-            <Slider
+            <input
+                id="duration"
+                type="time"
                 value={duration}
-                min={0}
-                max={300}
-                step={10}
-                onChange={setDuration}
+                onChange={handleTimeChange}
+                step="600" 
+                className="w-full p-2 border rounded-md"
             />
-            <div className="flex justify-between text-sm mt-2">
-                <span>{duration[0]} min</span>
-                <span>{duration[1]} min</span>
-            </div>
         </div>
-    )
-}
+    );
+};
 
 export default DurationFilter;
