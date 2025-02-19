@@ -5,7 +5,7 @@ import { getUserFilmHistory } from '@/redux/History/Action';
 
 const formatDate = (dateString) => {
   if (!dateString) return "N/A";
-  return dateString.split("T")[0]; 
+  return dateString.split("T")[0];
 };
 
 const formatTime = (dateString) => {
@@ -21,6 +21,8 @@ const PurchaseHistoryCard = () => {
     dispatch(getUserFilmHistory());
   }, [dispatch]);
 
+  console.log(purchases);
+
   return (
     <div>
       {purchases.length > 0 ? (
@@ -28,11 +30,13 @@ const PurchaseHistoryCard = () => {
           <CarouselContent>
             {purchases.map((purchase) => (
               <CarouselItem key={purchase.id}>
-                <div className="bg-gray-100 p-6 rounded-lg shadow-lg">
-                  <h3 className="text-xl font-semibold">Film: {purchase?.filmName}</h3>
-                  <p className="text-gray-500">Buy at: {formatTime(purchase?.ActionDate)}</p>
-                  <p className="text-gray-500">Date: {formatDate(purchase?.ActionDate)}</p>
-                  <p className="text-gray-500">Amount: $150</p>
+                <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-300">
+                  <h3 className="text-xl font-semibold text-black">🎬 Film: <span className="text-indigo-600">{purchase?.filmName}</span></h3>
+                  <p className="text-gray-600">🛒 Buy at: <span className="text-black">{formatTime(purchase?.actionDate)}</span></p>
+                  <p className="text-gray-600">📅 Date: <span className="text-black">{formatDate(purchase?.actionDate)}</span></p>
+                  <p className="text-green-600 font-semibold">💰 Amount: <span className="text-red-500 font-semibold">${purchase?.price}</span></p>
+                  <p className="text-gray-400">🎟️ Seat number: <span className="text-black">{purchase?.seat_number}</span></p>
+                  <p className="text-gray-600">🏷️ Type: <span >{purchase?.type}</span></p>
                 </div>
               </CarouselItem>
             ))}
