@@ -53,7 +53,7 @@ const MovieDetails = () => {
           <span>•</span>
           <span>{film?.Age_rating || "Film age rating"}</span>
         </div>
-        <Button variant="destructive" size="sm">See reviews</Button>
+        <Button variant="destructive" size="sm" onClick={() => navigate(`${film?.Id}/reviews`)}>See reviews</Button>
       </div>
     </div>
   )

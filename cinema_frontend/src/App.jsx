@@ -15,6 +15,7 @@ import WatchFilmsOnlinePage from './pages/WatchFilmsOnlinePage/WatchFilmsOnlineP
 import FilmDetailsOnlinePage from './pages/FilmDetailsOnlinePage/FilmDetailsOnlinePage';
 import AdminPanelPage from './pages/AdminPanelPage/AdminPanelPage';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute ';
+import FilmReviewsPage from './pages/FilmReviewsPage/FilmReviewsPage';
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const MainApp = () => {
           <Route path='/auth' element={<AuthPage />} />
           <Route path='/my-profile' element={<UserProfilePage />} />
           <Route path='/:locationId/sessions' element={<ChooseSessionPage />} />
+          <Route path='/:filmId/reviews' element={<FilmReviewsPage />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path='/:locationId/sessions/:sessionId' element={<HallPage />} />
