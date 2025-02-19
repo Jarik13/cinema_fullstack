@@ -1,15 +1,19 @@
 import { Button } from '@/components/ui/button';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import EditActionCard from './EditActionCard/EditActionCard';
 import DeleteActionCard from './DeleteActionCard/DeleteActionCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSaleList } from '@/redux/Sale/Action';
 
 const ListOfActions = () => {
-    const [actions, setActions] = useState([
-        { id: 1, discount: 20, description: 'description 1', for_what: "Snack", discount_type: "Student", is_active: true },
-        { id: 2, discount: 15, description: 'description 2', for_what: "Ticket", discount_type: "BulkPurchase", is_active: false },
-        { id: 3, discount: 10, description: 'description 3', for_what: "Snack", discount_type: "ShowDateDiscount", is_active: true },
-        { id: 4, discount: 30, description: 'description 4', for_what: "Both", discount_type: "SummerForKids", is_active: false },
-    ]);
+    const dispatch = useDispatch();
+    const actions = useSelector(store => store.sale?.sales || []);
+    const isFirtLoaded = useRef(true);
+
+    useEffect(() => {
+        dispatch(getSaleList(isFirtLoaded.current));
+        isFirtLoaded.current = false;
+    }, [])
 
     const [editingAction, setEditingAction] = useState(null);
     const [deletingAction, setDeletingAction] = useState(null);
@@ -46,14 +50,14 @@ const ListOfActions = () => {
                     <div>Action</div>
                 </div>
                 {actions.map((action) => (
-                    <div key={action.id} className="grid grid-cols-7 px-4 py-2 border-b items-center">
-                        <div>{action.id}</div>
-                        <div>{action.discount}%</div>
-                        <div>{action.description}</div>
-                        <div>{action.for_what}</div>
-                        <div>{action.discount_type}</div>
-                        <div className={action.is_active ? "text-green-600" : "text-red-600"}>
-                            {action.is_active ? "Active" : "Non Active"}
+                    <div key={action?.Id} className="grid grid-cols-7 px-4 py-2 border-b items-center">
+                        <div>{action?.Id}</div>
+                        <div>{action?.Discount}%</div>
+                        <div>{action?.Description}</div>
+                        <div>{action?.For_what}</div>
+                        <div>{action?.Discount_type}</div>
+                        <div className={action?.Is_Active ? "text-green-600" : "text-red-600"}>
+                            {action?.Is_Active ? "Active" : "Non Active"}
                         </div>
                         <div className='flex gap-2'>
                             <Button variant="outline" onClick={() => handleEdit(action)}>Edit</Button>

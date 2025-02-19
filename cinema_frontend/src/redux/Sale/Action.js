@@ -21,7 +21,7 @@ export const createSale = (data) => async (dispatch) => {
     }
 }
 
-export const getSaleList = () => async (dispatch) => {
+export const getSaleList = (showToast) => async (dispatch) => {
     dispatch({ type: GET_SALE_LIST_REQUEST });
 
     try {
@@ -30,11 +30,15 @@ export const getSaleList = () => async (dispatch) => {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         });
-        toast.success("Sale list got successfully!");
+        if (showToast) {
+            toast.success("Sale list got successfully!");
+        }
         dispatch({ type: GET_SALE_LIST_SUCCESS, payload: data });
     } catch (e) {
         console.log(e);
         dispatch({ type: GET_SALE_LIST_FAILURE });
-        toast.error("Failed to get sale list!");
+        if (showToast) {
+            toast.error("Failed to get sale list!");
+        }
     }
 }
