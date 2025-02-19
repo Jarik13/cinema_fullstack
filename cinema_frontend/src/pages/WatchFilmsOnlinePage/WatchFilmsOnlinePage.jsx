@@ -1,25 +1,22 @@
 import GoToHomePage from '@/components/GoToHomePage/GoToHomePage';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFilmList } from '@/redux/Film/Action';
+import { saveFilmToHistory } from '@/redux/History/Action';
 
 const WatchFilmsOnlinePage = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const films = [
-        { id: 1, title: 'Inception', ageRating: '16+', price: 120 },
-        { id: 2, title: 'Frozen II', ageRating: '6+', price: 100 },
-        { id: 3, title: 'Avengers: Endgame', ageRating: '13+', price: 150 },
-        { id: 4, title: 'Joker', ageRating: '18+', price: 130 },
-        { id: 5, title: 'Toy Story 4', ageRating: '6+', price: 90 },
-        { id: 6, title: 'The Matrix', ageRating: '16+', price: 110 },
-        { id: 7, title: 'Interstellar', ageRating: '13+', price: 140 },
-        { id: 8, title: 'Shrek', ageRating: '6+', price: 80 },
-        { id: 9, title: 'The Lion King', ageRating: '6+', price: 95 },
-        { id: 10, title: 'Parasite', ageRating: '18+', price: 125 },
-        { id: 11, title: 'Coco', ageRating: '6+', price: 100 },
-        { id: 12, title: 'Black Panther', ageRating: '13+', price: 115 },
-    ];
+    const films = useSelector(store => store.film?.films || []);
+    const isFirstLoaded = useRef(true);
+
+    useEffect(() => {
+        dispatch(getFilmList(isFirstLoaded.current, null));
+        isFirstLoaded.current = false;
+    }, [dispatch])
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 8;
@@ -33,6 +30,11 @@ const WatchFilmsOnlinePage = () => {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+
+    const handleSaveFilmToHistory = (id) => {
+        dispatch(saveFilmToHistory(id));
+        navigate(`/watch-online/${id}`);
+    }
 
     return (
         <div className='flex flex-col w-full p-4'>
@@ -65,14 +67,14 @@ const WatchFilmsOnlinePage = () => {
             <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
                 {currentFilms.map((film) => (
                     <div
-                        key={film.id}
+                        key={film.Id}
                         className='border rounded-lg shadow-sm p-4 flex flex-col items-center text-center'
                     >
                         <div className='w-full h-40 bg-gray-300 rounded-lg mb-4'></div>
-                        <h3 className='text-lg font-semibold mb-2'>{film.title}</h3>
-                        <p className='text-sm text-gray-600 mb-2'>Age Rating: {film.ageRating}</p>
-                        <p className='text-lg text-gray-800 font-medium mb-4'>$ {film.price}</p>
-                        <Button variant="destructive" onClick={() => navigate("/watch-online/1")}>
+                        <h3 className='text-lg font-semibold mb-2'>{film?.Name}</h3>
+                        <p className='text-sm text-gray-600 mb-2'>Age Rating: {film?.Age_limit}</p>
+                        <p className='text-lg text-gray-800 font-medium mb-4'>$ 150</p>
+                        <Button variant="destructive" onClick={() => handleSaveFilmToHistory(film?.Id)}>
                             Watch online
                         </Button>
                     </div>

@@ -30,17 +30,17 @@ const UserAccountDetails = () => {
                     </a>
                     <a
                         href="#"
-                        onClick={() => handleLinkClick('purchaseHistory')}
-                        className={`${cardContent === 'purchaseHistory' ? 'underline' : ''}`}
+                        onClick={() => handleLinkClick('filmPurchaseHistory')}
+                        className={`${cardContent === 'filmPurchaseHistory' ? 'underline' : ''}`}
                     >
-                        Purchase History
+                        Film Purchase History
                     </a>
                     <a
                         href="#"
-                        onClick={() => handleLinkClick('paymentCards')}
-                        className={`${cardContent === 'paymentCards' ? 'underline' : ''}`}
+                        onClick={() => handleLinkClick('ticketPurchaseHistory')}
+                        className={`${cardContent === 'ticketPurchaseHistory' ? 'underline' : ''}`}
                     >
-                        My Payment Cards
+                        Ticket Purchase History
                     </a>
                     <a
                         href="#"
@@ -56,14 +56,14 @@ const UserAccountDetails = () => {
                 <Card className="w-full h-full">
                     <CardHeader className="text-center text-xl">
                         {cardContent === 'personalInfo' && 'Personal Information'}
-                        {cardContent === 'purchaseHistory' && 'Purchase History'}
-                        {cardContent === 'paymentCards' && 'My Payment Cards'}
+                        {cardContent === 'filmPurchaseHistory' && 'Films Purchase History'}
+                        {cardContent === 'ticketPurchaseHistory' && 'Tickets Purchase History'}
                         {cardContent === 'myTickets' && 'My Tickets'}
                     </CardHeader>
                     <CardContent className="space-y-3">
                         {cardContent === 'personalInfo' && <PersonalInfoCard user={user} />}
-                        {cardContent === 'purchaseHistory' && <PurchaseHistoryCard />}
-                        {cardContent === 'paymentCards' && <MyPaymentCardsCard />}
+                        {cardContent === 'filmPurchaseHistory' && <PurchaseHistoryCard />}
+                        {cardContent === 'ticketPurchaseHistory' && <MyPaymentCardsCard />}
                         {cardContent === 'myTickets' && <MyTicketsCard />}
                     </CardContent>
                 </Card>
