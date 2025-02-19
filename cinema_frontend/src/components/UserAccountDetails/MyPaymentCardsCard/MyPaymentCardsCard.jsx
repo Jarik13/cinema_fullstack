@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserTicketHistory } from '@/redux/History/Action';
+import { clearUserTicketHistory, getUserTicketHistory } from '@/redux/History/Action';
+import { Button } from '@/components/ui/button';
 
 const formatDate = (dateString) => {
     if (!dateString) return "N/A";
@@ -20,6 +21,11 @@ const MyPaymentCardsCard = () => {
     useEffect(() => {
         dispatch(getUserTicketHistory());
     }, [dispatch])
+
+    const handleClearTicketHistory = async () => {
+        await dispatch(clearUserTicketHistory());
+        await dispatch(getUserTicketHistory());
+    }
 
     return (
         <div className="space-y-6">
@@ -43,8 +49,11 @@ const MyPaymentCardsCard = () => {
                     <CarouselNext />
                 </Carousel>
             ) : (
-                <p>No payment cards saved yet.</p>
+                <p>No tickets saved yet.</p>
             )}
+            {
+                tickets.length > 0 && <Button onClick={() => handleClearTicketHistory()}>Clear History</Button>
+            }
         </div>
     );
 };
