@@ -38,7 +38,7 @@ const MyTicketsCard = () => {
               <CarouselItem key={ticket?.id}>
                 <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-300">
                   <h3 className="text-xl font-semibold text-black">🎬 Film: <span className="text-indigo-600">{ticket?.filmName}</span></h3>
-                  <p className="text-gray-600">🛒 Buy at: <span className="text-black">{formatTime(ticket?.book_buy_data)}</span></p>
+                  <p className="text-gray-600">🛒 Bought at: <span className="text-black">{formatTime(ticket?.book_buy_data)}</span></p>
                   <p className="text-gray-600">📅 Date: <span className="text-black">{formatDate(ticket?.book_buy_data)}</span></p>
                   <p className="text-green-600 font-semibold">💰 Amount: <span className="text-red-500 font-semibold">${ticket?.price}</span></p>
                   <p className="text-gray-400">🎟️ Seat number: <span className="text-black">{ticket?.seat_number}</span></p>
