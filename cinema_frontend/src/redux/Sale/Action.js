@@ -79,7 +79,7 @@ export const deleteSale = (id) => async (dispatch) => {
     }
 }
 
-const applySummerSale = () => async (dispatch) => {
+export const applySummerSale = () => async (dispatch) => {
     dispatch({ type: DELETE_SALE_REQUEST });
 
     try {
