@@ -12,10 +12,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchVisible, setIsSearchVisible] = useState(false); 
-
-  const searchRef = useRef(null); 
-
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
+  const searchRef = useRef(null);
   const filteredFilms = useSelector(store => store.userReducer?.filteredFilms || []);
 
   const handleSearchChange = (e) => {
@@ -24,22 +22,21 @@ const Navbar = () => {
 
   useEffect(() => {
     if (searchQuery) {
-      setIsSearchVisible(true); 
-      dispatch(searchFilms(searchQuery)); 
+      setIsSearchVisible(true);
+      dispatch(searchFilms(searchQuery));
     } else {
-      setIsSearchVisible(false); 
+      setIsSearchVisible(false);
     }
   }, [dispatch, searchQuery]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (searchRef.current && !searchRef.current.contains(e.target)) {
-        setIsSearchVisible(false); 
+        setIsSearchVisible(false);
       }
     };
 
     document.addEventListener('click', handleClickOutside);
-
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
@@ -53,25 +50,14 @@ const Navbar = () => {
       </div>
       <div className='flex justify-between items-center gap-8'>
         <Button variant="ghost" size="lg" className="text-xl underline decoration-2" onClick={() => navigate("/")}>In the cinema</Button>
-        <Button
-          variant="destructive"
-          size="lg"
-          onClick={() => navigate("/watch-online")}
-        >
-          Watch online
-        </Button>
+        <Button variant="destructive" size="lg" onClick={() => navigate("/watch-online")}>Watch online</Button>
+        <Button variant="ghost" size="lg" className="text-xl underline decoration-2" onClick={() => navigate("/actions")}>Hot Price Actions</Button>
       </div>
       <div className='flex justify-between items-center gap-8'>
-        <Input
-          type="text"
-          placeholder="Film here..."
-          value={searchQuery}
-          onChange={handleSearchChange}
-        />
+        <Input type="text" placeholder="Film here..." value={searchQuery} onChange={handleSearchChange} />
         <Filters />
         <UserAvatar />
       </div>
-
       {searchQuery && isSearchVisible && (
         <div ref={searchRef} className="absolute left-[61%] top-[10%] w-[380px] p-4 border rounded-lg bg-white shadow-lg z-10">
           <h2 className="text-xl font-bold mb-3">Films</h2>

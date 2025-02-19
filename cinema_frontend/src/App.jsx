@@ -15,6 +15,7 @@ import WatchFilmsOnlinePage from './pages/WatchFilmsOnlinePage/WatchFilmsOnlineP
 import FilmDetailsOnlinePage from './pages/FilmDetailsOnlinePage/FilmDetailsOnlinePage';
 import AdminPanelPage from './pages/AdminPanelPage/AdminPanelPage';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute ';
+import ActionsPage from './pages/ActionsPage/ActionsPage';
 import FilmReviewsPage from './pages/FilmReviewsPage/FilmReviewsPage';
 
 const App = () => {
@@ -54,6 +55,8 @@ const MainApp = () => {
 
           <Route path='/watch-online' element={<WatchFilmsOnlinePage />} />
           <Route path='/watch-online/:filmId' element={<FilmDetailsOnlinePage />} />
+
+          <Route path='/actions' element={<ActionsPage />} />
         </Routes>
       }
     </div>
