@@ -20,7 +20,7 @@ export const sendReview = (review, id) => async (dispatch) => {
     } catch (e) {
         console.log(e);
         dispatch({ type: SEND_REVIEW_FAILURE });
-        toast.error(e.response.message || "Failed to send review!");
+        toast.error(e.response?.message || "Failed to send review!");
     }
 }
 
