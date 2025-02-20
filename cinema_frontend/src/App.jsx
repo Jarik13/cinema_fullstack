@@ -17,6 +17,7 @@ import AdminPanelPage from './pages/AdminPanelPage/AdminPanelPage';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute ';
 import ActionsPage from './pages/ActionsPage/ActionsPage';
 import FilmReviewsPage from './pages/FilmReviewsPage/FilmReviewsPage';
+import AboutUsPage from './pages/AboutUsPage/AboutUsPage';
 
 const App = () => {
   return (
@@ -44,6 +45,7 @@ const MainApp = () => {
         <Routes>
           <Route path='/' element={<InCinemaPage />} />
           <Route path='/auth' element={<AuthPage />} />
+          <Route path='/about-us' element={<AboutUsPage />} />
           <Route path='/my-profile' element={<UserProfilePage />} />
           <Route path='/:locationId/sessions' element={<ChooseSessionPage />} />
           <Route path='/:filmId/reviews' element={<FilmReviewsPage />} />

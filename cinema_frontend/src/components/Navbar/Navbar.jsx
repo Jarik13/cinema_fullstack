@@ -7,6 +7,7 @@ import UserAvatar from '../UserAvatar/UserAvatar';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { searchFilms } from '@/redux/User/Action';
+import { MoreVertical } from 'lucide-react';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -57,6 +58,9 @@ const Navbar = () => {
         <Input type="text" placeholder="Film here..." value={searchQuery} onChange={handleSearchChange} />
         <Filters />
         <UserAvatar />
+        <Button variant="ghost" size="icon" className="p-4" onClick={() => navigate("/about-us")}>
+          <MoreVertical className='w-6 h-6' />
+        </Button>
       </div>
       {searchQuery && isSearchVisible && (
         <div ref={searchRef} className="absolute left-[61%] top-[10%] w-[380px] p-4 border rounded-lg bg-white shadow-lg z-10">
