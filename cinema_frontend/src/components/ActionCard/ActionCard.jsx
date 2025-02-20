@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useDispatch } from 'react-redux';
-import { applyDateSale, applySummerSale } from '@/redux/Sale/Action';
+import { applyDateSale, applyFourSale, applySummerSale } from '@/redux/Sale/Action';
 
 const ActionCard = ({ action }) => {
     const dispatch = useDispatch();
@@ -11,11 +11,14 @@ const ActionCard = ({ action }) => {
             case "Student":
                 return;
             case "Purchases4":
-                return;
+                dispatch(applyFourSale());
+                break;
             case "SummerForKids":
                 dispatch(applySummerSale());
+                break;
             case "ShowDateDiscount":
                 dispatch(applyDateSale());
+                break;
             case "Reviews100Plus":
                 return;
             default:

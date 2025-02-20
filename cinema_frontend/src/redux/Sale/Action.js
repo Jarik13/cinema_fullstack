@@ -120,3 +120,22 @@ export const applyDateSale = () => async (dispatch) => {
         toast.error(e.response?.data.error || "Failed to apply sale!");
     }
 }
+
+export const applyFourSale = () => async (dispatch) => {
+    dispatch({ type: APPLY_SALE_REQUEST });
+
+    try {
+        const response = await axios.get(`${baseURL}/api/Test/FourSale`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        console.log(response);
+        toast.success(response?.data.message || "Sale applied successfully!");
+        dispatch({ type: APPLY_SALE_SUCCESS });
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: APPLY_SALE_FAILURE });
+        toast.error(e.response?.data.error || "Failed to apply sale!");
+    }
+}
