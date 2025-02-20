@@ -6,6 +6,7 @@ import AddSnack from "@/components/AdminOptionComponents/AddSnack/AddSnack";
 import ListOfActions from "@/components/AdminOptionComponents/ListOfActions/ListOfActions";
 import ListOfFilms from "@/components/AdminOptionComponents/ListOfFilms/ListOfFilms";
 import ListOfHalls from "@/components/AdminOptionComponents/ListOfHalls/ListOfHalls";
+import ListOfReviews from "@/components/AdminOptionComponents/ListOfReviews/ListOfReviews";
 import ListOfSessions from "@/components/AdminOptionComponents/ListOfSessions/ListOfSessions";
 import ListOfSnacks from "@/components/AdminOptionComponents/ListOfSnacks/ListOfSnacks";
 import ListOfTickets from "@/components/AdminOptionComponents/ListOfTickets/ListOfTickets";
@@ -42,6 +43,8 @@ const AdminPanelPage = () => {
                 return <ListOfTickets />;
             case "listOfUsers":
                 return <ListOfUsers />;
+            case "listOfReviews":
+                return <ListOfReviews />
             default:
                 return <p className="text-gray-500">Select an action from the sidebar.</p>;
         }
@@ -134,6 +137,13 @@ const AdminPanelPage = () => {
                         onClick={() => setActiveComponent("listOfUsers")}
                     >
                         List users
+                    </Button>
+                    <Button
+                        variant={activeComponent === "listOfReviews" ? "destructive" : "outline"}
+                        className="w-full py-2 px-4"
+                        onClick={() => setActiveComponent("listOfReviews")}
+                    >
+                        List reviews
                     </Button>
                 </div>
             </div>
