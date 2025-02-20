@@ -87,3 +87,21 @@ export const getReviewList = (showToast) => async (dispatch) => {
         }
     }
 }
+
+export const deleteReviewByAdmin = (id) => async (dispatch) => {
+    dispatch({ type: DELETE_REVIEW_REQUEST });
+
+    try {
+        const response = await axios.delete(`${baseURL}/api/Review/delete_review_by_admin/${id}`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        });
+        dispatch({ type: DELETE_REVIEW_SUCCESS });
+        toast.success("Review deleted successfully!");
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: DELETE_REVIEW_FAILURE });
+        toast.error("Failed to delete review!");
+    }
+}

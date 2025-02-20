@@ -1,17 +1,36 @@
 import { Button } from '@/components/ui/button';
-import { getReviewList } from '@/redux/Review/Action';
-import React, { useEffect, useRef } from 'react';
+import { deleteReviewByAdmin, getReviewList } from '@/redux/Review/Action';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import DeleteReviewCard from './DeleteReviewCard/DeleteReviewCard';
 
 const ListOfReviews = () => {
     const dispatch = useDispatch();
     const reviews = useSelector(store => store.review?.reviews || []);
     const isFirstLoaded = useRef(true);
 
+    const [selectedReview, setSelectedReview] = useState(null);
+
     useEffect(() => {
         dispatch(getReviewList(isFirstLoaded.current));
         isFirstLoaded.current = false;
     }, [dispatch])
+
+    const handleDeleteClick = (review) => {
+        setSelectedReview(review);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedReview(null);
+    };
+
+    const handleConfirmDelete = async () => {
+        if (selectedReview) {
+            await dispatch(deleteReviewByAdmin(selectedReview.Id));
+            await dispatch(getReviewList(true));
+            setSelectedReview(null);
+        }
+    };
 
     return (
         <div className='flex flex-col'>
@@ -32,10 +51,24 @@ const ListOfReviews = () => {
                         <div>{review?.Film?.Name}</div>
                         <div>{review?.Content}</div>
                         <div>{review?.Mark}</div>
-                        <Button variant="destructive" size="sm">Delete</Button>
+                        <Button 
+                            variant="destructive" 
+                            size="sm"
+                            onClick={() => handleDeleteClick(review)}
+                        >
+                            Delete
+                            </Button>
                     </div>
                 ))}
             </div>
+
+            {selectedReview && (
+                <DeleteReviewCard 
+                    isOpen={ () => selectedReview !== null} 
+                    onClose={handleCloseModal} 
+                    onConfirm={handleConfirmDelete} 
+                />
+            )}
         </div>
     );
 }
