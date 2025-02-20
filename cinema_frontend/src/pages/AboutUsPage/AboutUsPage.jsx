@@ -41,6 +41,16 @@ const AboutUsPage = () => {
                 <div className="mt-4 md:mt-0">
                     <p className="text-lg font-semibold text-center md:text-left mb-4">Our Developers:</p>
                     <ul className="text-center md:text-left space-y-2">
+                    <li>
+                            <a
+                                href="https://github.com/roksolana-shendiukh"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-blue-400 hover:text-blue-300 text-lg font-semibold"
+                            >
+                                🌐 Roksolana Shendiukh - C# Backend Developer
+                            </a>
+                        </li>
                         <li>
                             <a
                                 href="https://github.com/babychkate"
@@ -48,7 +58,7 @@ const AboutUsPage = () => {
                                 rel="noopener noreferrer"
                                 className="text-blue-400 hover:text-blue-300 text-lg font-semibold"
                             >
-                                💻 Katya Babych - C# Backend Developer
+                                🦄 Katia Babych - C# Backend Developer
                             </a>
                         </li>
                         <li>
@@ -59,16 +69,6 @@ const AboutUsPage = () => {
                                 className="text-blue-400 hover:text-blue-300 text-lg font-semibold"
                             >
                                 ⭐ Yaroslav Guz - Frontend Developer
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="https://github.com/roksolana-shendiukh"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-400 hover:text-blue-300 text-lg font-semibold"
-                            >
-                                🌐 Roksolana Shendiukh - C# Backend Developer
                             </a>
                         </li>
                     </ul>
