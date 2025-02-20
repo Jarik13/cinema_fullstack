@@ -140,7 +140,6 @@ export const applyFourSale = () => async (dispatch) => {
     }
 }
 
-
 export const apply100PlusReviewsSale = () => async (dispatch) => {
     dispatch({ type: APPLY_SALE_REQUEST });
 
@@ -151,6 +150,25 @@ export const apply100PlusReviewsSale = () => async (dispatch) => {
             }
         });
         console.log(response);
+        toast.success(response?.data.message || "Sale applied successfully!");
+        dispatch({ type: APPLY_SALE_SUCCESS });
+        dispatch({ type: GET_TOTAL_AMOUNT, payload: response?.data });
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: APPLY_SALE_FAILURE });
+        toast.error(e.response?.data.error || "Failed to apply sale!");
+    }
+}
+
+export const applyStudentSale = () => async (dispatch) => {
+    dispatch({ type: APPLY_SALE_REQUEST });
+
+    try {
+        const response = await axios.get(`${baseURL}/api/Test/StudentSale`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
         toast.success(response?.data.message || "Sale applied successfully!");
         dispatch({ type: APPLY_SALE_SUCCESS });
         dispatch({ type: GET_TOTAL_AMOUNT, payload: response?.data });
