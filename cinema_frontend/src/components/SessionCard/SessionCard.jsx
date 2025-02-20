@@ -6,8 +6,6 @@ const SessionCard = ({ session }) => {
     const navigate = useNavigate();
     const params = useParams();
 
-    console.log(session);
-
     return (
         <div 
             className="text-black p-4 rounded-md shadow-md w-80 border border-white relative cursor-pointer"

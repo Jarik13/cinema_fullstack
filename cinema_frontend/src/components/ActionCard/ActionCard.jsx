@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { useDispatch } from 'react-redux';
-import { applyDateSale, applyFourSale, applySummerSale } from '@/redux/Sale/Action';
+import { apply100PlusReviewsSale, applyDateSale, applyFourSale, applySummerSale } from '@/redux/Sale/Action';
 
 const ActionCard = ({ action }) => {
     const dispatch = useDispatch();
@@ -20,7 +20,8 @@ const ActionCard = ({ action }) => {
                 dispatch(applyDateSale());
                 break;
             case "Reviews100Plus":
-                return;
+                dispatch(apply100PlusReviewsSale());
+                break;
             default:
                 return;
         }

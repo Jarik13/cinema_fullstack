@@ -33,6 +33,11 @@ const BuyTicketList = ({ selectedSeats, setSelectedSeats }) => {
         dispatch(getUserTickets(false)); 
     }, [dispatch]);
 
+    useEffect(() => {
+        const totalPrice = formattedTickets.reduce((sum, ticket) => sum + ticket.price, 0);
+        localStorage.setItem(`totalPrice_${params.sessionId}`, totalPrice);
+    }, [selectedSeats, userTickets]);
+
     const bookedSeats = userTickets.filter(ticket => ticket?.Status === "Booked");
     const allTickets = [...selectedSeats, ...bookedSeats];
 
