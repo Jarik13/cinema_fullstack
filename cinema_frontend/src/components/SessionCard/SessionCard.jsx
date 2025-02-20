@@ -6,6 +6,8 @@ const SessionCard = ({ session }) => {
     const navigate = useNavigate();
     const params = useParams();
 
+    console.log(session);
+
     return (
         <div 
             className="text-black p-4 rounded-md shadow-md w-80 border border-white relative cursor-pointer"
@@ -13,6 +15,7 @@ const SessionCard = ({ session }) => {
         >
             <div className="flex justify-between text-sm mb-2">
                 <span>{session.Start_time} - {session.End_time}</span>
+                <span>{session.Date}</span>
                 <span>Hall {session.Hall}</span>
             </div>
             <div className="bg-gray-200 text-center py-4 rounded-md border border-white">
