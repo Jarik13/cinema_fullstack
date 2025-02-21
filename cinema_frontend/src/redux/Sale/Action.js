@@ -1,5 +1,12 @@
 import { toast } from "react-toastify";
-import { APPLY_SUMMER_SALE_FAILURE, APPLY_SUMMER_SALE_SUCCESS, CREATE_SALE_FAILURE, CREATE_SALE_REQUEST, CREATE_SALE_SUCCESS, DELETE_SALE_FAILURE, DELETE_SALE_REQUEST, DELETE_SALE_SUCCESS, GET_SALE_LIST_FAILURE, GET_SALE_LIST_REQUEST, GET_SALE_LIST_SUCCESS, UPDATE_SALE_FAILURE, UPDATE_SALE_REQUEST, UPDATE_SALE_SUCCESS } from "./ActionType"
+import { 
+    APPLY_SALE_FAILURE, APPLY_SALE_REQUEST, APPLY_SALE_SUCCESS, 
+    CREATE_SALE_FAILURE, CREATE_SALE_REQUEST, CREATE_SALE_SUCCESS, 
+    DELETE_SALE_FAILURE, DELETE_SALE_REQUEST, DELETE_SALE_SUCCESS, 
+    GET_SALE_LIST_FAILURE, GET_SALE_LIST_REQUEST, GET_SALE_LIST_SUCCESS, 
+    GET_TOTAL_AMOUNT, 
+    UPDATE_SALE_FAILURE, UPDATE_SALE_REQUEST, UPDATE_SALE_SUCCESS 
+} from "./ActionType"
 import axios from "axios";
 import { baseURL } from "@/config/constants";
 
@@ -80,7 +87,7 @@ export const deleteSale = (id) => async (dispatch) => {
 }
 
 export const applySummerSale = () => async (dispatch) => {
-    dispatch({ type: DELETE_SALE_REQUEST });
+    dispatch({ type: APPLY_SALE_REQUEST });
 
     try {
         const response = await axios.get(`${baseURL}/api/User/SummerSale`, {
@@ -89,10 +96,85 @@ export const applySummerSale = () => async (dispatch) => {
             }
         });
         toast.success(response?.message || "Sale applied successfully!");
-        dispatch({ type: APPLY_SUMMER_SALE_SUCCESS });
+        dispatch({ type: APPLY_SALE_SUCCESS });
     } catch (e) {
         console.log(e);
-        dispatch({ type: APPLY_SUMMER_SALE_FAILURE });
-        toast.error("Failed to apply sale!");
+        dispatch({ type: APPLY_SALE_FAILURE });
+        toast.error(e.response?.data.error || "Failed to apply sale!");
+    }
+}
+
+export const applyDateSale = () => async (dispatch) => {
+    dispatch({ type: APPLY_SALE_REQUEST });
+
+    try {
+        const response = await axios.get(`${baseURL}/api/User/DateSale`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        toast.success(response?.message || "Sale applied successfully!");
+        dispatch({ type: APPLY_SALE_SUCCESS });
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: APPLY_SALE_FAILURE });
+        toast.error(e.response?.data.error || "Failed to apply sale!");
+    }
+}
+
+export const applyFourSale = () => async (dispatch) => {
+    dispatch({ type: APPLY_SALE_REQUEST });
+
+    try {
+        const response = await axios.get(`${baseURL}/api/Test/FourSale`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        toast.success(response?.data.message || "Sale applied successfully!");
+        dispatch({ type: APPLY_SALE_SUCCESS });
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: APPLY_SALE_FAILURE });
+        toast.error(e.response?.data.error || "Failed to apply sale!");
+    }
+}
+
+export const apply100PlusReviewsSale = () => async (dispatch) => {
+    dispatch({ type: APPLY_SALE_REQUEST });
+
+    try {
+        const response = await axios.get(`${baseURL}/api/Test/Reviews100Sale`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        console.log(response);
+        toast.success(response?.data.message || "Sale applied successfully!");
+        dispatch({ type: APPLY_SALE_SUCCESS });
+        dispatch({ type: GET_TOTAL_AMOUNT, payload: response?.data });
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: APPLY_SALE_FAILURE });
+        toast.error(e.response?.data.error || "Failed to apply sale!");
+    }
+}
+
+export const applyStudentSale = () => async (dispatch) => {
+    dispatch({ type: APPLY_SALE_REQUEST });
+
+    try {
+        const response = await axios.get(`${baseURL}/api/Test/StudentSale`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        toast.success(response?.data.message || "Sale applied successfully!");
+        dispatch({ type: APPLY_SALE_SUCCESS });
+        dispatch({ type: GET_TOTAL_AMOUNT, payload: response?.data });
+    } catch (e) {
+        console.log(e);
+        dispatch({ type: APPLY_SALE_FAILURE });
+        toast.error(e.response?.data.error || "Failed to apply sale!");
     }
 }

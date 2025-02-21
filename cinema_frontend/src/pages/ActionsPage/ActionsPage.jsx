@@ -14,8 +14,6 @@ const ActionsPage = () => {
         isFirstLoaded.current = false;
     }, [])
 
-    console.log(actions);
-
     return (
         <div className='flex flex-col w-full p-4'>
             <GoToHomePage message={"Hot prices!"} navigation={"/"} />

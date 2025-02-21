@@ -13,6 +13,9 @@ const SnacksListPage = () => {
     const userTickets = useSelector(store => store.ticket?.tickets || []);
     const isFirstLoad = useRef(true);
 
+    const totals = useSelector(store => store.sale?.totals || {});
+    console.log(totals);
+
     useEffect(() => {
         dispatch(getSnackList(isFirstLoad.current));
         isFirstLoad.current = false;
@@ -57,9 +60,13 @@ const SnacksListPage = () => {
 
     const selectedSnacks = snacks.filter(snack => snackQuantities[snack.Id] > 0);
     const totalPrice = selectedSnacks.reduce((total, snack) => total + snack.Price * snackQuantities[snack.Id], 0);
+    const totalTicketPrice = localStorage.getItem(`totalPrice_${params.sessionId}`)
+
+    const totalPrice_TicketAndSnackAfterDiscount = 
+    (Object.keys(totals).length === 0 ? +totalTicketPrice + +totalPrice : totalTicketPrice - totals?.finalTicketAmount + totalPrice - totals?.finalSnackAmount);
 
     const handlePayment = async () => {
-        const selectedSnackIds = selectedSnacks.flatMap(snack => 
+        const selectedSnackIds = selectedSnacks.flatMap(snack =>
             Array.from({ length: snackQuantities[snack.Id] }, () => snack.Id)
         );
 
@@ -152,7 +159,25 @@ const SnacksListPage = () => {
                     ))}
                 </div>
                 <div className='flex justify-between items-center mt-6'>
-                    <h3 className='text-lg font-semibold'>Total Price: ${totalPrice}</h3>
+                    <h3 className='text-lg font-semibold'>
+                        Ticket Price: ${totalTicketPrice}
+                    </h3>
+                    <h3 className='text-sm text-red-500'>
+                        Discount: (-{totals?.finalTicketAmount})
+                    </h3>
+                </div>
+                <div className='flex justify-between items-center mt-2'>
+                    <h3 className='text-lg font-semibold'>
+                        Snack Price: ${totalPrice}
+                    </h3>
+                    <h3 className='text-sm text-red-500'>
+                        Discount: (-{totals?.finalSnackAmount})
+                    </h3>
+                </div>
+                <div className='flex justify-between items-center mt-4'>
+                    <h3 className='text-lg font-semibold'>
+                        Total Price: ${totalPrice_TicketAndSnackAfterDiscount}
+                    </h3>
                     <Button variant="destructive" onClick={handlePayment}>
                         Proceed to Payment
                     </Button>
