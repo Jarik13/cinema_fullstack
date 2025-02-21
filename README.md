@@ -1,106 +1,82 @@
-# 🚀 Назва проекту
+# 🚀 Jeen Studio Cinema
 
-Короткий опис проекту. Наприклад:  
-"Платформа для керування завданнями з використанням штучного інтелекту."
-
-![Демо](https://via.placeholder.com/800x400.png?text=Скріншот+або+Демо)
+Short project description. 
+"An online platform for booking cinema tickets with interactive seat selection and personalized movie recommendations."
 
 ---
 
-## 📋 Зміст
-1. [Опис](#опис)
-2. [Особливості](#особливості)
-3. [Системні вимоги](#системні-вимоги)
-4. [Як встановити](#як-встановити)
-5. [Як використовувати](#як-використовувати)
-6. [Технології](#технології)
-7. [Автори](#автори)
-8. [Ліцензія](#ліцензія)
-9. [Контакти](#контакти)
+## 📋 Contents
+1. [Description](#description)
+2. [System Requirements](#system-requirements)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Technologies](#technologies)
+6. [Authors](#authors)
 
 ---
 
-## ✨ Опис
+## ✨ Description
 
-"Назва проекту" — це інструмент, який дозволяє користувачам ефективно керувати своїми завданнями, автоматизувати рутинні процеси та отримувати аналітику в режимі реального часу. Ідеальний для команд, які прагнуть підвищити продуктивність.
-
----
-
-## 🌟 Особливості
-
-- 🧠 Інтеграція зі штучним інтелектом для автоматизації.
-- 📊 Інтерактивна аналітика та звіти.
-- 🖥️ Кросплатформеність (підтримка Web, iOS, Android).
-- 🔒 Захист даних за допомогою шифрування.
-- 🌍 Підтримка багатомовного інтерфейсу.
+**Jeen Studio Cinema** is a modern platform that allows users to easily find movies, book tickets, and receive personalized recommendations. An intuitive interface and a convenient seat selection system guarantee the best cinema experience.
 
 ---
 
-## 🖥️ Системні вимоги
+## 🖥️ System Requirements
 
-- **Операційна система:** Windows 10, macOS 10.15+, Linux.
-- **Node.js:** v16 або вище.
-- **RAM:** мінімум 4GB.
+- **Operating System:** Windows 10+, macOS 10.15+, Linux.
+- **Node.js:** v16 or later.
+- **RAM:** Minimum 4GB.
 
 ---
 
-## ⚙️ Як встановити
+## ⚙️ Installation
 
-1. Клонувати репозиторій:
+1. Clone the repository:
     ```bash
-    git clone https://github.com/username/project-name.git
+    git clone git@github.com:Jarik13/cinema_fullstack.git
     ```
-2. Перейти до папки проекту:
+2. Navigate to the project folder:
     ```bash
-    cd project-name
+    cd cinema_fullstack/cinema_frontend
     ```
-3. Встановити залежності:
+3. Install dependencies:
     ```bash
     npm install
     ```
-4. Запустити проект:
+4. Start the project:
     ```bash
     npm start
     ```
 
 ---
 
-## 📚 Як використовувати
+## 📚 Usage
 
-1. Відкрити браузер і перейти за посиланням `http://localhost:3000`.
-2. Створити обліковий запис.
-3. Додати перші завдання та налаштувати автоматизацію.
-4. Аналізуйте результати в панелі "Звіти".
+1. Open a browser and go to `http://localhost:5173`.
+2. Register or log in to your account.
+3. Select a cinema, movie, and session.
+4. Choose seats and complete the booking.
+5. Receive an electronic ticket and enjoy the movie!
 
 ---
 
-## 🛠️ Технології
+## 🛠️ Technologies
 
 - **Frontend:** React, TailwindCSS.
-- **Backend:** Node.js, Express.
-- **База даних:** MongoDB.
-- **Хостинг:** AWS.
+- **Backend:** C#, .NET.
+- **Database Server:** SQL Server.
 
 ---
 
-## 👤 Автори
+## 👤 Authors
 
-- **Ім'я Прізвище**  
-  - GitHub: [@username](https://github.com/username)  
-  - LinkedIn: [profile](https://linkedin.com/in/username)
+- **Shendiukh Roksolana**  
+  - GitHub: [@roksolana-shendiukh](https://github.com/roksolana-shendiukh)  
 
----
+- **Babysh Katia**  
+  - GitHub: [@babychkate](https://github.com/babychkate) 
 
-## 📄 Ліцензія
-
-Цей проект розповсюджується під ліцензією MIT. Деталі можна знайти у файлі [LICENSE](LICENSE).
-
----
-
-## 📞 Контакти
-
-- Email: example@email.com  
-- Telegram: [@username](https://t.me/username)  
-- Сайт: [example.com](https://example.com)
+- **Guz Yaroslav**  
+  - GitHub: [@Jarik13](https://github.com/Jarik13) 
 
 ---
