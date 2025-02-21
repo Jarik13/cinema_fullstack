@@ -4,7 +4,7 @@ import React from 'react';
 import UpdateUserInfoCard from '../UpdateUserInfo/UpdateUserInfoCard';
 
 const PersonalInfoCard = ({ user }) => {
-    const maskedPassword = user?.password ? '*'.repeat(user.password.length) : '';
+    const maskedPassword = user?.Password ? '*'.repeat(user.Password.length) : '';
 
     return (
         <>
@@ -18,7 +18,7 @@ const PersonalInfoCard = ({ user }) => {
             </div>
             <div>
                 <CardDescription className="text-gray-400">Age:</CardDescription>
-                <span>{user?.age}</span>
+                <span>{user?.Age}</span>
             </div>
             <div>
                 <CardDescription className="text-gray-400">Password:</CardDescription>

@@ -32,11 +32,9 @@ const PurchaseHistoryCard = () => {
               <CarouselItem key={purchase.id}>
                 <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-300">
                   <h3 className="text-xl font-semibold text-black">🎬 Film: <span className="text-indigo-600">{purchase?.filmName}</span></h3>
-                  <p className="text-gray-600">🛒 Bought at: <span className="text-black">{formatTime(purchase?.actionDate)}</span></p>
-                  <p className="text-gray-600">📅 Date: <span className="text-black">{formatDate(purchase?.actionDate)}</span></p>
-                  <p className="text-green-600 font-semibold">💰 Amount: <span className="text-red-500 font-semibold">${purchase?.price}</span></p>
-                  <p className="text-gray-400">🎟️ Seat number: <span className="text-black">{purchase?.seat_number}</span></p>
-                  <p className="text-gray-600">🏷️ Type: <span >{purchase?.type}</span></p>
+                  <p className="text-gray-600">🛒 Bought at: <span className="text-black">{formatTime(purchase?.ActionDate)}</span></p>
+                  <p className="text-gray-600">📅 Date: <span className="text-black">{formatDate(purchase?.ActionDate)}</span></p>
+                  <p className="text-green-600 font-semibold">💰 Amount: <span className="text-red-500 font-semibold">$100</span></p>
                 </div>
               </CarouselItem>
             ))}

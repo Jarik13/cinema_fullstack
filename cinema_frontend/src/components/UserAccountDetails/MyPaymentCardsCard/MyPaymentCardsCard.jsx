@@ -36,11 +36,9 @@ const MyPaymentCardsCard = () => {
                             <CarouselItem key={ticket?.Id}>
                                 <div className="bg-white p-6 rounded-lg shadow-lg border border-gray-300">
                                     <h3 className="text-xl font-semibold text-black">🎬 Film: <span className="text-indigo-600">{ticket?.filmName}</span></h3>
-                                    <p className="text-gray-600">🛒 Bought at: <span className="text-black">{formatTime(ticket?.actionDate)}</span></p>
-                                    <p className="text-gray-600">📅 Date: <span className="text-black">{formatDate(ticket?.actionDate)}</span></p>
-                                    <p className="text-gray-600">💰 Amount: <span className="text-red-500 font-semibold">${ticket?.price}</span></p>
-                                    <p className="text-gray-600">🎟️ Seat number: <span className="text-black">{ticket?.seat_number}</span></p>
-                                    <p className="text-gray-600">🏷️ Type: <span >{ticket?.type}</span></p>
+                                    <p className="text-gray-600">🛒 Bought at: <span className="text-black">{formatTime(ticket?.ActionDate)}</span></p>
+                                    <p className="text-gray-600">📅 Date: <span className="text-black">{formatDate(ticket?.ActionDate)}</span></p>
+                                    <p className="text-gray-600">💰 Amount: <span className="text-red-500 font-semibold">$100</span></p>
                                 </div>
                             </CarouselItem>
                         ))}
