@@ -1,35 +1,52 @@
 import GoToHomePage from '@/components/GoToHomePage/GoToHomePage';
 import { Button } from '@/components/ui/button';
-import React from 'react';
+import { getFilmList } from '@/redux/Film/Action';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 const FilmDetailsOnlinePage = () => {
+    const dispatch = useDispatch();
+    const params = useParams();
+    const films = useSelector(store => store.film?.films || []);
+
+    useEffect(() => {
+        dispatch(getFilmList(false));
+    }, [dispatch])
+
+    const film = films.find(film => film.Id === params.filmId);
+
     return (
         <div className='flex flex-col w-full p-4'>
             <GoToHomePage message={"Watch film online"} navigation={"/watch-online"} />
 
             <div className='flex justify-between'>
                 <div className='text-3xl'>
-                    <h1>Film Name</h1>
-                    <h2 className='text-xl mb-4'>Film Description</h2>
+                    <h1>{film?.Name}</h1>
+                    <h2 className='text-xl mb-4'>{film?.Description}</h2>
                     <Button
                         variant="destructive"
                         className="mt-2"
                         onClick={() => alert('Proceeding to payment...')}
                     >
-                        Buy now
+                        Watch now
                     </Button>
                 </div>
                 <div>
                     <div className='flex gap-4 mb-3'>
                         <span>Film Rating</span>
                         <span>•</span>
-                        <span>Film Release Year</span>
+                        <span>{film?.Release_year}</span>
                         <span>•</span>
-                        <span>Film Genre</span>
+                        <div>
+                            {
+                                film?.Genres.map(genre => {
+                                    return <span>{genre}</span>
+                                })
+                            }
+                        </div>
                         <span>•</span>
-                        <span>Film Duration</span>
-                        <span>•</span>
-                        <span>Film Age Rating</span>
+                        <span>{film?.Age_limit || "0"}+</span>
                     </div>
                     <Button variant="destructive" size="sm">See reviews</Button>
                 </div>
