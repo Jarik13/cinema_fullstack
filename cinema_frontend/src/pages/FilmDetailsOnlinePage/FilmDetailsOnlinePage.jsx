@@ -3,9 +3,10 @@ import { Button } from '@/components/ui/button';
 import { getFilmList } from '@/redux/Film/Action';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const FilmDetailsOnlinePage = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const params = useParams();
     const films = useSelector(store => store.film?.films || []);
@@ -48,7 +49,7 @@ const FilmDetailsOnlinePage = () => {
                         <span>•</span>
                         <span>{film?.Age_limit || "0"}+</span>
                     </div>
-                    <Button variant="destructive" size="sm">See reviews</Button>
+                    <Button variant="destructive" size="sm" onClick={() => navigate(`/${params.filmId}/reviews`)}>See reviews</Button>
                 </div>
             </div>
 
