@@ -19,7 +19,7 @@ const MovieDetails = () => {
   }, [dispatch])
 
   const film = films[currentFilmNumber - 1];
-  
+
   return (
     <div className='grid grid-cols-[3fr_2fr] gap-10'>
       <div className='text-3xl'>
@@ -41,13 +41,9 @@ const MovieDetails = () => {
           <span>•</span>
           <div>
             {
-              film?.Genres && film?.Genres.length > 0 ? (
-                film.Genres.map((genre, index) => (
-                  <span key={index}>{genre.Name}{index < film.Genres.length - 1 && ", "}</span>
-                ))
-              ) : (
-                <span>No genres available</span>
-              )
+              film?.Genres.map(genre => {
+                return <span>{genre}</span>
+              })
             }
           </div>
           <span>•</span>
